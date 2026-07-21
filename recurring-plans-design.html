@@ -1,0 +1,171 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Recurring Service Plans — Design</title>
+<style>
+  :root{--bg:#0a0e17;--card:#111826;--line:#1e2938;--txt:#e6edf3;--dim:#8b98a5;
+        --blue:#1570EF;--orange:#F97316;--green:#10B981;--amber:#F59E0B;--red:#EF4444}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--txt);
+       font:16px/1.62 -apple-system,BlinkMacSystemFont,"SF Pro Display",system-ui,sans-serif;padding:28px 18px 80px}
+  .wrap{max-width:820px;margin:0 auto}
+  h1{font-size:26px;margin:0 0 6px;background:linear-gradient(90deg,var(--blue),var(--orange));
+     -webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{color:var(--dim);font-size:14px;margin:0 0 26px}
+  .tl{font:11px/1 "SF Mono",ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;
+      color:var(--dim);margin:34px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:16px}
+  h2{font-size:18px;margin:0 0 4px}
+  h3{font-size:15px;margin:18px 0 6px}
+  code{font:13px "SF Mono",ui-monospace,monospace;background:rgba(255,255,255,.06);padding:2px 6px;border-radius:5px;word-break:break-word}
+  pre{background:#0b1020;border:1px solid var(--line);border-radius:9px;padding:12px;overflow-x:auto;
+      font:12.5px/1.55 "SF Mono",ui-monospace,monospace;margin:8px 0}
+  ul{margin:6px 0;padding-left:20px}li{margin:5px 0}
+  .flag{border-left:3px solid var(--amber);background:rgba(245,158,11,.07);padding:11px 13px;border-radius:0 8px 8px 0;margin-top:12px;font-size:14.5px}
+  .stop{border-left:3px solid var(--red);background:rgba(239,68,68,.07);padding:11px 13px;border-radius:0 8px 8px 0;margin-top:12px;font-size:14.5px}
+  .win{border-left:3px solid var(--green);background:rgba(16,185,129,.07);padding:11px 13px;border-radius:0 8px 8px 0;margin-top:12px;font-size:14.5px}
+  .opt{border:1px solid var(--line);border-radius:11px;padding:14px;margin:10px 0}
+  .opt.rec{border-color:var(--green);background:rgba(16,185,129,.05)}
+  .tag{font:600 10px/1 "SF Mono",monospace;letter-spacing:.08em;text-transform:uppercase;padding:5px 9px;border-radius:99px;margin-left:8px}
+  .tg{background:rgba(16,185,129,.15);color:#6ee7b7}
+  .ta{background:rgba(245,158,11,.15);color:#fcd34d}
+  .tr{background:rgba(239,68,68,.15);color:#fca5a5}
+  table{width:100%;border-collapse:collapse;margin-top:8px;font-size:14px}
+  th,td{text-align:left;padding:9px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font:600 11px/1 "SF Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+  .q{border-left:2px solid var(--line);padding-left:12px;color:var(--dim);font-size:14px;font-style:italic}
+</style>
+<div class="wrap">
+
+<h1>Recurring Service Plans</h1>
+<p class="sub">Design for report #52 — Greg Chung. Read this before I build anything; one decision changes the whole shape.</p>
+
+<div class="card">
+  <p class="q">"sell maintenance packages for recurring revenue… bill monthly or yearly… have the proposal live in snapcoat, and then have a recurring event on my job schedule every year in the same month for me to assign to a team and generate a work order"</p>
+  <p>Three separate things in one sentence: <strong>a plan you sell</strong>, <strong>money that repeats</strong>, and <strong>work that reappears on the calendar</strong>. They have very different costs and risks, and they don't have to ship together.</p>
+</div>
+
+<div class="tl">The decision — everything downstream depends on it</div>
+
+<div class="card">
+  <div class="stop"><strong>The thing nobody's flagged.</strong> We already have <code>company_subscriptions</code>, <code>subscription_plans</code>, <code>subscription_invoices</code>, <code>subscription_events</code>. <strong>None of it can be reused.</strong> All of that bills <em>our customers for SnapCoat</em> through <em>our</em> Stripe account. Greg wants to bill <em>his</em> customers on <em>his</em> processor — which is <strong>Helcim</strong>. Different money, different direction, different liability. This is genuinely net-new.</div>
+
+  <h3>Pick one</h3>
+
+  <div class="opt">
+    <strong>A — Full auto-billing</strong><span class="tag tr">Highest risk</span>
+    <p>Card on file, we charge it on a schedule without anyone touching it.</p>
+    <ul>
+      <li>Best product. Truly passive revenue, which is what Greg is actually asking for.</li>
+      <li>But: we'd be storing/reusing payment credentials on behalf of our customers, and inheriting <strong>failed payments, dunning, expired cards, refunds and chargebacks</strong> — a whole support surface we don't have today.</li>
+      <li>Requires confirming Helcim supports stored-card recurring charges per-company, and that we're comfortable holding that.</li>
+    </ul>
+  </div>
+
+  <div class="opt rec">
+    <strong>B — Recurring invoice, customer pays<span class="tag tg">Recommended for v1</span></strong>
+    <p>On schedule we generate the invoice and send it. The customer pays it through the same flow they already use for any other invoice.</p>
+    <ul>
+      <li>Delivers most of the value — the billing <em>happens</em> on its own, nobody has to remember.</li>
+      <li>Reuses the existing <code>invoices</code> table and payment path completely. No card storage, no dunning engine, no new liability.</li>
+      <li>If Greg wants true auto-charge later, A is a strict upgrade on top of this — none of it gets thrown away.</li>
+    </ul>
+  </div>
+
+  <div class="opt">
+    <strong>C — Scheduling only</strong><span class="tag tg">Cheapest</span>
+    <p>The recurring job lands on the calendar. Billing stays entirely manual.</p>
+    <ul>
+      <li>Solves the "so that it is on the radar when that time comes" half, which is the part he described most concretely.</li>
+      <li>Nearly free, and it's a genuine slice of B rather than throwaway work.</li>
+    </ul>
+  </div>
+
+  <p><strong>My recommendation: B</strong>, built so C ships first and standalone. The scheduling half is the part with no risk attached, and it's independently useful the day it lands.</p>
+</div>
+
+<div class="tl">Where it lives</div>
+<div class="card">
+  <p>Your instinct — a separate page inside Projects — is right. These aren't jobs; they're <em>agreements that emit jobs</em>. Putting them in the normal pipeline would clog it with rows that never move.</p>
+  <ul>
+    <li>Route <code>/projects/recurring</code>, page <code>client/src/pages/projects/recurring.tsx</code></li>
+    <li>Nav item in <code>client/src/lib/app-navigation.ts</code> alongside Work Orders (<code>production</code> group, <code>legacyVisibility: 'projects'</code>, icon <code>RefreshCw</code>)</li>
+    <li>Add <code>/projects/recurring</code> to the <code>/unified-projects</code> prefix list so the hub highlights correctly</li>
+  </ul>
+  <h3>The page</h3>
+  <ul>
+    <li><strong>Active plans</strong> — customer, what's included, cadence, price, next service date, next bill date, status</li>
+    <li><strong>Due soon</strong> — the next 60 days, the working view: assign a crew, generate the work order, mark done</li>
+    <li><strong>History</strong> — every past occurrence with its appointment and invoice, so "when did we last do the Hendersons?" is one glance</li>
+  </ul>
+</div>
+
+<div class="tl">Data model</div>
+<div class="card">
+<pre>service_plans
+  id, company_id, customer_id
+  source_proposal_id        -- the proposal that sold it
+  name                      -- "Annual Pressure Wash + Touch-Up"
+  service_cadence           -- annual | semiannual | quarterly | monthly
+  service_anchor_month      -- keeps "same month every year" honest
+  billing_cadence           -- monthly | annual | per_service | none
+  amount_cents, currency
+  next_service_date, next_bill_date
+  status                    -- active | paused | cancelled | completed
+  auto_generate_work_order  boolean
+  created_at, updated_at, cancelled_at, cancel_reason
+
+service_plan_occurrences
+  id, plan_id, company_id
+  scheduled_date, period_start, period_end
+  appointment_id, work_order_id, invoice_id
+  status                    -- scheduled | completed | skipped | cancelled
+  created_at, completed_at</pre>
+
+  <div class="win"><strong>Why the occurrences table matters more than it looks.</strong> It's the audit trail <em>and</em> the idempotency guard. The generator claims a <code>(plan_id, period_start)</code> row before doing anything, so a retry, a double-run, or two workers can never double-bill a customer. Without it, one bad cron night bills everybody twice.</div>
+</div>
+
+<div class="tl">The generator — where this gets dangerous</div>
+<div class="card">
+  <p>A scheduled job walks plans whose <code>next_service_date</code> or <code>next_bill_date</code> has arrived, creates the occurrence, then the appointment and/or invoice.</p>
+  <div class="flag"><strong>Timezone and time-of-day are not details here.</strong> We've been bitten by both. Every date has to be resolved against <code>companies.timezone</code> (all 15 companies have one set) using <code>fromZonedTime</code> — never the server's local time — and the job must never fire overnight in the company's own timezone. A maintenance reminder landing at 3am reads as a system that's broken.</div>
+  <div class="flag"><strong>Never send to a real customer without a preview.</strong> First release should generate everything in a <em>draft</em> state with a clear "review and send" step. Auto-sending invoices to a contractor's customers on day one is how we'd lose a customer's trust in one bad night. Loosen it once it's proven.</div>
+  <h3>Edge cases that decide the schema — worth answering before I build</h3>
+  <table>
+    <tr><th>Case</th><th>Question</th></tr>
+    <tr><td>Cancellation mid-term</td><td>Prorate, honour to the end of the paid period, or stop dead?</td></tr>
+    <tr><td>Price change</td><td>Existing plans grandfathered, or repriced at renewal?</td></tr>
+    <tr><td>Skipped visit</td><td>Customer skips a year — still billed? Does the anchor month shift?</td></tr>
+    <tr><td>Reschedule</td><td>Moving one visit — does it move the whole series or just that occurrence?</td></tr>
+    <tr><td>Failed payment</td><td>Pause the plan, keep servicing, or flag and continue?</td></tr>
+    <tr><td>Cadence mismatch</td><td>Greg's example bills <em>monthly</em> for <em>annual</em> service — so billing and service schedules must be independent. The model above already separates them.</td></tr>
+  </table>
+  <p>Those last two are the ones that force a rebuild if guessed wrong.</p>
+</div>
+
+<div class="tl">Build order</div>
+<div class="card">
+  <ol>
+    <li><strong>Schema + the page, read-only.</strong> Create plans by hand, see them listed. Proves the model before anything automated exists.</li>
+    <li><strong>Scheduling generator (option C).</strong> Occurrences and appointments only, drafts, no money. Independently shippable and useful on its own.</li>
+    <li><strong>Work-order generation.</strong> Hook into the existing work-order flow from an occurrence.</li>
+    <li><strong>Billing (option B).</strong> Invoice generation on the billing cadence, draft-then-send.</li>
+    <li><strong>Sell it from a proposal.</strong> Flag a proposal as a recurring plan so accepting it creates the plan; the customer-facing document states cadence and terms.</li>
+    <li><em>Later, only if wanted:</em> option A auto-charge.</li>
+  </ol>
+  <div class="win">Steps 1–2 are low risk, touch no money, and give Greg the "on my radar" half quickly. Step 4 is the one that needs the Helcim answer, and it doesn't block anything before it.</div>
+</div>
+
+<div class="tl">What I need from you</div>
+<div class="card">
+  <ul>
+    <li><strong>A, B or C?</strong> (I'd build toward B, shipping C first.)</li>
+    <li><strong>Does Helcim do stored-card recurring per-company</strong> — and do you want us holding that?</li>
+    <li><strong>Cancellation and failed-payment behaviour</strong> — the two answers that shape the schema.</li>
+    <li>Is this <strong>every plan</strong>, or gated to a subscription tier?</li>
+  </ul>
+  <p>Answer those and I'll start on steps 1–2, which I can do without waiting on the billing decision.</p>
+</div>
+
+<p class="sub" style="margin-top:32px;border-top:1px solid var(--line);padding-top:16px">
+Nothing built yet. Routes, nav integration points and table names above were read from the live codebase, not assumed.</p>
+</div>
