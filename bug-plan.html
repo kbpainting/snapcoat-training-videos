@@ -1,0 +1,237 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SnapCoat — Open Bugs &amp; Feature Requests</title>
+<style>
+  :root{--bg:#0a0e17;--card:#111826;--line:#1e2938;--txt:#e6edf3;--dim:#8b98a5;
+        --blue:#1570EF;--orange:#F97316;--green:#10B981;--red:#EF4444;--amber:#F59E0B}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--txt);
+       font:16px/1.6 -apple-system,BlinkMacSystemFont,"SF Pro Display",system-ui,sans-serif;
+       padding:28px 18px 80px}
+  .wrap{max-width:820px;margin:0 auto}
+  h1{font-size:26px;margin:0 0 6px;background:linear-gradient(90deg,var(--blue),var(--orange));
+     -webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{color:var(--dim);font-size:14px;margin:0 0 26px}
+  .tl{font:11px/1 "SF Mono",ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;
+      color:var(--dim);margin:34px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:16px}
+  .hd{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:4px}
+  .id{font:600 13px "SF Mono",ui-monospace,monospace;color:var(--blue)}
+  h2{font-size:17px;margin:0;flex:1 1 220px}
+  .who{color:var(--dim);font-size:13px;margin:0 0 12px}
+  .pill{font:600 10px/1 "SF Mono",monospace;letter-spacing:.08em;text-transform:uppercase;
+        padding:5px 9px;border-radius:99px;white-space:nowrap}
+  .bug{background:rgba(239,68,68,.15);color:#fca5a5}
+  .feat{background:rgba(21,112,239,.15);color:#93c5fd}
+  .xs{background:rgba(16,185,129,.15);color:#6ee7b7}
+  .s{background:rgba(16,185,129,.12);color:#6ee7b7}
+  .m{background:rgba(245,158,11,.15);color:#fcd34d}
+  .l{background:rgba(239,68,68,.15);color:#fca5a5}
+  .lbl{font:600 11px/1 "SF Mono",monospace;letter-spacing:.1em;text-transform:uppercase;
+       color:var(--dim);margin:14px 0 5px}
+  .quote{border-left:2px solid var(--line);padding-left:12px;color:var(--dim);font-size:14px;font-style:italic}
+  code{font:13px "SF Mono",ui-monospace,monospace;background:rgba(255,255,255,.06);
+       padding:2px 6px;border-radius:5px;word-break:break-word}
+  pre{background:#0b1020;border:1px solid var(--line);border-radius:9px;padding:12px;
+      overflow-x:auto;font:12.5px/1.55 "SF Mono",ui-monospace,monospace;margin:8px 0}
+  ul{margin:6px 0;padding-left:20px}li{margin:4px 0}
+  .flag{border-left:3px solid var(--amber);background:rgba(245,158,11,.07);
+        padding:10px 12px;border-radius:0 8px 8px 0;margin-top:12px;font-size:14px}
+  .win{border-left:3px solid var(--green);background:rgba(16,185,129,.07);
+       padding:10px 12px;border-radius:0 8px 8px 0;margin-top:12px;font-size:14px}
+  table{width:100%;border-collapse:collapse;margin-top:10px;font-size:14px}
+  th,td{text-align:left;padding:9px 8px;border-bottom:1px solid var(--line)}
+  th{font:600 11px/1 "SF Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+  .foot{color:var(--dim);font-size:13px;margin-top:36px;border-top:1px solid var(--line);padding-top:16px}
+</style>
+<div class="wrap">
+
+<h1>Open Bugs &amp; Feature Requests</h1>
+<p class="sub">All 6 active items from <code>beta_bug_reports</code>, each traced to root cause in the code. July 21, 2026.</p>
+
+<div class="card">
+  <strong>The short version</strong>
+  <table>
+    <tr><th>#</th><th>What</th><th>Verdict</th><th>Effort</th></tr>
+    <tr><td>53</td><td>Can't add primers to rates</td><td>Found it — one filter, 3 lines</td><td><span class="pill xs">XS</span></td></tr>
+    <tr><td>54</td><td>Duplicate a rate</td><td><strong>Backend already built</strong>, UI never wired</td><td><span class="pill xs">XS</span></td></tr>
+    <tr><td>55</td><td>App won't die, phone overheats</td><td>Found it — location config, every knob maxed</td><td><span class="pill s">S–M</span></td></tr>
+    <tr><td>8</td><td>Import production rates</td><td><strong>Did this by hand today</strong> — productize it</td><td><span class="pill m">M</span></td></tr>
+    <tr><td>38</td><td>Custom surface types + reorder</td><td>Hardcoded list; <code>displayOrder</code> already exists</td><td><span class="pill m">M</span></td></tr>
+    <tr><td>52</td><td>Recurring maintenance packages</td><td>Real net-new build, needs a decision first</td><td><span class="pill l">L</span></td></tr>
+  </table>
+  <div class="win"><strong>Two of these are nearly free.</strong> #53 and #54 are together about an hour of work and both are Greg's, who has filed 4 of the 6 open items.</div>
+</div>
+
+<div class="tl">Do first — quick wins</div>
+
+<div class="card">
+  <div class="hd"><span class="id">#53</span><h2>Can't add primers to production rates</h2><span class="pill bug">Bug</span><span class="pill xs">XS</span></div>
+  <p class="who">Greg Chung · Elevate Paint Pros · Jul 20</p>
+  <p class="quote">"only products that are labeled 'interior paint' are able to be added. i cannot find a way to access primers or miscellaneous materials without just categorizing them as interior paint"</p>
+
+  <div class="lbl">Root cause — confirmed</div>
+  <p><code>client/src/pages/settings/production-rates.tsx:2747-2760</code>. The paint dropdown filters products against the category's estimate type:</p>
+<pre>if (categoryEstimateType.includes('exterior'))      return productType.includes('exterior');
+else if (categoryEstimateType.includes('interior')) return productType.includes('interior');
+else if (categoryEstimateType.includes('cabinet'))  return productType.includes('cabinet')
+                                                        || productType.includes('interior');</pre>
+  <p>But the product-type dropdown (<code>:3938-3943</code>) offers <strong>six</strong> types: Interior, Exterior, <strong>Primer</strong>, Cabinet, <strong>Stain</strong>, <strong>Other</strong>. The filter only ever matches interior/exterior/cabinet — so Primer, Stain and Other are invisible in <em>every</em> category. Greg isn't missing a setting; there is no path to them.</p>
+
+  <div class="lbl">Fix</div>
+  <p>Treat Primer / Stain / Other as universal — they legitimately belong to interior <em>and</em> exterior work. Insert before the category branches:</p>
+<pre>const UNIVERSAL = ['primer', 'stain', 'other'];
+if (UNIVERSAL.some(t =&gt; productType.includes(t))) return true;</pre>
+  <p>Single location — I checked for copies of this filter and there is only one. The block at <code>:3337</code> is help text, not a filter.</p>
+  <div class="lbl">Risk</div>
+  <p>Very low. Purely additive to a dropdown; nothing is removed and no pricing math is touched.</p>
+</div>
+
+<div class="card">
+  <div class="hd"><span class="id">#54</span><h2>Duplicate a production rate</h2><span class="pill feat">Feature</span><span class="pill xs">XS</span></div>
+  <p class="who">Greg Chung · Jul 20</p>
+  <p class="quote">"should be able to duplicate rates to make it easier to create variety"</p>
+
+  <div class="win"><strong>This is already built.</strong> <code>POST /api/production-rates/:id/duplicate</code> exists at <code>server/routes.ts:23805</code>, with auth, company scoping and a permission check, backed by <code>storage.duplicateProductionRate()</code> (<code>dbStorage.ts:4497</code>). <strong>Nothing in the client calls it.</strong> I grepped the whole front end — zero references.</div>
+
+  <div class="lbl">Fix</div>
+  <ul>
+    <li>Add a Copy icon to the rate row action group in <code>production-rates.tsx</code>, next to edit/delete</li>
+    <li><code>useMutation</code> → POST the endpoint → invalidate the rates query → toast</li>
+    <li>Server already names the copy; confirm it reads "(Copy)" and is obvious in the list</li>
+  </ul>
+  <div class="flag">This is the third time we've hit this exact shape: <strong>working backend, unwired UI</strong> — same as Greg's #50 (drag-reorder) and Jessica's #51 (notification toggles that saved but were never read). Worth a one-off sweep for other orphaned endpoints; it's cheap to find and each one is a customer complaint waiting to happen.</div>
+</div>
+
+<div class="tl">Do next — real bug, real customer pain</div>
+
+<div class="card">
+  <div class="hd"><span class="id">#55</span><h2>App survives force-quit, phone lags and overheats</h2><span class="pill bug">Bug</span><span class="pill s">S–M</span></div>
+  <p class="who">Greg Chung · iPhone 12 · Jul 21</p>
+  <p class="quote">"I keep force closing the app but it stays on in the background and causes my phone to lag and overheat. Even when it is force closed"</p>
+
+  <div class="lbl">Root cause — confirmed, and Greg is right</div>
+  <p><code>ios/App/App/BackgroundLocationPlugin.swift:120-136</code>. Every available power knob is set to maximum:</p>
+<pre>desiredAccuracy = kCLLocationAccuracyBest      // full GPS, highest draw
+distanceFilter  = 5                            // a callback every 5 metres
+allowsBackgroundLocationUpdates = true
+pausesLocationUpdatesAutomatically = false     // ← forbids iOS's own battery saver
+startUpdatingLocation()
+startMonitoringSignificantLocationChanges()    // ← relaunches the app after force-quit</pre>
+  <p>Two of those lines explain the whole report:</p>
+  <ul>
+    <li><code>pausesLocationUpdatesAutomatically = false</code> explicitly disables the built-in optimisation that suspends GPS when the user stops moving. On a parked truck or a job site, the radio keeps running anyway.</li>
+    <li><code>startMonitoringSignificantLocationChanges()</code> is documented by Apple to <strong>relaunch a terminated app</strong>. So force-quitting genuinely cannot work.</li>
+  </ul>
+  <p>And it self-perpetuates: <code>locationManagerDidChangeAuthorization</code> (<code>:164-175</code>) restarts tracking whenever authorization is present and <code>isTracking</code> is false. A relaunched process is always fresh, so it immediately re-arms both subscriptions. Kill it, walk 500m, iOS wakes it, and it starts full GPS again — forever.</p>
+  <p>Running <code>startUpdatingLocation()</code> and significant-change monitoring simultaneously is also redundant; they're two subscriptions doing overlapping jobs.</p>
+
+  <div class="lbl">Fix — staged, safest first</div>
+  <ul>
+    <li><strong>1. Let iOS pause.</strong> <code>pausesLocationUpdatesAutomatically = true</code> and set <code>activityType = .automotiveNavigation</code>. Biggest win for the least risk.</li>
+    <li><strong>2. Loosen precision.</strong> <code>kCLLocationAccuracyBest</code> → <code>kCLLocationAccuracyNearestTenMeters</code>, <code>distanceFilter</code> 5 → 25–50m. We report on an interval anyway (<code>reportInterval</code>), so 5m fidelity is thrown away.</li>
+    <li><strong>3. Only track when there's a reason to.</strong> Tracking should be tied to an active shift/appointment, not to app launch. Today authorization alone is enough to start it.</li>
+    <li><strong>4. Pick one subscription.</strong> Continuous updates while on the clock; significant-change only if we truly need post-termination wake — and if we don't, drop it and force-quit starts working like Greg expects.</li>
+  </ul>
+  <div class="flag"><strong>The advice we gave Greg only half-works.</strong> He was told to disable location services. That does stop the drain, but it also silently kills geofencing, on-my-way, and GPS timesheets for him — and per our own notes geofence is already unreliable in the Capacitor app. Fixing the config is the real answer; the workaround quietly disables features he's paying for.</div>
+  <div class="lbl">Ships how</div>
+  <p>Swift change, so it needs a native iOS build — not an OTA web bundle. Worth batching with any other pending native work.</p>
+</div>
+
+<div class="tl">Then — the two rate-system features</div>
+
+<div class="card">
+  <div class="hd"><span class="id">#8</span><h2>Import production rates from another CRM</h2><span class="pill feat">Feature</span><span class="pill m">M</span></div>
+  <p class="who">Greg Chung · Nov 20 · oldest open item</p>
+
+  <div class="win"><strong>We did exactly this by hand today.</strong> Jason Thomas's 44 rates were built from a DripJobs-format guide and loaded into Paint Pals (co 65). The hard parts are already solved and written down — what's left is turning a script into a screen.</div>
+
+  <div class="lbl">What we learned doing it manually — this is the whole feature</div>
+  <ul>
+    <li><strong>DripJobs coat columns are cumulative, ours are per-coat.</strong> Their "2 coat" figure is the total speed for a 2-coat job; ours is the speed of the second coat alone. Import naively and every labour line is <strong>~78% high</strong> at 2 coats, ~125% at 3.</li>
+    <li>Easy to detect automatically: <strong>rates that descend across coats are cumulative; ascending are per-coat.</strong></li>
+    <li>The engine already supports both — <code>[dripjobs:cumulative_coat_rate]</code> in <code>productionRateCalculations.ts:69</code> — but <strong>nothing in the app ever sets it</strong>. It's read in 3 files, written in 0. Any customer migrating hits the 78% wall silently.</li>
+    <li>"Each"/<code>price_per_item</code> rows return <strong>zero material cost</strong>; DripJobs man-hour rows must map to <code>hours_per_item</code>.</li>
+    <li>Linear-foot rates need <code>substrateWidth</code> or material silently under-orders up to 9×.</li>
+    <li>Coverage is clamped to [150,500], which quietly breaks fences (125) and pressure washing (5000).</li>
+  </ul>
+
+  <div class="lbl">Build</div>
+  <ul>
+    <li><strong>Phase 1 — CSV/paste importer.</strong> Upload or paste a rate table → column mapper → preview grid → commit. Auto-detect cumulative vs per-coat and <em>show</em> the call with a sample calculation, letting the user override.</li>
+    <li><strong>Phase 2 — surface the cumulative flag properly.</strong> A real "coat rates are cumulative totals" checkbox on the rate editor instead of a magic string in a text field. This is worth doing even if the importer slips.</li>
+    <li><strong>Phase 3 — templates.</strong> Ship the PaintPro-style starter set as a one-click "load a starter rate library," which is what most of these customers actually want.</li>
+  </ul>
+  <div class="flag">Greg's original ask was a browser script to scrape DripJobs. I'd push back on that — scraping a competitor's UI is fragile and legally murky. Import from an export/CSV instead; same outcome, none of the exposure.</div>
+</div>
+
+<div class="card">
+  <div class="hd"><span class="id">#38</span><h2>Custom surface types + drag-to-reorder rates</h2><span class="pill feat">Feature</span><span class="pill m">M</span></div>
+  <p class="who">Zach Bellin · Oakhurst Exteriors · Mar 13</p>
+  <p class="quote">"the ability to add Prep, Garage Doors, Shutters, Railings, &amp; Decks. Also Allow drag and drop for re organization of rates within a surface type"</p>
+
+  <div class="lbl">Where it stands</div>
+  <p>Surface types are a hardcoded list of nine in two places: the picker at <code>production-rates.tsx:2669-2677</code> and the <code>surfaceTypeConfig</code> map at <code>:694</code> that supplies label, sort order and colours. None of Zach's five exist. Grouping runs through <code>inferSurfaceType()</code> (<code>:762</code>), which falls back to keyword inference when <code>surfaceType</code> is <code>'other'</code>.</p>
+  <div class="win">Reordering is closer than it looks — <code>production_rates.displayOrder</code> already exists in the schema and is already written on insert. The list just doesn't expose a way to change it.</div>
+
+  <div class="lbl">Build</div>
+  <ul>
+    <li><strong>Cheap first pass:</strong> add Prep, Garage Doors, Shutters, Railings, Decks to the hardcoded list + config map. Ships in an hour and satisfies most of the ask.</li>
+    <li><strong>Proper version:</strong> a <code>surface_types</code> table (company_id, key, label, colour, sort_order, is_system) seeded from the current nine, so each company manages their own. Keep <code>inferSurfaceType</code> as the fallback for legacy rows.</li>
+    <li><strong>Drag-and-drop:</strong> reuse the pattern from the checklists overhaul, persisting <code>displayOrder</code> via a batch reorder endpoint. <em>Reminder from that build: nested <code>overflow-y-auto</code> containers kill wheel scrolling — don't nest the sortable list inside a scroll area.</em></li>
+  </ul>
+  <div class="flag">Zach was told in March that proposal-builder changes are risky and would be gradual. That's still true, but note this is the <strong>settings</strong> surface, not the pricing engine — adding surface types and a sort column doesn't touch how anything is calculated. It's a lower-risk change than the original reply implied.</div>
+</div>
+
+<div class="tl">Biggest — needs a decision before any code</div>
+
+<div class="card">
+  <div class="hd"><span class="id">#52</span><h2>Recurring service / maintenance packages</h2><span class="pill feat">Feature</span><span class="pill l">L</span></div>
+  <p class="who">Greg Chung · Jul 20</p>
+  <p class="quote">"sell maintenance packages for recurring revenue… bill monthly or yearly… have the proposal live in snapcoat, and then have a recurring event on my job schedule every year in the same month for me to assign to a team and generate a work order"</p>
+
+  <div class="lbl">The catch nobody's flagged yet</div>
+  <p>We have a lot of subscription machinery — <code>company_subscriptions</code>, <code>subscription_plans</code>, <code>subscription_invoices</code>, <code>subscription_events</code> — but <strong>all of it bills our customers for SnapCoat, through our Stripe account.</strong> Greg is asking to bill <em>his</em> customers on <em>his</em> processor, which is <strong>Helcim</strong>, not Stripe. None of the existing tables can be reused as-is. This is genuinely net-new.</p>
+
+  <div class="lbl">Decision needed first</div>
+  <p>Does Helcim support stored-card recurring charges on a per-company basis, and are we willing to hold that liability? Everything else follows from that answer. Three options:</p>
+  <ul>
+    <li><strong>A — Full auto-billing.</strong> Card on file, we charge on a schedule. Best product, highest risk: card storage, dunning, failed payments, refunds, chargebacks.</li>
+    <li><strong>B — Recurring invoice, manual pay.</strong> We generate and send the invoice on schedule; customer pays it like any other. <em>Most of the value, a fraction of the risk — my recommendation for v1.</em></li>
+    <li><strong>C — Scheduling only.</strong> The recurring job lands on the calendar; billing stays manual. Solves the "on my radar" half and is nearly free.</li>
+  </ul>
+
+  <div class="lbl">Rough shape (option B)</div>
+  <ul>
+    <li><code>service_plans</code> — company_id, customer_id, source proposal, cadence, price, next_run, status</li>
+    <li><code>service_plan_occurrences</code> — one row per cycle, linking the generated appointment/work order and invoice; the audit trail and the idempotency guard</li>
+    <li>A scheduled job that materialises the next occurrence, creates the appointment, and raises the invoice. <em>Must be timezone-correct per company and never fire overnight — we've been bitten by both.</em></li>
+    <li>Proposal flag marking it a recurring plan so the customer-facing document states the cadence and the terms</li>
+  </ul>
+  <div class="flag">Biggest hidden cost is the unglamorous part: cancellation, price changes mid-plan, skipped/rescheduled visits, and what happens when a card or invoice fails. Those need answers before the schema is settled, or we'll rebuild it.</div>
+</div>
+
+<div class="tl">Housekeeping</div>
+<div class="card">
+  <div class="hd"><span class="id">#32</span><h2>"Not assigned to a company" signup lockout</h2><span class="pill bug">Bug</span></div>
+  <p class="who">Zach Bellin · Mar 4 · status <code>resolved</code></p>
+  <p>Already fixed — duplicate user removed, case-insensitive email check added, commit <code>c4adb634</code>. It's sitting in <code>resolved</code> while everything else closed uses <code>completed</code>, so it still reads as open. <strong>Flip it to completed</strong> and Zach gets his closure email.</p>
+  <div class="flag">Worth standardising: <code>resolved</code> and <code>completed</code> both exist as statuses and mean the same thing. One of them should go, or reports will keep drifting into a state nobody looks at.</div>
+</div>
+
+<div class="tl">Suggested order</div>
+<div class="card">
+  <ol>
+    <li><strong>#53 + #54</strong> — about an hour together, both Greg's, both shippable today via web deploy</li>
+    <li><strong>#32</strong> — one status update, closes the loop with Zach</li>
+    <li><strong>#55</strong> — highest actual customer pain; staged fix, needs a native build</li>
+    <li><strong>#38 cheap pass</strong> — five new surface types, ~an hour, unblocks Zach's five-month-old ask</li>
+    <li><strong>#8 phase 2</strong> — expose the cumulative-rate flag in the UI; small, and prevents silent 78% overbilling for every future migration</li>
+    <li><strong>#38 proper + #8 importer</strong> — the real builds</li>
+    <li><strong>#52</strong> — after you pick A, B or C</li>
+  </ol>
+  <div class="win">Items 1–4 clear <strong>four of six</strong> open reports and both of Greg's active bugs, without touching the pricing engine.</div>
+</div>
+
+<p class="foot">Every root cause above was traced in the code and confirmed, not inferred from the report text. File paths and line numbers are current as of commit <code>ab97ba43</code>.</p>
+</div>
