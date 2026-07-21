@@ -1,0 +1,81 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ticket Close-Out — Draft Messages</title>
+<style>
+  :root{--bg:#0a0e17;--card:#111826;--line:#1e2938;--txt:#e6edf3;--dim:#8b98a5;--blue:#1570EF;--orange:#F97316;--green:#10B981;--amber:#F59E0B}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--txt);font:16px/1.62 -apple-system,BlinkMacSystemFont,"SF Pro Display",system-ui,sans-serif;padding:28px 18px 80px}
+  .wrap{max-width:780px;margin:0 auto}
+  h1{font-size:25px;margin:0 0 6px;background:linear-gradient(90deg,var(--blue),var(--orange));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{color:var(--dim);font-size:14px;margin:0 0 26px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:18px}
+  .hd{display:flex;flex-wrap:wrap;gap:8px;align-items:baseline;margin-bottom:2px}
+  .id{font:600 13px "SF Mono",ui-monospace,monospace;color:var(--blue)}
+  h2{font-size:17px;margin:0;flex:1 1 200px}
+  .who{color:var(--dim);font-size:13px;margin:0 0 12px}
+  .lbl{font:600 11px/1 "SF Mono",monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin:14px 0 6px}
+  .msg{background:#0b1020;border:1px solid var(--line);border-left:3px solid var(--green);border-radius:0 9px 9px 0;padding:14px 16px;white-space:pre-wrap;font-size:15px;line-height:1.7}
+  .flag{border-left:3px solid var(--amber);background:rgba(245,158,11,.07);padding:10px 12px;border-radius:0 8px 8px 0;margin-top:12px;font-size:14px}
+  code{font:13px "SF Mono",ui-monospace,monospace;background:rgba(255,255,255,.06);padding:2px 6px;border-radius:5px}
+</style>
+<div class="wrap">
+<h1>Ticket Close-Out — Draft Messages</h1>
+<p class="sub">Exact wording each customer would receive. Nothing has been sent. Each goes out inside the branded "Bug Fixed!" email as the highlighted note from the team.</p>
+
+<div class="card">
+  <div class="hd"><span class="id">#53</span><h2>Can't add primers to rates</h2></div>
+  <p class="who">Greg Chung · greg@elevatepaintpros.com · bug → completed</p>
+  <div class="lbl">Message</div>
+  <div class="msg">Fixed — primers, stains and any other materials now show up in the paint dropdown no matter which category you're building a rate for.
+
+The cause: that dropdown was only offering products typed as "Interior" on interior categories (and Exterior on exterior ones), so anything typed as Primer, Stain or Other had nowhere to appear. Those aren't interior- or exterior-specific, so they now show everywhere.
+
+Where to find it: Settings → Production Rates → open any rate → Default Paint Product.
+
+One tip: if you relabelled any primers as "Interior Paint" to work around this, you can switch them back to Primer under Settings → Paint Products and they'll still appear in every category. No need to rebuild anything.</div>
+</div>
+
+<div class="card">
+  <div class="hd"><span class="id">#54</span><h2>Duplicate rates</h2></div>
+  <p class="who">Greg Chung · feature → completed</p>
+  <div class="lbl">Message</div>
+  <div class="msg">Added — there's a Copy button on every rate row now, next to Edit and Delete. It clones the whole rate: coat rates, coverage, substrate width, default paint product and its settings.
+
+Where to find it: Settings → Production Rates → expand a category → the copy icon on any rate row.
+
+Worth knowing: the copy arrives named "… (Copy)", and that label is the one your customers see on proposals. So we drop you straight into the editor right after copying — rename it, adjust your numbers, save. That way a "(Copy)" can't accidentally end up in front of a customer.</div>
+</div>
+
+<div class="card">
+  <div class="hd"><span class="id">#38</span><h2>Custom surface types + reordering</h2></div>
+  <p class="who">Zach Bellin · zach@oakhurstexteriors.com · feature → completed</p>
+  <div class="lbl">Message</div>
+  <div class="msg">Added — Prep, Garage Doors, Shutters, Railings and Decks are now available as surface types alongside the original set.
+
+We also made your existing rates regroup themselves, so you shouldn't have to re-save dozens of them one at a time. Anything with "garage" in the name moves under Garage Doors, "railing" under Railings, siding/stucco/masonry under Walls, soffit and fascia under Trim, and so on. Anything we couldn't place confidently stays in Other and you can set it yourself.
+
+Where to find it: Settings → Production Rates → edit any rate → Surface Type. Prep sorts to the top, since it's what comes first on the actual job.
+
+On the second half of your request — drag-and-drop to reorder rates within a surface type — that isn't done yet. It's still on the list and we'll come back to you on it separately rather than leave you wondering.</div>
+  <div class="flag"><strong>Deliberate:</strong> Zach asked for two things and only one shipped. The note says so plainly rather than implying the whole request is closed — otherwise he re-opens it annoyed in a week.</div>
+</div>
+
+<div class="card">
+  <div class="hd"><span class="id">#32</span><h2>"Not assigned to a company" signup lockout</h2></div>
+  <p class="who">Zach Bellin · bug → completed <em>(fixed back in March, never closed out)</em></p>
+  <div class="lbl">Message</div>
+  <div class="msg">Resolved — and apologies this one sat open longer than it should have.
+
+The cause: our signup flow wasn't checking whether an email already existed before creating an account. Signing up again with slightly different capitalisation produced a second account that wasn't attached to your company, which is why you could log in but couldn't do anything, and why adding yourself came back as "user already exists".
+
+We removed the duplicate, attached your account properly, and added a case-insensitive email check so it can't happen to anyone else.
+
+Nothing needed on your end — you're all set. If anything like it ever crops up again, just reply here and we'll get on it the same day.</div>
+</div>
+
+<div class="card">
+  <div class="lbl">Not being closed</div>
+  <p><strong>#55</strong> (Greg, iOS battery/force-quit) stays open — diagnosed, but the fix is native Swift and needs an iOS build, so it isn't in his hands yet. Closing it would be a lie.</p>
+  <p><strong>#8</strong> (rate import) and <strong>#52</strong> (recurring plans) stay open — not built.</p>
+</div>
+</div>
