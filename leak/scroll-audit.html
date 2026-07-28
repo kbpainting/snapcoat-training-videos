@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Desktop Scroll Audit — SnapCoat</title>
+<style>
+  :root{
+    --bg:#E6E7E2;--bg-2:#DEE0DA;--bg-3:#F2F3EF;--line:#C6C9C1;--line-soft:#D6D8D1;
+    --text:#14171A;--dim:#555C55;--faint:#868D85;
+    --bad:#B33C22;--ok:#0E8E7F;--warn:#B57900;--info:#5F6A55;
+    --display:"Avenir Next Condensed","HelveticaNeue-CondensedBold","Helvetica Neue",Helvetica,Arial,sans-serif;
+    --body:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+    --gut:clamp(1.15rem,4.5vw,2.5rem);
+  }
+  @media (prefers-color-scheme:dark){:root{
+    --bg:#0A0B0C;--bg-2:#121417;--bg-3:#171A1D;--line:#262A2E;--line-soft:#1D2124;
+    --text:#E4E6E2;--dim:#969B95;--faint:#5F655F;
+    --bad:#D9573A;--ok:#1FC6B0;--warn:#F0A400;--info:#7E8874;}}
+  :root[data-theme="light"]{--bg:#E6E7E2;--bg-2:#DEE0DA;--bg-3:#F2F3EF;--line:#C6C9C1;--text:#14171A;--dim:#555C55;--faint:#868D85;--bad:#B33C22;--ok:#0E8E7F;--warn:#B57900;--info:#5F6A55}
+  :root[data-theme="dark"]{--bg:#0A0B0C;--bg-2:#121417;--bg-3:#171A1D;--line:#262A2E;--text:#E4E6E2;--dim:#969B95;--faint:#5F655F;--bad:#D9573A;--ok:#1FC6B0;--warn:#F0A400;--info:#7E8874}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  .wrap{max-width:60rem;margin:0 auto;padding:0 var(--gut) 5rem}
+  p{margin:0;max-width:66ch}
+  h1{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:clamp(2.6rem,11vw,5.5rem);line-height:.86;margin:1.2rem 0 0}
+  h2{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:clamp(1.6rem,5.5vw,2.4rem);margin:0;line-height:1}
+  h3{font-family:var(--display);font-weight:600;text-transform:uppercase;font-size:1.05rem;letter-spacing:.06em;margin:0}
+  .eyebrow{font-family:var(--mono);font-size:.67rem;letter-spacing:.17em;text-transform:uppercase;color:var(--faint)}
+  .lede{font-size:clamp(1.02rem,3.2vw,1.2rem);color:var(--dim);line-height:1.55}
+  header{padding:clamp(2.5rem,9vw,5rem) 0 0}
+  section{margin-top:clamp(2.6rem,8vw,4.2rem)}
+  hr.rule{height:1px;background:var(--line);border:0;margin:0}
+  .sec-head{padding:1.3rem 0}
+  .strip{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:2.2rem}
+  @media(min-width:44rem){.strip{grid-template-columns:repeat(4,1fr)}}
+  .strip div{background:var(--bg);padding:.9rem 1rem;display:flex;flex-direction:column;gap:.25rem}
+  .strip dt{font-family:var(--mono);font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--faint)}
+  .strip dd{margin:0;font-family:var(--display);font-size:1.5rem;text-transform:uppercase}
+  .find{border:1px solid var(--line);border-left:4px solid var(--sev,var(--info));background:var(--bg-3);padding:1.1rem 1.25rem;margin-top:1.1rem;display:flex;flex-direction:column;gap:.6rem}
+  .find.p1{--sev:var(--bad)}.find.p2{--sev:var(--warn)}.find.p3{--sev:var(--info)}.find.good{--sev:var(--ok)}
+  .find .tag{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--sev,var(--info))}
+  .find p{font-size:.96rem}
+  pre{margin:0;background:var(--bg-2);border:1px solid var(--line);padding:.8rem 1rem;font-family:var(--mono);font-size:.72rem;line-height:1.55;overflow-x:auto;white-space:pre}
+  code{font-family:var(--mono);font-size:.85em;background:var(--bg-2);padding:.08em .32em;border:1px solid var(--line-soft)}
+  table{border-collapse:collapse;width:100%;font-size:.85rem;margin-top:.8rem;display:block;overflow-x:auto}
+  th,td{text-align:left;padding:.45rem .7rem;border-bottom:1px solid var(--line-soft);white-space:nowrap}
+  th{font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);font-weight:400}
+  td.mono{font-family:var(--mono);font-size:.78rem}
+  .bad{color:var(--bad)}.ok{color:var(--ok)}.warn{color:var(--warn)}
+  ul.plain{margin:0;padding-left:1.15rem;display:flex;flex-direction:column;gap:.45rem}
+  ul.plain li{font-size:.95rem}
+  footer{margin-top:4rem;border-top:1px solid var(--line);padding-top:1.2rem;font-family:var(--mono);font-size:.64rem;letter-spacing:.11em;text-transform:uppercase;color:var(--faint);display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">SnapCoat CRM &nbsp;·&nbsp; Desktop Scroll Audit &nbsp;·&nbsp; 28 Jul 2026</div>
+  <h1>Scroll<br>Audit</h1>
+  <dl class="strip">
+    <div><dt>Pages probed</dt><dd>20</dd></div>
+    <div><dt>Viewports</dt><dd>4</dd></div>
+    <div><dt>Root causes</dt><dd>2</dd></div>
+    <div><dt>Horiz. overflow</dt><dd>0</dd></div>
+  </dl>
+</header>
+
+<section>
+  <hr class="rule">
+  <div class="sec-head"><h2>The short version</h2></div>
+  <p class="lede">Two root causes explain almost everything. Both are single-place fixes, not a 70-page slog. Tested live at 3440, 2560, 1440 and 1280 wide against the real app, not just by reading CSS.</p>
+
+  <div class="find p1">
+    <span class="tag">Root cause 1 · affects every page</span>
+    <h3>A global rule traps the mouse wheel</h3>
+    <p><code>index.css:3632–3641</code> applies <code>overscroll-behavior: contain</code> to <em>every</em> element whose class contains <code>overflow-y-auto</code>. The block is titled <b>“iOS SCROLL &amp; MOMENTUM OPTIMIZATION”</b> — but it has no media query and no platform guard, so it applies to desktop too.</p>
+    <pre>/* iOS SCROLL &amp; MOMENTUM OPTIMIZATION  ← the intent
+   Smooth, native-feeling scroll on all iOS devices */
+
+.overflow-auto, .overflow-y-auto, .overflow-x-auto,
+[class*="overflow-auto"], [class*="overflow-y-auto"],
+[class*="overflow-x-auto"] {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;   ← blocks scroll chaining
+}</pre>
+    <p><code>contain</code> is exactly right on touch: it stops rubber-banding and stops the page behind a modal from moving. On a mouse wheel it does something else — when an inner list reaches its end, <b>the page behind refuses to keep scrolling</b>. You have to physically move the pointer off the list to continue. That is the “multiple scrolls that don’t work together” feeling.</p>
+  </div>
+
+  <div class="find p1">
+    <span class="tag">Root cause 2 · 22 dialogs across 18 files</span>
+    <h3>The wheel-death pattern is back, in bulk</h3>
+    <p>A Radix <code>DialogContent</code> that is itself <code>overflow-y-auto</code>, containing another <code>overflow-y-auto</code>, kills the wheel inside the dialog. Scrollbar <em>drag</em> still works, which is precisely why it survives testing.</p>
+    <p>This is the same defect Greg Chung reported as bug #48 on the Production Rates modal in July. That instance was fixed; the pattern was never swept up elsewhere. Of 328 <code>DialogContent</code> instances in the app, <b>22 still have it</b>.</p>
+    <pre>&lt;DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto"&gt;   ← scroller 1
+  &lt;div className="max-h-[400px] overflow-y-auto"&gt;                    ← scroller 2
+                                                    wheel dies here</pre>
+  </div>
+</section>
+
+<section>
+  <hr class="rule">
+  <div class="sec-head"><h2>Proof, not theory</h2></div>
+  <p class="lede">I parked an inner list at its bottom, then sent six wheel ticks over it and measured whether the page behind moved.</p>
+  <table>
+    <thead><tr><th>Page</th><th>overscroll</th><th>page left to scroll</th><th>moved by wheel</th><th>verdict</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">/projects/subcontractors</td><td class="mono">contain</td><td class="mono">1569px</td><td class="mono">0px</td><td class="bad">trapped</td></tr>
+      <tr><td class="mono">/project-pipeline</td><td class="mono">contain</td><td class="mono">484px</td><td class="mono">0px</td><td class="bad">trapped</td></tr>
+      <tr><td class="mono">/projects/calendar</td><td class="mono">contain</td><td class="mono">30px</td><td class="mono">0px</td><td class="bad">trapped</td></tr>
+    </tbody>
+  </table>
+  <p style="margin-top:1rem">On <code>/projects/subcontractors</code> there is <b>over 1,500px of page you cannot reach with the wheel</b> while the pointer sits over that list. That rules out the innocent explanation — it isn’t “the page had nothing left to scroll”.</p>
+
+  <div class="find p3">
+    <span class="tag">Honest caveat</span>
+    <p>When I forced <code>overscroll-behavior: auto</code> to confirm the cause, only <code>/projects/calendar</code> visibly started chaining. Synthetic wheel events in headless Chrome don’t reproduce scroll-chaining reliably, so that arm of the test is weak evidence. The <em>reproduction</em> above is solid, and the CSS spec is unambiguous about what <code>contain</code> does — but the fix will want your eyes on a real machine, not just my say-so.</p>
+  </div>
+</section>
+
+<section>
+  <hr class="rule">
+  <div class="sec-head"><h2>Where it bites, by viewport</h2></div>
+  <table>
+    <thead><tr><th>Page</th><th>3440</th><th>2560</th><th>1440</th><th>1280</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">/project-pipeline</td><td class="bad">nested</td><td class="bad">nested</td><td class="bad">nested</td><td class="bad">nested</td></tr>
+      <tr><td class="mono">/projects/subcontractors</td><td class="bad">nested</td><td class="bad">nested</td><td class="bad">nested</td><td class="bad">nested</td></tr>
+      <tr><td class="mono">/projects/calendar</td><td class="ok">clean</td><td class="ok">clean</td><td class="bad">nested</td><td class="bad">nested</td></tr>
+      <tr><td class="mono">/settings/production-rates</td><td class="ok">no scroll</td><td class="ok">no scroll</td><td class="warn">2 scrollers</td><td class="warn">2 scrollers</td></tr>
+      <tr><td class="mono">/sales/proposals</td><td class="ok">clean</td><td class="ok">clean</td><td class="ok">clean</td><td class="ok">clean</td></tr>
+    </tbody>
+  </table>
+  <p style="margin-top:1rem"><code>/projects/calendar</code> is the clearest illustration of the laptop problem: perfectly fine on a wide monitor, nested and trapped once vertical space runs out. That is why this reads as “some pages, sometimes”.</p>
+</section>
+
+<section>
+  <hr class="rule">
+  <div class="sec-head"><h2>Secondary findings</h2></div>
+
+  <div class="find p2">
+    <span class="tag">28 pages</span>
+    <h3><code>h-screen</code> inside a shell that is already full height</h3>
+    <p>The app shell is <code>h-[100dvh] overflow-hidden</code> and the only intended scroller is its <code>&lt;main&gt;</code>. 28 pages that render inside it still declare <code>h-screen</code> / <code>min-h-screen</code>, which forces 100vh of height into a box that is already shorter than the viewport (the header eats the difference). Worst: <code>project-pipeline</code>, <code>sales-pipeline</code>, <code>projects/reports</code> at 3 each.</p>
+    <p><b>Not a false positive:</b> I checked. 136 other pages use <code>h-screen</code> legitimately because they are standalone full-viewport routes (auth, blog, compare, customer portal) that never mount the shell. Those are excluded.</p>
+  </div>
+
+  <div class="find p2">
+    <span class="tag">12 pages</span>
+    <h3>Multiple page-level scrollers in one file</h3>
+    <p><code>sales/sop.tsx</code> has 13, <code>sales/proposal-builder-redesign.tsx</code> 7, <code>settings/production-rates.tsx</code> 6. Most are inside dialogs, which is where they overlap with root cause 2.</p>
+  </div>
+
+  <div class="find good">
+    <span class="tag">Clean</span>
+    <h3>Ultrawide is fine horizontally</h3>
+    <p>Zero horizontal overflow at 3440 or 2560 on any page tested. No fixed-width containers spilling, no sideways scrollbars. The ultrawide problems are vertical only.</p>
+  </div>
+
+  <div class="find p3">
+    <span class="tag">Worth a look</span>
+    <h3><code>/notifications</code> renders without the shell</h3>
+    <p>No <code>&lt;main&gt;</code> element at any viewport, so it sits outside the standard layout. Probably deliberate, but it means it doesn’t inherit the shell’s scroll behaviour.</p>
+  </div>
+</section>
+
+<section>
+  <hr class="rule">
+  <div class="sec-head"><h2>Proposed fix order</h2></div>
+  <ul class="plain">
+    <li><b>1 — Scope the iOS block to touch devices.</b> Wrap it in <code>@media (hover:none) and (pointer:coarse)</code> so <code>contain</code> applies to phones and tablets and desktop gets normal chaining. One edit, fixes the systemic symptom everywhere at once. Keep <code>contain</code> unconditionally on modals/drawers, where it is correct on every platform.</li>
+    <li><b>2 — Sweep the 22 dialogs.</b> Remove the inner <code>overflow-y-auto</code> so the DialogContent is the single scroller, exactly as bug #48 was fixed. Mobile keeps its scroll through the existing <code>.dialog-body-scroll</code> media-query CSS.</li>
+    <li><b>3 — Replace <code>h-screen</code> with <code>h-full</code></b> on the 28 in-shell pages. Mechanical, but each one needs a look because a few use it for intentional full-bleed sections.</li>
+    <li><b>4 — Re-measure</b> at all four widths and diff against this baseline.</li>
+  </ul>
+  <p style="margin-top:1.2rem">1 and 2 are the ones that will actually change how the app feels. 3 is hygiene that prevents the next regression.</p>
+</section>
+
+<footer>
+  <span>Desktop Scroll Audit · 28 Jul 2026</span>
+  <span>3440 / 2560 / 1440 / 1280 · DEV build</span>
+</footer>
+</div>
+</body>
+</html>
