@@ -1,0 +1,170 @@
+# SnapCoat MCP — spec
+
+**"Connect your own AI to your SnapCoat data."**
+A customer points Claude, ChatGPT, or their own agent at SnapCoat and asks questions about their
+business. Read-only, scoped to their company, audited.
+
+Written 2026-08-02 against the actual codebase, not a generic design.
+
+---
+
+## 1. The constraint that decides the whole architecture
+
+**Never hand a customer a database connection.**
+
+`owneriq.*` views scope with:
+```sql
+WHERE company_id = ANY(string_to_array(current_setting('app.current_company_ids', true), ',')::int[])
+```
+`current_setting` is a session GUC, and **the connecting role can `SET` it itself**. That is safe
+today only because our server owns the session. Give a customer's agent a connection string and it
+can point that variable at another tenant and read a competitor's leads, pricing and revenue.
+
+The `kb_ro` schema avoids this with a hard-coded literal `company_id = 1`, which is unescapable —
+and therefore unscalable. Ten customers would be ten schemas and forty roles.
+
+**So the MCP is an API-level server, not a database proxy.** The company scope is derived
+server-side from an authenticated credential and is never accepted from the client.
+
+---
+
+## 2. Architecture
+
+```
+customer's agent
+      │  MCP over HTTP (streamable), Authorization: Bearer sk_mcp_...
+      ▼
+SnapCoat MCP server            ← NEW (thin)
+      │  resolves key → companyId, checks plan + scopes, rate-limits
+      ▼
+executeOwnerIqSql({ modelSql, scope, user })   ← ALREADY EXISTS
+      │  server/services/owner-iq-sql.ts:175
+      ▼
+owneriq.* views (70) under 7 existing defense layers
+```
+
+**The security work is already done.** `executeOwnerIqSql` enforces, in order:
+
+1. `SET LOCAL search_path = owneriq, pg_temp` — cannot reach `public.*`
+2. `BEGIN READ ONLY` — writes fail at the protocol layer
+3. Validator — SELECT/WITH only; rejects `;` mid-query, `pg_*`, `information_schema`,
+   `current_setting`, `current_user`, `set_config`, `FOR UPDATE`, all write keywords, and
+   comment-hidden statements
+4. `statement_timeout = 8s` (`OWNER_IQ_SQL_TIMEOUT_MS`), `idle_in_transaction_session_timeout = 15s`
+5. Outer wrap `LIMIT 5000`
+6. Views are `security_barrier = true` — blocks leaky-view predicate push-down
+7. Every call lands in `public.owner_iq_query_log` with model SQL, rewritten SQL, status and duration
+
+The MCP adds **authentication and metering**. It does not re-implement safety.
+
+---
+
+## 3. Tools exposed
+
+Deliberately three. A large tool surface is a large attack surface.
+
+| Tool | Purpose |
+|---|---|
+| `list_views` | Inventory of the company's readable views. Wraps `ownerIqViewInventoryText()`. |
+| `describe_views(views[])` | Column lists. Wraps `describeOwnerIqViews()`. |
+| `query(sql, purpose)` | One SELECT/WITH. Wraps `executeOwnerIqSql()`. `purpose` is required and logged. |
+
+No write tool. No schema-mutation tool. No raw-connection tool. If a customer wants to change
+something they use the app, where permissions, audit and business rules already live.
+
+---
+
+## 4. Authentication
+
+New table `company_mcp_keys`:
+
+| column | notes |
+|---|---|
+| `id` | serial |
+| `company_id` | the scope — **the only source of truth for tenancy** |
+| `key_hash` | store a hash, never the key. Show the raw key once at creation. |
+| `key_prefix` | e.g. `sk_mcp_a1b2` — for display and support, safe to log |
+| `name` | "Meta ads agent", "Claude desktop" — customers will have several |
+| `scopes` | jsonb; v1 is `["read"]`, leaves room for narrower grants later |
+| `last_used_at`, `created_by`, `revoked_at` | ops + trust |
+
+Rules:
+- Key resolves to exactly one `company_id`. **The client cannot pass a company id, ever.**
+- A revoked or unknown key fails closed with a generic error — never reveal whether a key existed.
+- Keys are created and revoked in Settings, visible to the company admin, with last-used shown so a
+  forgotten integration is obvious.
+
+---
+
+## 5. What is genuinely new vs. already built
+
+**Already built (~90%):** the 70 scoped views, the validator, read-only transactions, timeouts,
+row cap, audit log, and the `describe_views` / `execute_sql` tool definitions.
+
+**New work:**
+1. `company_mcp_keys` table + Settings UI to create/revoke (half a day)
+2. MCP server transport + the three tool handlers (a day)
+3. Auth middleware: key → company, plan gate, rate limit (half a day)
+4. Per-key metering and an abuse ceiling (half a day)
+5. Docs page + a copy-paste config block for Claude Desktop / Cowork (half a day)
+
+**Roughly three days.** The reason it is small is precisely that the dangerous part was solved in
+June for OwnerIQ.
+
+---
+
+## 6. Rate limiting and cost
+
+An agent will happily issue hundreds of queries. Without a ceiling one curious customer can saturate
+the pool that serves every tenant.
+
+- Per key: 60 queries/minute, 2,000/day (tunable per plan)
+- Concurrency: 2 in-flight per company — the 8s statement timeout means a runaway loop cannot pin
+  connections indefinitely
+- Return `429` with `retry_after`; agents handle it correctly
+- Reuse the existing pool; do **not** open a second one
+
+---
+
+## 7. Product framing
+
+Gate it to **Elite**. It is the natural top of the AI ladder and it costs almost nothing to serve.
+
+The pitch is specific: *"Your data, in your AI, without exporting anything."* A contractor can ask
+their own assistant "which lead sources actually closed last quarter" and get a real answer from
+live data. Nobody else in painting software offers this, and it is a genuine reason to move up a
+tier rather than a checkbox.
+
+It also feeds the AI Division: an Operator Program client's device can be pointed at their SnapCoat
+data on day one instead of being taught to scrape screens.
+
+---
+
+## 8. Risks, and what I would deliberately not do
+
+- **Do not expose a Postgres connection**, however tempting. See §1.
+- **Do not let the client supply `company_id`**, not even as a "convenience" for multi-location
+  owners. Handle multi-location by resolving all of an owner's companies server-side from the key.
+- **Do not add a write tool in v1.** Writes need business rules, not just permissions —
+  OwnerIQ's guarded write engine exists but is CONFIRM-gated for a reason.
+- **Do not skip `purpose` on `query`.** It is what makes the audit log readable when something goes
+  wrong six months from now.
+- **Watch prompt injection.** A customer's agent may read attacker-controlled text (a lead's notes,
+  an inbound email) and then issue a query. The read-only + scoped design already caps the blast
+  radius to that company's own data, which is the correct mitigation — but it is a reason not to add
+  writes later without thought.
+
+---
+
+## 9. Suggested phasing
+
+**Phase 1 — internal.** Ship it, issue one key to KB, point the Meta ads agent at it. Real usage on
+a company we own before any customer sees it.
+
+**Phase 2 — beta.** Two or three Elite customers who already ask data questions. Watch
+`owner_iq_query_log` for what they actually ask; that tells us which views are missing.
+
+**Phase 3 — GA.** Settings UI, docs page, pricing on the Elite card.
+
+Note for Phase 1: KB's Meta ads agent can use the existing `kb_sales_ro` role today — that is
+already built and does not block this work.
