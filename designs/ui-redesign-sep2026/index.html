@@ -38,6 +38,31 @@ footer{margin-top:60px;font-size:12.5px;color:#68718257;color:#687182;text-align
   <div class="legend"><span><span class="dot" style="background:#8b93a5"></span>Before = today's live UI</span><span><span class="dot" style="background:#6fe3a1"></span>After = proposed redesign (visual mockup)</span><span><span class="dot" style="background:#f0a44a"></span>Audit findings</span></div>
 </header>
 
+<section id="fieldline" style="border:1.5px solid #34405c;border-radius:18px;padding:26px 22px;margin-top:34px;background:linear-gradient(160deg,#101725,#0d1220);">
+  <h2>⭐ FEATURED · Full Proposal Builder Redesign <span class="concept">Design language: “Fieldline”</span></h2>
+  <p class="sub" style="margin-top:8px">Astra's ground-up redesign of the entire builder, engineered for iPad + iPhone perfection. Process: Astra first read the actual builder source and produced a <b>1,464-line functionality inventory</b> — the contract that guarantees <b>nothing is lost</b> (every pricing rule, validation, flat-rate flow, change-order mode, SnapScan path, autosave/offline behavior mapped to a home in the new design). Then it designed against that contract: a focused shell, a room navigator beside the work on iPad, one-hand reach on iPhone, honest save states, and a motion language specced to the millisecond (180ms step transitions, 240ms sheets, 60fps on field iPads, tabular numerals so money never jitters).</p>
+  <div class="pair" style="grid-template-columns:1fr;margin-top:18px">
+    <div class="shot after"><div class="cap"><span>Fieldline — iPad (1194px) · Rooms workspace</span><span>mockup</span></div><img src="mock-fieldline-ipad.png" alt=""></div>
+  </div>
+  <div class="pair" style="margin-top:14px">
+    <div class="shot after"><div class="cap"><span>Fieldline — iPhone · Rooms</span><span>mockup</span></div><img src="mock-fieldline-iphone.png" alt=""></div>
+    <div class="shot after"><div class="cap"><span>Fieldline — iPhone · Price breakdown sheet</span><span>mockup</span></div><img src="mock-fieldline-breakdown.png" alt=""></div>
+  </div>
+  <div class="pair" style="margin-top:14px">
+    <div class="shot before"><div class="cap"><span>Before — iPad today</span><span>live capture</span></div><img src="before-builder-ipad.png" alt=""></div>
+    <div class="shot before"><div class="cap"><span>Before — iPhone today</span><span>live capture</span></div><img src="before-builder-iphone.png" alt=""></div>
+  </div>
+  <div class="wins"><b>What Fieldline changes (highlights)</b><ul>
+    <li>One focused shell replaces four stacked headers — utilities (GARVIS, Zapier, override codes, training) move to a Tools menu, customer + save state stay visible</li>
+    <li>iPad: 240px room navigator beside the working pane — measure, edit surfaces, photos without leaving the room</li>
+    <li>iPhone: room cards with thumb-reach actions, a floating Add button, and "Step 4 of 6" progress that never clips</li>
+    <li>Tap the total → full price breakdown sheet: labor/materials/markup, per-room totals, FREE items, optional scope clearly excluded from base, discount w/ expiry</li>
+    <li>Honest save states: "Saved on this device · waiting to sync" ≠ "Saved" — field reps always know what's real</li>
+    <li>Every alternate flow preserved: cabinet flat-rate wizard, change orders, simple mode, SnapScan imports, revisions, in-person signing</li>
+  </ul></div>
+  <div class="approve">📄 Full deliverables saved alongside this page: <b>fieldline-design-spec.md</b> (1,204 lines incl. animation tokens, component system, functionality preservation map, phased build plan) and <b>builder-functionality-inventory.md</b> (the 1,464-line contract). Approve "Fieldline" and I start with the phased build — step 4 (Rooms) first behind a feature flag.</div>
+</section>
+
 <section id="dashboard">
   <h2>1 · Sales Home <span class="concept">Concept: “Today's Job Desk”</span></h2>
   <div class="finds">
