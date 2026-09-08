@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SnapCoat UI Redesign — Astra Audit · Sep 2026</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:#0b0e14;color:#eef1f6;line-height:1.55;}
+.wrap{max-width:1080px;margin:0 auto;padding:28px 18px 80px;}
+header{padding:26px 0 10px;}
+.eyebrow{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#8b93a5;font-weight:700;}
+h1{font-size:clamp(26px,5vw,38px);margin:6px 0 8px;background:linear-gradient(90deg,#7ea8ff,#f07ae2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.sub{color:#9aa3b2;font-size:14.5px;max-width:760px;}
+.legend{display:flex;gap:14px;margin:18px 0 6px;font-size:12px;color:#9aa3b2;flex-wrap:wrap;}
+.legend span{display:flex;align-items:center;gap:6px;}
+.dot{width:10px;height:10px;border-radius:99px;display:inline-block;}
+section{margin-top:44px;border-top:1px solid #232936;padding-top:30px;}
+h2{font-size:22px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;}
+h2 .concept{font-size:14px;font-weight:800;color:#f07ae2;}
+.finds{margin:14px 0 6px;display:grid;gap:8px;}
+.f{background:#141926;border:1px solid #232936;border-left:4px solid #f0a44a;border-radius:10px;padding:10px 14px;font-size:13.5px;color:#c8cfdb;}
+.pair{display:grid;gap:14px;margin-top:16px;}
+.shot{background:#141926;border:1px solid #232936;border-radius:14px;overflow:hidden;}
+.shot .cap{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;}
+.shot.before .cap{color:#8b93a5;}
+.shot.after .cap{color:#6fe3a1;}
+.shot img{width:100%;display:block;}
+.wins{margin-top:14px;background:#12203a20;background:#101725;border:1px solid #24304a;border-radius:12px;padding:12px 16px;}
+.wins b{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#7ea8ff;}
+.wins ul{margin:8px 0 0 18px;font-size:13px;color:#c8cfdb;}
+.wins li{margin:4px 0;}
+.approve{margin-top:14px;font-size:13px;color:#9aa3b2;background:#141926;border:1px dashed #34405c;border-radius:10px;padding:10px 14px;}
+footer{margin-top:60px;font-size:12.5px;color:#68718257;color:#687182;text-align:center;}
+@media(min-width:900px){.pair{grid-template-columns:1fr 1fr;}}
+</style></head><body><div class="wrap">
+<header>
+  <div class="eyebrow">SnapCoat CRM · UI Audit &amp; Redesign Concepts</div>
+  <h1>Core Feature Redesigns — for your approval</h1>
+  <p class="sub">Full end-to-end UI audit of the six core screens, run with <b>GPT-6 Astra</b> against live desktop + mobile captures of DEV, concepts art-directed and mocked up by Jarvis. Each section: what's wrong today → the redesign concept → quick wins we can ship immediately. Reply with the section names you approve (or tweaks) and I'll start building.</p>
+  <div class="legend"><span><span class="dot" style="background:#8b93a5"></span>Before = today's live UI</span><span><span class="dot" style="background:#6fe3a1"></span>After = proposed redesign (visual mockup)</span><span><span class="dot" style="background:#f0a44a"></span>Audit findings</span></div>
+</header>
+
+<section id="dashboard">
+  <h2>1 · Sales Home <span class="concept">Concept: “Today's Job Desk”</span></h2>
+  <div class="finds">
+    <div class="f">The sales landing screen isn't a dashboard — it drops straight into the project-type chooser. No daily metrics, appointments, or follow-ups anywhere.</div>
+    <div class="f">Two navigation rails eat 360px (25% of the screen) while the center sits mostly empty; header is crowded with utility buttons (Zapier, override codes, bug report) that outrank sales actions.</div>
+    <div class="f">On mobile, picking one of three project types requires scrolling.</div>
+  </div>
+  <div class="pair">
+    <div class="shot before"><div class="cap"><span>Before — today</span><span>/sales</span></div><img src="before-dashboard.png" alt=""></div>
+    <div class="shot after"><div class="cap"><span>After — Today's Job Desk</span><span>mockup</span></div><img src="mock-dashboard.png" alt=""></div>
+  </div>
+  <div class="wins"><b>Quick wins (shippable now)</b><ul>
+    <li>Compact, fully-clickable project-type rows on mobile (all 3 above the fold)</li>
+    <li>Collapse header utilities into one labeled Tools menu</li>
+    <li>Single merged sidebar with a clear active state</li>
+  </ul></div>
+</section>
+
+<section id="pipeline">
+  <h2>2 · Sales Pipeline <span class="concept">Concept: “Next Coat”</span></h2>
+  <div class="finds">
+    <div class="f">The actual pipeline starts 815px down the screen — deal cards aren't even visible on load; reporting panels come first.</div>
+    <div class="f">Mobile truncates the numbers that matter ("$200,38…", "Untouched in la…").</div>
+    <div class="f">"Needs Follow-up: 1" — the one thing worth acting on — gets the same weight as empty metrics.</div>
+  </div>
+  <div class="pair">
+    <div class="shot before"><div class="cap"><span>Before — today</span><span>/sales/pipeline</span></div><img src="before-pipeline.png" alt=""></div>
+    <div class="shot after"><div class="cap"><span>After — Next Coat</span><span>mockup</span></div><img src="mock-pipeline.png" alt=""></div>
+  </div>
+  <div class="wins"><b>Quick wins</b><ul>
+    <li>Un-truncate money values on mobile; Open Pipeline spans full width</li>
+    <li>Collapse Salesperson Metrics by default</li>
+    <li>"Needs Follow-up" becomes a tappable filter with emphasis</li>
+    <li>Every deal card gets ONE contextual next-action button</li>
+  </ul></div>
+</section>
+
+<section id="leads">
+  <h2>3 · Lead Manager <span class="concept">Concept: “Job-Ready Leads”</span></h2>
+  <div class="finds">
+    <div class="f">Zero leads visible in the first 900px — headers, metrics, and banners introduce the page five different ways first.</div>
+    <div class="f">The hot-lead banner is huge but names no customer and offers no action.</div>
+    <div class="f">Desktop wastes a full detail-panel opportunity — every lead requires navigating away.</div>
+  </div>
+  <div class="pair">
+    <div class="shot before"><div class="cap"><span>Before — today</span><span>/sales/lead-manager</span></div><img src="before-leads.png" alt=""></div>
+    <div class="shot after"><div class="cap"><span>After — Job-Ready Leads</span><span>mockup</span></div><img src="mock-leads.png" alt=""></div>
+  </div>
+  <div class="wins"><b>Quick wins</b><ul>
+    <li>Hide metric cards on mobile; single summary row on desktop</li>
+    <li>Hot banner → "1 hot lead needs follow-up" filter chip</li>
+    <li>Rename stage chip "New Lead" → "New"; clear Grid/Table active state</li>
+  </ul></div>
+</section>
+
+<section id="proposals">
+  <h2>4 · Proposals List <span class="concept">Concept: “Close Next”</span></h2>
+  <div class="finds">
+    <div class="f">The list starts at y=820 on desktop; on mobile you can't even reach search in the first screen.</div>
+    <div class="f">Six metric cards eat 434px of mobile space — "Sent: 0" gets as much room as 34 drafts.</div>
+    <div class="f">No contextual actions — every proposal is a hunt through menus to advance it.</div>
+  </div>
+  <div class="pair">
+    <div class="shot before"><div class="cap"><span>Before — today</span><span>/sales/proposals</span></div><img src="before-proposals-list.png" alt=""></div>
+    <div class="shot after"><div class="cap"><span>After — Close Next</span><span>mockup</span></div><img src="mock-proposals-list.png" alt=""></div>
+  </div>
+  <div class="wins"><b>Quick wins</b><ul>
+    <li>Metric cards → status filter chips with counts (Draft 34 · Sent · Accepted)</li>
+    <li>Contextual row actions: Send for drafts, Follow up for sent, View for accepted</li>
+    <li>Kill the hero card; search always visible near the top</li>
+  </ul></div>
+</section>
+
+<section id="builder">
+  <h2>5 · Proposal Builder <span class="concept">Concept: “Quote Desk”</span></h2>
+  <div class="finds">
+    <div class="f">Mobile relabels "Labor Markup" as just "Labor" — a rep could read markup as cost. Same money, different meaning per device.</div>
+    <div class="f">Room rows squeeze pricing + ~9 controls into one line; the five existing surfaces stay hidden while an empty "no custom items" panel gets prime space.</div>
+    <div class="f">The mobile stepper clips "Project" and "Send" — no sense of where you are in the flow.</div>
+  </div>
+  <div class="pair">
+    <div class="shot before"><div class="cap"><span>Before — today</span><span>/sales/proposal-builder-redesign</span></div><img src="before-builder.png" alt=""></div>
+    <div class="shot after"><div class="cap"><span>After — Quote Desk</span><span>mockup</span></div><img src="mock-builder.png" alt=""></div>
+  </div>
+  <div class="wins"><b>Quick wins</b><ul>
+    <li>Fix mobile labels: "Labor markup" / "Material markup" (money must read identically everywhere)</li>
+    <li>"Next" → "Review proposal" on the rooms step</li>
+    <li>Mobile stepper → "Step 4 of 6 · Rooms" + progress bar</li>
+    <li>Kill the empty custom-items panel; one compact add row</li>
+  </ul></div>
+</section>
+
+<section id="scheduler">
+  <h2>6 · Appointments <span class="concept">Concept: “Book &amp; Go”</span></h2>
+  <div class="finds">
+    <div class="f">There is no visible "New appointment" button — Refresh, Map and Block Off Time all outrank the primary action.</div>
+    <div class="f">The calendar grid starts ~450px down; seven saturated weekday color blocks fight the appointment data.</div>
+    <div class="f">Empty days burn a full screen panel that only says "use the arrows".</div>
+  </div>
+  <div class="pair">
+    <div class="shot before"><div class="cap"><span>Before — today</span><span>/sales/appointments</span></div><img src="before-scheduler.png" alt=""></div>
+    <div class="shot after"><div class="cap"><span>After — Book &amp; Go</span><span>mockup</span></div><img src="mock-scheduler.png" alt=""></div>
+  </div>
+  <div class="wins"><b>Quick wins</b><ul>
+    <li>Add a real "+ New Appointment" primary button (with Block Off Time in its dropdown)</li>
+    <li>Neutral weekday headers; month heading reads "September 2026"</li>
+    <li>Empty day → compact "No appointments · Book one → · Next: Sep 8"</li>
+  </ul></div>
+</section>
+
+<div class="approve">✅ <b>To approve:</b> text me the numbers/names you want built (e.g. "build 1, 4, and the quick wins on everything"). Mockups are directional — real builds keep every existing feature and both themes. Full Astra audit reports are saved alongside this page.</div>
+<footer>SnapCoat CRM · UI audit run Sep 7, 2026 · GPT-6 Astra (visual audit) + Jarvis (mockups &amp; delivery) · internal use</footer>
+</div></body></html>
