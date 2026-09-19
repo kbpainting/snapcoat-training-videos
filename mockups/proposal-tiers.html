@@ -113,6 +113,9 @@
   .best .hero .ic{color:var(--best)} .better .hero .ic{color:var(--better)} .basic .hero .ic{color:var(--basic)}
   .hero{font-weight:600}
   .feats li.dim .ic{color:var(--faint)}
+  .feats li.no{color:var(--faint)}
+  .feats li.no .ic{color:#C56A5F}
+  .feats .divider{height:1px;background:var(--line-soft);margin:3px 0 1px;list-style:none}
   .feats .sublabel{color:var(--faint);font-weight:400;font-size:12.5px;display:block}
 
   .price-wrap{margin-top:auto;padding-top:16px;border-top:1px solid var(--line-soft)}
@@ -195,6 +198,8 @@
         <li class="hero"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/><path d="M4 12h.01"/></svg><span>Free 5-year touch-up service</span></li>
         <li class="dim"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg><span>Resists cracking, peeling &amp; early failure</span></li>
         <li class="dim"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg><span>Keeps its color &amp; sheen the longest</span></li>
+        <li class="divider"></li>
+        <li class="hero"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.2 2.2 4.8-4.8"/></svg><span><b>Everything included — nothing left out</b></span></li>
       </ul>
       <div class="price-wrap">
         <div class="price">$24,012</div>
@@ -229,6 +234,9 @@
         <li class="dim"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg><span>Strong resistance to sun, moisture &amp; mildew</span></li>
         <li class="dim"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg><span>Holds color &amp; reduces peeling and cracking</span></li>
         <li class="dim"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg><span>Extends the time between repaints</span></li>
+        <li class="divider"></li>
+        <li class="no"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg><span>No elastomeric weatherproof top coat</span></li>
+        <li class="no"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg><span>No free 5-year touch-up service</span></li>
       </ul>
       <div class="price-wrap">
         <div class="price">$20,103</div>
@@ -263,6 +271,10 @@
         <li class="dim"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg><span>Protects against everyday weather exposure</span></li>
         <li class="dim"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg><span>Solid coverage &amp; a clean, professional finish</span></li>
         <li class="dim"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg><span>Great fit for shorter repaint cycles</span></li>
+        <li class="divider"></li>
+        <li class="no"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg><span>No urethanized sealant upgrade</span></li>
+        <li class="no"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg><span>No enhanced mildew &amp; moisture package</span></li>
+        <li class="no"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg><span>No workmanship touch-ups included</span></li>
       </ul>
       <div class="price-wrap">
         <div class="price">$17,218</div>
@@ -284,16 +296,13 @@
 
   <div class="legend">
     <h4>Mockup notes — ideas pulled in (KB-branded, not copied)</h4>
-    <p><span class="k">Product cans + warranty shields</span> per tier · <span class="k">"Lasts X years" durability pills</span> (reframes price → value) · <span class="k">per-tier /mo financing</span> off your live Wisetack · <span class="k">hero features</span> (top 2–3 in color, rest muted) · <span class="k">"Best" steering nudge</span> · <span class="k">"Your Investment" + trust bar</span> up top. Real product photos would drop straight into the can slots. Toggle the theme (top-right) to see light &amp; dark.</p>
+    <p><span class="k">✅ included / ❌ not-included features per tier</span> (see the red ✕s on Better &amp; Basic — that's the "what you give up to save" lever) · <span class="k">Product cans + warranty shields</span> · <span class="k">"Lasts X years" durability pills</span> · <span class="k">per-tier /mo financing</span> off your live Wisetack · <span class="k">hero features</span> (top 2–3 in color) · <span class="k">"Best" steering nudge</span> · <span class="k">"Your Investment" + trust bar</span>. Planned: a per-package settings editor for the ✅/❌ lists, a transparent-PNG image uploader (600×600), auto-pulled warranty + Wisetack amounts, and a stacked mobile/tablet layout. Real product photos drop straight into the can slots. Toggle the theme (top-right) for light &amp; dark.</p>
   </div>
 
  </div>
 </div>
 
 <button id="tt" aria-label="Toggle light/dark" style="position:fixed;top:14px;right:14px;z-index:20;border:1px solid var(--line);background:var(--panel);color:var(--ink);width:40px;height:40px;border-radius:11px;cursor:pointer;font-size:17px;box-shadow:var(--shadow)">◐</button>
-<script>
-var r=document.documentElement,b=document.getElementById('tt');
-b.onclick=function(){var d=r.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');r.setAttribute('data-theme',d==='dark'?'light':'dark')};
-</script>
+<script>var r=document.documentElement,b=document.getElementById('tt');b.onclick=function(){var d=r.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');r.setAttribute('data-theme',d==='dark'?'light':'dark')};</script>
 </body>
 </html>
