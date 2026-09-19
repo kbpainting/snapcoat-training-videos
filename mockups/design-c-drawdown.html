@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your Investment — KB Painting &amp; Refinishing</title>
+<style>
+/* ============================================================
+   KB PAINTING & REFINISHING — "The Drawdown Card"
+   Color-forward tier proposal. Each card is a paint drawdown:
+   full-strength hue pulled down over chart stock.
+   ============================================================ */
+
+:root {
+  color-scheme: light;
+  --canvas: #FAFAF7;
+  --card: #FFFFFF;
+  --ink: #191624;
+  --muted: #5D5868;
+  --line: #E4E2DB;
+
+  --emerald: #0E6B4C;
+  --emerald-hover: #0A5A3F;
+  --ultra: #2740CE;
+  --ultra-hover: #1E32A9;
+  --gold: #EDA414;
+  --gold-hover: #D28F0A;
+
+  --on-emerald: #F2FBF5;
+  --on-ultra: #F2F4FF;
+  --on-gold: #241C05;
+
+  --shield-paper: #FDFCF8;
+
+  --display: "Avenir Next Condensed", "Helvetica Neue Condensed",
+             "Arial Narrow", "Franklin Gothic Medium", sans-serif;
+  --body: "Avenir Next", "Seravek", "Helvetica Neue", system-ui,
+          -apple-system, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --canvas: #14111A;
+    --card: #1D1927;
+    --ink: #F1EEE7;
+    --muted: #A6A0B2;
+    --line: #2F2A3B;
+    --emerald: #178A63;
+    --emerald-hover: #1FA075;
+    --ultra: #4A61EE;
+    --ultra-hover: #6076F8;
+    --gold: #F2AE2A;
+    --gold-hover: #F8BC4A;
+    --on-emerald: #F2FBF5;
+    --on-ultra: #F2F4FF;
+    --on-gold: #241C05;
+  }
+}
+
+/* Manual override — must win in both directions */
+:root[data-theme="light"] {
+  color-scheme: light;
+  --canvas: #FAFAF7;
+  --card: #FFFFFF;
+  --ink: #191624;
+  --muted: #5D5868;
+  --line: #E4E2DB;
+  --emerald: #0E6B4C;
+  --emerald-hover: #0A5A3F;
+  --ultra: #2740CE;
+  --ultra-hover: #1E32A9;
+  --gold: #EDA414;
+  --gold-hover: #D28F0A;
+  --on-emerald: #F2FBF5;
+  --on-ultra: #F2F4FF;
+  --on-gold: #241C05;
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --canvas: #14111A;
+  --card: #1D1927;
+  --ink: #F1EEE7;
+  --muted: #A6A0B2;
+  --line: #2F2A3B;
+  --emerald: #178A63;
+  --emerald-hover: #1FA075;
+  --ultra: #4A61EE;
+  --ultra-hover: #6076F8;
+  --gold: #F2AE2A;
+  --gold-hover: #F8BC4A;
+  --on-emerald: #F2FBF5;
+  --on-ultra: #F2F4FF;
+  --on-gold: #241C05;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--ink);
+  background: var(--canvas);
+  -webkit-font-smoothing: antialiased;
+}
+
+:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 3px;
+}
+
+.wrap {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+/* ---------- theme toggle ---------- */
+.theme-toggle {
+  position: fixed;
+  top: 18px;
+  right: 18px;
+  z-index: 50;
+  width: 42px;
+  height: 42px;
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+  background: var(--card);
+  color: var(--ink);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  padding: 0;
+}
+.theme-toggle svg { width: 20px; height: 20px; display: block; }
+.theme-toggle:hover { background: var(--canvas); }
+
+/* ---------- top bar / brand ---------- */
+.topbar {
+  padding: 30px 0 0;
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+}
+.wordmark {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 1.25rem;
+  letter-spacing: 0.04em;
+  line-height: 1;
+}
+.wordmark .amp { color: var(--muted); font-weight: 600; }
+.brand-swipe { height: 10px; width: 96px; flex: none; align-self: center; }
+.doc-ref {
+  margin-left: auto;
+  font-size: 0.82rem;
+  color: var(--muted);
+  padding-right: 60px;
+}
+
+/* ---------- header ---------- */
+.masthead {
+  position: relative;
+  padding: 64px 0 44px;
+  overflow: visible;
+}
+.masthead-art {
+  position: absolute;
+  top: 26px;
+  right: -30px;
+  width: 360px;
+  height: 228px;
+  pointer-events: none;
+}
+.eyebrow {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+.masthead h1 {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: clamp(2.7rem, 5.6vw, 4.8rem);
+  line-height: 0.96;
+  letter-spacing: -0.005em;
+  max-width: 12ch;
+  margin-bottom: 18px;
+}
+.trust-line {
+  font-size: 1.08rem;
+  color: var(--muted);
+  max-width: 46ch;
+  margin-bottom: 22px;
+}
+.trust-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 26px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+.trust-row span {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+}
+.chip {
+  width: 13px;
+  height: 13px;
+  flex: none;
+  display: inline-block;
+}
+.chip--emerald { background: var(--emerald); }
+.chip--ultra   { background: var(--ultra); }
+.chip--gold    { background: var(--gold); }
+
+/* ---------- tier grid ---------- */
+.tiers {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  align-items: stretch;
+  padding-top: 18px;
+}
+
+.tier {
+  position: relative;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.tier-body, .pull { min-width: 0; }
+.tier--best {
+  border: 2px solid var(--ink);
+}
+
+.tier--best  { --hue: var(--emerald); --hue-hover: var(--emerald-hover); --on: var(--on-emerald); }
+.tier--better{ --hue: var(--ultra);   --hue-hover: var(--ultra-hover);   --on: var(--on-ultra); }
+.tier--basic { --hue: var(--gold);    --hue-hover: var(--gold-hover);    --on: var(--on-gold); }
+
+/* recommended flag */
+.flag {
+  position: absolute;
+  top: -15px;
+  left: 20px;
+  z-index: 7;
+  background: var(--ink);
+  color: var(--canvas);
+  font-weight: 700;
+  font-size: 0.82rem;
+  letter-spacing: 0.02em;
+  padding: 5px 13px 6px;
+}
+
+/* ---- the drawdown: color field + pulled edge ---- */
+.pull { position: relative; }
+
+.field {
+  position: relative;
+  background: var(--hue);
+  color: var(--on);
+  min-height: 218px;
+  padding: 24px 24px 10px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 1px 1px 0 0;
+}
+.tier--best .field { min-height: 248px; }
+
+.badge {
+  align-self: flex-start;
+  background: var(--shield-paper);
+  color: #191624;
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+  padding: 4px 10px;
+  margin-bottom: 12px;
+}
+
+.tier-name {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 3.4rem;
+  line-height: 0.9;
+  letter-spacing: 0.015em;
+  text-transform: uppercase;
+}
+
+.field-bottom {
+  margin-top: auto;
+  display: flex;
+  align-items: flex-end;
+  gap: 14px;
+  padding-bottom: 8px;
+  max-width: 58%;
+}
+.shield { width: 62px; height: 71px; flex: none; }
+.shield .sh-num {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 34px;
+}
+.shield .sh-yr {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 1.4px;
+}
+.warranty-cap { line-height: 1.3; padding-bottom: 2px; }
+.warranty-cap strong { display: block; font-size: 0.95rem; font-weight: 700; }
+.warranty-cap small { display: block; font-size: 0.83rem; opacity: 0.85; }
+
+/* ragged pulled edge */
+.edge {
+  display: block;
+  width: 100%;
+  height: 46px;
+  margin-top: -1px;
+  color: var(--hue);
+}
+
+/* paint cans straddle the pulled edge (placeholder for product PNG) */
+.cans {
+  position: absolute;
+  right: 8px;
+  bottom: -62px;
+  z-index: 4;
+  color: var(--hue);
+  line-height: 0;
+}
+.can { width: 118px; height: 134px; }
+.tier--best .cans { right: 4px; bottom: -66px; }
+.tier--best .can { width: 104px; height: 118px; }
+.can--q {
+  width: 62px;
+  height: 70px;
+  margin-right: -16px;
+  margin-bottom: 16px;
+  opacity: 0.96;
+}
+
+/* load moment: paint pulled down the card, once */
+.pull::after {
+  content: "";
+  position: absolute;
+  left: -3px;
+  right: -3px;
+  top: -3px;
+  bottom: -78px;
+  z-index: 6;
+  background: var(--card);
+  transform-origin: bottom;
+  animation: pulldown 0.6s cubic-bezier(0.3, 0.75, 0.3, 1) both;
+}
+.tier:nth-child(2) .pull::after { animation-delay: 0.12s; }
+.tier:nth-child(3) .pull::after { animation-delay: 0.24s; }
+@keyframes pulldown {
+  from { transform: scaleY(1); }
+  to   { transform: scaleY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pull::after { display: none; }
+  html { scroll-behavior: auto; }
+  * { transition: none !important; animation: none !important; }
+}
+
+/* ---------- card body ---------- */
+.tier-body {
+  padding: 30px 24px 26px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.products { margin-bottom: 16px; }
+.product { padding: 9px 0; }
+.product + .product { border-top: 1px solid var(--line); }
+.product b { display: block; font-size: 0.98rem; font-weight: 700; }
+.product span { display: block; font-size: 0.86rem; color: var(--muted); }
+
+.best-for {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  padding: 10px 12px;
+  background: color-mix(in srgb, var(--hue) 9%, var(--card));
+  margin-bottom: 18px;
+}
+.best-for .chip { background: var(--hue); }
+
+.list-h {
+  font-size: 0.83rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--muted);
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 5px;
+  margin-bottom: 9px;
+}
+.feat {
+  list-style: none;
+  margin-bottom: 18px;
+  font-size: 0.92rem;
+}
+.feat li {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 4px 0;
+}
+.ic { width: 14px; height: 14px; flex: none; margin-top: 4px; }
+.feat--in .ic { color: var(--hue); }
+.feat--out { color: var(--muted); }
+.feat--out .ic { color: var(--muted); opacity: 0.75; }
+.all-in {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 0.92rem;
+  font-weight: 600;
+  margin-bottom: 18px;
+}
+.all-in .ic { color: var(--hue); }
+
+/* price + CTA pinned to bottom so cards align */
+.price-block { margin-top: auto; padding-top: 6px; }
+.price {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 2.9rem;
+  line-height: 1;
+  letter-spacing: 0.005em;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+.price-sub {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--muted);
+  margin: 2px 0 10px;
+}
+.finance-line {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-bottom: 16px;
+  font-variant-numeric: tabular-nums;
+}
+
+.cta {
+  display: block;
+  width: 100%;
+  border: 0;
+  border-radius: 2px;
+  background: var(--hue);
+  color: var(--on);
+  font-family: var(--body);
+  font-weight: 700;
+  font-size: 1.02rem;
+  padding: 15px 18px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.cta:hover { background: var(--hue-hover); }
+
+/* ---------- nudge ---------- */
+.nudge {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  margin: 34px 0 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+.nudge .best-word { color: var(--emerald); }
+
+/* ---------- footer ---------- */
+.closing {
+  margin-top: 26px;
+  padding: 30px 0 64px;
+  border-top: 2px solid var(--ink);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 18px;
+}
+.btn-approve {
+  border: 0;
+  border-radius: 2px;
+  background: var(--ink);
+  color: var(--canvas);
+  font-family: var(--body);
+  font-weight: 700;
+  font-size: 1.05rem;
+  padding: 16px 34px;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+.btn-approve:hover { opacity: 0.88; }
+.btn-finance {
+  border: 2px solid var(--ink);
+  border-radius: 2px;
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--body);
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 14px 26px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.btn-finance:hover { background: color-mix(in srgb, var(--ink) 8%, transparent); }
+.fine {
+  flex-basis: 100%;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+/* ---------- responsive ---------- */
+@media (max-width: 1060px) {
+  .masthead-art { width: 280px; height: 180px; right: -20px; top: -10px; }
+}
+@media (max-width: 900px) {
+  .wrap { padding: 0 20px; }
+  .masthead { padding: 44px 0 34px; }
+  .masthead-art { display: none; }
+  .tiers { grid-template-columns: 1fr; gap: 44px; }
+  .doc-ref { display: none; }
+  .field-bottom { max-width: 60%; }
+}
+@media (max-width: 420px) {
+  .cans { transform: scale(0.82); transform-origin: bottom right; }
+  .field-bottom { max-width: 100%; }
+  .tier-name { font-size: 2.9rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- shared SVG shapes -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- brush-check -->
+    <symbol id="tick" viewBox="0 0 16 16">
+      <path fill="currentColor" d="M2.1 9 4.5 6.8 6.6 9.9 12.3 2.4 14.6 4.1 7 13.8 Z"/>
+    </symbol>
+    <!-- cross -->
+    <symbol id="cross" viewBox="0 0 16 16">
+      <path fill="currentColor" d="M3.4 1.9 8 6.2 12.6 1.9 14.4 3.8 9.9 8.1 14.4 12.4 12.5 14.2 8 10 3.5 14.2 1.6 12.4 6.1 8.1 1.6 3.8 Z"/>
+    </symbol>
+    <!-- warranty shield -->
+    <symbol id="shield-shape" viewBox="0 0 88 100">
+      <path fill="#FDFCF8" stroke="rgba(20,17,26,0.18)" stroke-width="2"
+        d="M44 4 80 16c0 0 2.4 42-11.6 60C58.4 89 44 96 44 96S29.6 89 19.6 76C5.6 58 8 16 8 16Z"/>
+    </symbol>
+    <!-- gallon can: body in fixed metal tones, paint + drips in currentColor -->
+    <symbol id="gallon" viewBox="0 0 132 152">
+      <path d="M24 46 C24 12 108 12 108 46" fill="none" stroke="#8E8B84" stroke-width="4" stroke-linecap="round"/>
+      <circle cx="24" cy="46" r="3.5" fill="#8E8B84"/>
+      <circle cx="108" cy="46" r="3.5" fill="#8E8B84"/>
+      <path d="M20 44 26 134 c0 9 20 14 40 14 s40-5 40-14 l6-90 Z" fill="#D8D5CC"/>
+      <path d="M66 44 H112 L106 134 c0 9-20 14-40 14 Z" fill="rgba(0,0,0,0.07)"/>
+      <rect x="36" y="72" width="60" height="54" rx="3" fill="#FBFAF5"/>
+      <rect x="44" y="82" width="44" height="7" fill="#2A2733"/>
+      <rect x="44" y="94" width="30" height="5" fill="#8B8896"/>
+      <rect x="44" y="103" width="38" height="5" fill="#8B8896"/>
+      <rect x="44" y="113" width="20" height="8" fill="currentColor"/>
+      <ellipse cx="66" cy="44" rx="46" ry="11" fill="#C2BFB6"/>
+      <ellipse cx="66" cy="43" rx="38" ry="8.5" fill="#AEABA2"/>
+      <ellipse cx="66" cy="43" rx="33" ry="7" fill="currentColor"/>
+      <path fill="currentColor" d="M38 46 c0 4 3.2 7 3.2 13 l0 14 c0 5-3.2 7-5.8 7 -2.6 0-5.4-2-5.4-7 l0-15 c0-6 2.6-9 2.6-12 Z"/>
+      <path fill="currentColor" d="M93 47 c0 3 2.6 5 2.6 9 l0 7 c0 4-2.2 5.6-4.4 5.6 -2.2 0-4.2-1.8-4.2-5.6 l0-8 c0-4 1.6-6 1.6-8 Z"/>
+    </symbol>
+    <!-- pulled drawdown edges (three hand variants) -->
+    <symbol id="edge-a" viewBox="0 0 400 56" preserveAspectRatio="none">
+      <path fill="currentColor" d="M0 0 H400 V12 L334 22 c-4 0.6-6 2.4-6 5.6 L328 43 c0 6.4-2.2 9.6-5.6 9.6 -3.4 0-5.4-3.2-5.4-9 L317 29.4 c0-3.2-2.2-4.8-5.4-4.4 L118 38 0 28 Z"/>
+    </symbol>
+    <symbol id="edge-b" viewBox="0 0 400 56" preserveAspectRatio="none">
+      <path fill="currentColor" d="M0 0 H400 V24 L268 35 102 27 c-3-0.2-5 1.6-5 4.8 L97 46 c0 5.6-2.2 8.6-5.6 8.6 -3.4 0-5.4-3-5.4-8.6 L86 30.6 c0-3.2-2-4.8-5-4.6 L0 16 Z"/>
+    </symbol>
+    <symbol id="edge-c" viewBox="0 0 400 56" preserveAspectRatio="none">
+      <path fill="currentColor" d="M0 0 H400 V16 L338 24 214 33 c-3.2 0.4-5.2 2.2-5.2 5.4 L208.8 47 c0 5-2 7.6-5.2 7.6 -3.2 0-5.2-2.6-5.2-7.2 L198.4 39.6 c0-3.2-2.2-4.8-5.4-4.6 L0 24 Z"/>
+    </symbol>
+    <!-- masthead strokes -->
+    <symbol id="strokes" viewBox="0 0 380 240">
+      <g transform="rotate(-16 190 120)">
+        <path fill="var(--emerald)" d="M28 52 356 44 353 90 25 96 Z"/>
+        <path fill="var(--ultra)"   d="M56 108 384 102 381 146 53 150 Z"/>
+        <path fill="var(--gold)"    d="M20 162 300 156 297 198 17 202 Z"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
+
+<button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch between light and dark theme">
+  <svg viewBox="0 0 20 20" aria-hidden="true">
+    <circle cx="10" cy="10" r="8" fill="none" stroke="currentColor" stroke-width="2"/>
+    <path d="M10 2 a8 8 0 0 1 0 16 Z" fill="currentColor"/>
+  </svg>
+</button>
+
+<div class="wrap">
+
+  <header class="topbar">
+    <div class="wordmark">KB PAINTING <span class="amp">&amp;</span> REFINISHING</div>
+    <svg class="brand-swipe" viewBox="0 0 96 10" aria-hidden="true">
+      <path fill="var(--emerald)" d="M0 1 34 0 33 9 0 10 Z"/>
+      <path fill="var(--ultra)"   d="M32 1 66 0 65 9 32 10 Z"/>
+      <path fill="var(--gold)"    d="M64 1 96 0 95 9 64 10 Z"/>
+    </svg>
+    <div class="doc-ref">Proposal 2419 · The Alvarez residence</div>
+  </header>
+
+  <section class="masthead">
+    <svg class="masthead-art" aria-hidden="true"><use href="#strokes"/></svg>
+    <p class="eyebrow">Your Investment</p>
+    <h1>Choose your level of protection.</h1>
+    <p class="trust-line">Three ways to paint the same house right — the difference is how long the finish protects it.</p>
+    <div class="trust-row" role="list">
+      <span role="listitem"><i class="chip chip--emerald"></i>Full prep on every job</span>
+      <span role="listitem"><i class="chip chip--ultra"></i>Written workmanship guarantee</span>
+      <span role="listitem"><i class="chip chip--gold"></i>Licensed &amp; insured</span>
+    </div>
+  </section>
+
+  <main class="tiers">
+
+    <!-- ============ BEST ============ -->
+    <article class="tier tier--best" aria-labelledby="t-best">
+      <div class="flag">Recommended</div>
+      <div class="pull">
+        <div class="field">
+          <h2 class="tier-name" id="t-best">Best</h2>
+          <div class="field-bottom">
+            <svg class="shield" viewBox="0 0 88 100" role="img" aria-label="5 year warranty shield">
+              <use href="#shield-shape"/>
+              <text class="sh-num" x="44" y="54" text-anchor="middle" fill="var(--emerald)">5</text>
+              <text class="sh-yr" x="44" y="74" text-anchor="middle" fill="var(--emerald)">YEAR</text>
+            </svg>
+            <p class="warranty-cap">
+              <strong>5-year workmanship warranty</strong>
+              <small>Lasts 12–15 years before repaint</small>
+            </p>
+          </div>
+          <div class="cans" aria-hidden="true">
+            <svg class="can can--q"><use href="#gallon"/></svg><svg class="can"><use href="#gallon"/></svg>
+          </div>
+        </div>
+        <svg class="edge" aria-hidden="true"><use href="#edge-a"/></svg>
+      </div>
+
+      <div class="tier-body">
+        <div class="products">
+          <div class="product">
+            <b>Emerald Rain Refresh</b>
+            <span>Self-cleaning flagship acrylic that sheds dirt every time it rains.</span>
+          </div>
+          <div class="product">
+            <b>Emerald Urethane Trim Enamel</b>
+            <span>Furniture-grade hardness on doors, trim and shutters.</span>
+          </div>
+        </div>
+
+        <p class="best-for"><i class="chip"></i>Best for the home you plan to keep forever.</p>
+
+        <h3 class="list-h">Included</h3>
+        <ul class="feat feat--in">
+          <li><svg class="ic"><use href="#tick"/></svg>Complete prep: wash, scrape, sand, caulk, spot-prime</li>
+          <li><svg class="ic"><use href="#tick"/></svg>Two full coats of Emerald Rain Refresh</li>
+          <li><svg class="ic"><use href="#tick"/></svg>Urethane enamel on every door, trim run and shutter</li>
+          <li><svg class="ic"><use href="#tick"/></svg>In-person color consultation</li>
+          <li><svg class="ic"><use href="#tick"/></svg>5-year written workmanship guarantee</li>
+          <li><svg class="ic"><use href="#tick"/></svg>Year-one touch-up visit, on us</li>
+        </ul>
+
+        <h3 class="list-h">Not included</h3>
+        <p class="all-in"><svg class="ic"><use href="#tick"/></svg>Nothing held back — this is our complete scope.</p>
+
+        <div class="price-block">
+          <p class="price">$24,012</p>
+          <p class="price-sub">project total</p>
+          <p class="finance-line">or as low as $400/mo · 60 mo via Wisetack — no credit impact</p>
+          <button class="cta" type="button">Select Best</button>
+        </div>
+      </div>
+    </article>
+
+    <!-- ============ BETTER ============ -->
+    <article class="tier tier--better" aria-labelledby="t-better">
+      <div class="pull">
+        <div class="field">
+          <p class="badge">Most Popular</p>
+          <h2 class="tier-name" id="t-better">Better</h2>
+          <div class="field-bottom">
+            <svg class="shield" viewBox="0 0 88 100" role="img" aria-label="3 year warranty shield">
+              <use href="#shield-shape"/>
+              <text class="sh-num" x="44" y="54" text-anchor="middle" fill="var(--ultra)">3</text>
+              <text class="sh-yr" x="44" y="74" text-anchor="middle" fill="var(--ultra)">YEAR</text>
+            </svg>
+            <p class="warranty-cap">
+              <strong>3-year workmanship warranty</strong>
+              <small>Lasts 8–10 years before repaint</small>
+            </p>
+          </div>
+          <div class="cans" aria-hidden="true">
+            <svg class="can"><use href="#gallon"/></svg>
+          </div>
+        </div>
+        <svg class="edge" aria-hidden="true"><use href="#edge-b"/></svg>
+      </div>
+
+      <div class="tier-body">
+        <div class="products">
+          <div class="product">
+            <b>Duration</b>
+            <span>Thick-build lifetime resin that flexes with the seasons.</span>
+          </div>
+          <div class="product">
+            <b>ProClassic Enamel</b>
+            <span>Smooth, durable finish for doors and trim.</span>
+          </div>
+        </div>
+
+        <p class="best-for"><i class="chip"></i>The right call for most homes.</p>
+
+        <h3 class="list-h">Included</h3>
+        <ul class="feat feat--in">
+          <li><svg class="ic"><use href="#tick"/></svg>Complete prep: wash, scrape, sand, caulk, spot-prime</li>
+          <li><svg class="ic"><use href="#tick"/></svg>Two full coats of Duration</li>
+          <li><svg class="ic"><use href="#tick"/></svg>ProClassic on doors and trim</li>
+          <li><svg class="ic"><use href="#tick"/></svg>3-year written workmanship guarantee</li>
+        </ul>
+
+        <h3 class="list-h">Not included</h3>
+        <ul class="feat feat--out">
+          <li><svg class="ic"><use href="#cross"/></svg>Self-cleaning Rain Refresh finish</li>
+          <li><svg class="ic"><use href="#cross"/></svg>Urethane-hardened trim enamel</li>
+          <li><svg class="ic"><use href="#cross"/></svg>Year-one touch-up visit</li>
+          <li><svg class="ic"><use href="#cross"/></svg>Guarantee years 4–5</li>
+        </ul>
+
+        <div class="price-block">
+          <p class="price">$20,103</p>
+          <p class="price-sub">project total</p>
+          <p class="finance-line">or as low as $335/mo · 60 mo via Wisetack — no credit impact</p>
+          <button class="cta" type="button">Select Better</button>
+        </div>
+      </div>
+    </article>
+
+    <!-- ============ BASIC ============ -->
+    <article class="tier tier--basic" aria-labelledby="t-basic">
+      <div class="pull">
+        <div class="field">
+          <p class="badge">Most Affordable</p>
+          <h2 class="tier-name" id="t-basic">Basic</h2>
+          <div class="field-bottom">
+            <svg class="shield" viewBox="0 0 88 100" role="img" aria-label="2 year warranty shield">
+              <use href="#shield-shape"/>
+              <text class="sh-num" x="44" y="54" text-anchor="middle" fill="#B07C08">2</text>
+              <text class="sh-yr" x="44" y="74" text-anchor="middle" fill="#B07C08">YEAR</text>
+            </svg>
+            <p class="warranty-cap">
+              <strong>2-year workmanship warranty</strong>
+              <small>Lasts 5–7 years before repaint</small>
+            </p>
+          </div>
+          <div class="cans" aria-hidden="true">
+            <svg class="can"><use href="#gallon"/></svg>
+          </div>
+        </div>
+        <svg class="edge" aria-hidden="true"><use href="#edge-c"/></svg>
+      </div>
+
+      <div class="tier-body">
+        <div class="products">
+          <div class="product">
+            <b>SuperPaint</b>
+            <span>Trusted workhorse acrylic with solid coverage.</span>
+          </div>
+          <div class="product">
+            <b>ProClassic Enamel</b>
+            <span>Smooth, durable finish for doors and trim.</span>
+          </div>
+        </div>
+
+        <p class="best-for"><i class="chip"></i>Built for rentals and quick refreshes.</p>
+
+        <h3 class="list-h">Included</h3>
+        <ul class="feat feat--in">
+          <li><svg class="ic"><use href="#tick"/></svg>Complete prep: wash, scrape, sand, caulk, spot-prime</li>
+          <li><svg class="ic"><use href="#tick"/></svg>Two coats of SuperPaint</li>
+          <li><svg class="ic"><use href="#tick"/></svg>ProClassic on the front door and primary trim</li>
+          <li><svg class="ic"><use href="#tick"/></svg>2-year written workmanship guarantee</li>
+        </ul>
+
+        <h3 class="list-h">Not included</h3>
+        <ul class="feat feat--out">
+          <li><svg class="ic"><use href="#cross"/></svg>Lifetime-grade resin (Duration or Emerald)</li>
+          <li><svg class="ic"><use href="#cross"/></svg>Self-cleaning finish technology</li>
+          <li><svg class="ic"><use href="#cross"/></svg>Full trim and shutter package</li>
+          <li><svg class="ic"><use href="#cross"/></svg>Year-one touch-up visit</li>
+          <li><svg class="ic"><use href="#cross"/></svg>Guarantee years 3–5</li>
+        </ul>
+
+        <div class="price-block">
+          <p class="price">$17,218</p>
+          <p class="price-sub">project total</p>
+          <p class="finance-line">or as low as $287/mo · 60 mo via Wisetack — no credit impact</p>
+          <button class="cta" type="button">Select Basic</button>
+        </div>
+      </div>
+    </article>
+
+  </main>
+
+  <p class="nudge">
+    <i class="chip chip--emerald"></i>
+    <span>Most homeowners choose <span class="best-word">Best</span> for the long-term value.</span>
+  </p>
+
+  <footer class="closing">
+    <button class="btn-approve" type="button">Approve Proposal</button>
+    <button class="btn-finance" type="button">Check financing options</button>
+    <p class="fine">Checking your financing options with Wisetack takes about a minute and has no impact on your credit score.</p>
+  </footer>
+
+</div>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  var mq = window.matchMedia("(prefers-color-scheme: dark)");
+  var btn = document.getElementById("themeToggle");
+  function current() {
+    return root.dataset.theme || (mq.matches ? "dark" : "light");
+  }
+  btn.addEventListener("click", function () {
+    root.dataset.theme = current() === "dark" ? "light" : "dark";
+  });
+})();
+</script>
+
+</body>
+</html>

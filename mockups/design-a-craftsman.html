@@ -1,0 +1,972 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>KB Painting &amp; Refinishing — Choose Your Package</title>
+<style>
+/* ============================================================
+   KB PAINTING & REFINISHING — "Heritage Craftsman" direction
+   Linen paper · umber ink · deep forest · aged brass
+   ============================================================ */
+
+:root {
+  color-scheme: light dark;
+
+  /* paper & ink */
+  --paper: #E7E0CE;
+  --card: #F2ECDD;
+  --ink: #2A2519;
+  --ink-soft: #6A6049;
+  --rule: #C4B99D;
+  --rule-strong: #40392A;
+
+  /* trade colors */
+  --brass: #9C742C;
+  --brass-bright: #B8873A;
+  --check: #2F5A3C;
+  --oxide: #8A3B28;
+
+  /* featured (inverted) plate — deep forest in light mode */
+  --feat-bg1: #264A35;
+  --feat-bg2: #1A3325;
+  --feat-ink: #F0E8D3;
+  --feat-soft: #C9BE9F;
+  --feat-rule: rgba(240,232,211,.28);
+  --feat-edge: #9C742C;
+  --feat-accent: #CFA14E;
+  --feat-check: #A3CBA8;
+  --feat-cta-ink: #1B3024;
+
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", "URW Palladio L", P052, Georgia, serif;
+  --grot: "Helvetica Neue", Helvetica, "Arial Nova", Arial, "Liberation Sans", sans-serif;
+
+  --noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.045 0'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
+  --noise-dark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.035 0'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
+  --grain: var(--noise);
+}
+
+/* ---- dark theme: shop at dusk. The featured plate flips to linen. ---- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #141811;
+    --card: #1D231B;
+    --ink: #E7E0CA;
+    --ink-soft: #A69C7F;
+    --rule: #454B37;
+    --rule-strong: #D6CCAD;
+    --brass: #C79A4A;
+    --brass-bright: #D8AC5E;
+    --check: #8FB795;
+    --oxide: #CE8A6C;
+    --feat-bg1: #EAE3CC;
+    --feat-bg2: #DFD6BC;
+    --feat-ink: #253526;
+    --feat-soft: #5F5C45;
+    --feat-rule: rgba(37,53,38,.30);
+    --feat-edge: #8A6420;
+    --feat-accent: #8A6420;
+    --feat-check: #2F5A3C;
+    --feat-cta-ink: #F2EBD6;
+    --grain: var(--noise-dark);
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #141811;
+  --card: #1D231B;
+  --ink: #E7E0CA;
+  --ink-soft: #A69C7F;
+  --rule: #454B37;
+  --rule-strong: #D6CCAD;
+  --brass: #C79A4A;
+  --brass-bright: #D8AC5E;
+  --check: #8FB795;
+  --oxide: #CE8A6C;
+  --feat-bg1: #EAE3CC;
+  --feat-bg2: #DFD6BC;
+  --feat-ink: #253526;
+  --feat-soft: #5F5C45;
+  --feat-rule: rgba(37,53,38,.30);
+  --feat-edge: #8A6420;
+  --feat-accent: #8A6420;
+  --feat-check: #2F5A3C;
+  --feat-cta-ink: #F2EBD6;
+  --grain: var(--noise-dark);
+}
+
+/* ---- reset-ish ---- */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  font-family: var(--serif);
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--ink);
+  background-color: var(--paper);
+  background-image: var(--grain);
+  background-size: 240px 240px;
+}
+button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; }
+ul { list-style: none; }
+svg { display: block; }
+
+:focus-visible {
+  outline: 2px solid var(--brass);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .cta, .footer-btn, .theme-toggle { transition: background-color .18s ease, color .18s ease, border-color .18s ease; }
+}
+
+/* ---- letterpress rules ---- */
+.rule-tt { /* thick over thin, the classic trade-catalog head rule */
+  border: none;
+  height: 6px;
+  border-top: 3px solid var(--rule-strong);
+  border-bottom: 1px solid var(--rule-strong);
+}
+.rule-hair {
+  border: none;
+  border-top: 1px solid var(--rule);
+}
+
+/* ---- page frame ---- */
+.sheet {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 44px 44px 56px;
+}
+
+/* ============ MASTHEAD ============ */
+.ticket-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 24px;
+  flex-wrap: wrap;
+  font-family: var(--grot);
+  font-size: .72rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  padding-bottom: 12px;
+}
+.ticket-row .co { color: var(--ink); font-weight: 600; }
+.ticket-row .no { font-variant-numeric: tabular-nums; }
+
+.masthead-grid {
+  display: grid;
+  grid-template-columns: 1.55fr .9fr;
+  gap: 56px;
+  padding: 44px 0 40px;
+}
+.eyebrow {
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--brass);
+  margin-bottom: 14px;
+}
+.eyebrow::after {
+  content: "";
+  display: inline-block;
+  width: 44px;
+  height: 1px;
+  background: var(--brass);
+  vertical-align: middle;
+  margin-left: 14px;
+}
+h1 {
+  font-size: clamp(2.35rem, 4.4vw, 3.55rem);
+  line-height: 1.06;
+  font-weight: 600;
+  letter-spacing: -.012em;
+  max-width: 14ch;
+  margin-bottom: 20px;
+}
+.lede {
+  font-size: 1.08rem;
+  color: var(--ink-soft);
+  max-width: 46ch;
+}
+
+/* trust colophon, right column */
+.colophon {
+  border-top: 1px solid var(--rule-strong);
+  align-self: start;
+  margin-top: 10px;
+}
+.colophon li {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 13px 2px;
+  border-bottom: 1px solid var(--rule);
+  font-size: .93rem;
+}
+.colophon li:last-child { border-bottom: 1px solid var(--rule-strong); }
+.colophon svg { width: 21px; height: 21px; flex-shrink: 0; color: var(--brass); }
+
+/* ============ TIER PLATES ============ */
+.tiers {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 26px;
+  margin-top: 34px;
+}
+
+.tier {
+  /* per-plate tokens (overridden on the featured plate) */
+  --c-bg: var(--card);
+  --c-bg2: var(--card);
+  --c-ink: var(--ink);
+  --c-soft: var(--ink-soft);
+  --c-rule: var(--rule);
+  --c-edge: var(--rule-strong);
+  --c-accent: var(--brass);
+  --c-check: var(--check);
+  --c-x: var(--oxide);
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(168deg, var(--c-bg), var(--c-bg2));
+  color: var(--c-ink);
+  border: 1px solid var(--c-edge);
+  border-radius: 2px;
+  padding: 26px 24px 24px;
+}
+.tier::before { /* inner hairline — the double plate frame */
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border: 1px solid var(--c-rule);
+  border-radius: 1px;
+  pointer-events: none;
+}
+.tier > * { position: relative; }
+
+.tier--featured {
+  --c-bg: var(--feat-bg1);
+  --c-bg2: var(--feat-bg2);
+  --c-ink: var(--feat-ink);
+  --c-soft: var(--feat-soft);
+  --c-rule: var(--feat-rule);
+  --c-edge: var(--feat-edge);
+  --c-accent: var(--feat-accent);
+  --c-check: var(--feat-check);
+  --c-x: var(--oxide);
+  border-width: 2px;
+  margin-top: -10px;
+  padding-top: 34px;
+}
+
+/* head */
+.tier-no {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--grot);
+  font-size: .7rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--c-accent);
+}
+.tier-no::after { content: ""; flex: 1; height: 1px; background: var(--c-rule); }
+.tier-name {
+  font-size: 1.72rem;
+  font-weight: 600;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  margin-top: 10px;
+}
+.badge-line {
+  font-style: italic;
+  font-size: .92rem;
+  color: var(--c-soft);
+  margin-top: 2px;
+}
+.badge-line::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: var(--c-accent);
+  transform: rotate(45deg);
+  margin-right: 9px;
+  vertical-align: 2px;
+}
+
+/* the brass RECOMMENDED stamp */
+.stamp {
+  position: absolute;
+  top: -13px;
+  right: 6px;
+  width: 138px;
+  height: 48px;
+  color: var(--c-accent);
+  transform: rotate(-4deg);
+  opacity: .95;
+}
+
+/* product plate (paint cans) */
+.tier-plate {
+  margin-top: 18px;
+  padding: 14px 10px 6px;
+  border-top: 1px solid var(--c-rule);
+  border-bottom: 1px solid var(--c-rule);
+}
+.tier-plate svg { width: 100%; height: auto; max-width: 232px; margin: 0 auto; }
+.plate-caption {
+  font-family: var(--grot);
+  font-size: .68rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--c-soft);
+  padding-bottom: 10px;
+}
+
+/* warranty + service life row */
+.tier-meta {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 18px 2px 16px;
+  border-bottom: 1px solid var(--c-rule);
+}
+.shield { width: 62px; height: 71px; flex-shrink: 0; color: var(--c-accent); }
+.meta-right { flex: 1; min-width: 0; }
+.warranty-line {
+  font-size: .92rem;
+  font-weight: 600;
+  letter-spacing: .01em;
+}
+.warranty-sub {
+  font-style: italic;
+  font-size: .82rem;
+  color: var(--c-soft);
+  margin-bottom: 9px;
+}
+.life-bar {
+  position: relative;
+  height: 7px;
+  background: var(--c-rule);
+  border-radius: 1px;
+  overflow: hidden;
+}
+.life-bar span {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--fill, 50%);
+  background: var(--c-accent);
+}
+.life-bar::after { /* year ticks over the gauge */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(90deg, transparent 0, transparent calc(100%/15 - 1px), var(--c-bg2) calc(100%/15 - 1px), var(--c-bg2) calc(100%/15));
+}
+.life-label {
+  font-size: .85rem;
+  margin-top: 7px;
+  color: var(--c-soft);
+}
+.life-label strong { color: var(--c-ink); font-weight: 600; }
+
+/* products */
+.products { padding: 16px 2px 4px; }
+.product { padding-bottom: 12px; }
+.product-name { font-weight: 600; font-size: 1rem; }
+.product-desc { font-size: .86rem; color: var(--c-soft); }
+
+.bestfor {
+  font-style: italic;
+  font-size: .95rem;
+  padding: 10px 2px 16px;
+  border-bottom: 1px solid var(--c-rule);
+}
+.bestfor strong { font-style: normal; font-weight: 600; }
+
+/* feature lists */
+.features { padding: 16px 2px 6px; }
+.list-title {
+  font-style: italic;
+  font-size: .88rem;
+  color: var(--c-soft);
+  margin-bottom: 8px;
+}
+.features ul { margin-bottom: 14px; }
+.features li {
+  display: flex;
+  gap: 10px;
+  font-size: .89rem;
+  line-height: 1.42;
+  padding: 3.5px 0;
+}
+.features li svg { width: 13px; height: 13px; flex-shrink: 0; margin-top: 4px; }
+.included li svg { color: var(--c-check); }
+.excluded li { color: var(--c-soft); }
+.excluded li svg { color: var(--c-x); }
+.none-line {
+  font-style: italic;
+  font-size: .89rem;
+  color: var(--c-soft);
+  padding: 2px 0 14px;
+}
+
+/* pricing */
+.pricing {
+  margin-top: auto;
+  border-top: 1px solid var(--c-edge);
+  padding-top: 14px;
+}
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+.price-label {
+  font-style: italic;
+  font-size: .85rem;
+  color: var(--c-soft);
+}
+.price {
+  font-size: 2.15rem;
+  font-weight: 600;
+  letter-spacing: -.01em;
+  font-variant-numeric: lining-nums tabular-nums;
+}
+.price sup { font-size: .55em; font-weight: 600; vertical-align: 14px; margin-right: 1px; }
+.financing {
+  font-size: .84rem;
+  color: var(--c-soft);
+  margin-top: 2px;
+}
+.financing strong { color: var(--c-ink); font-variant-numeric: tabular-nums; }
+
+/* per-card CTA */
+.cta {
+  display: block;
+  width: 100%;
+  margin-top: 18px;
+  padding: 13px 16px;
+  font-family: var(--grot);
+  font-size: .8rem;
+  font-weight: 600;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  text-align: center;
+  border: 1px solid var(--c-edge);
+  border-radius: 1px;
+  color: var(--c-ink);
+  background: transparent;
+}
+.cta:hover { background: var(--c-ink); color: var(--c-bg); }
+.tier--featured .cta {
+  background: var(--c-accent);
+  border-color: var(--c-accent);
+  color: var(--feat-cta-ink);
+}
+.tier--featured .cta:hover { background: var(--brass-bright); border-color: var(--brass-bright); color: #1B3024; }
+.tier--featured .cta:focus-visible { outline-color: var(--c-ink); }
+
+/* ============ NUDGE ============ */
+.nudge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin: 44px auto 8px;
+  max-width: 720px;
+  font-style: italic;
+  font-size: 1.14rem;
+  text-align: center;
+}
+.nudge .orn { width: 54px; height: 8px; color: var(--brass); flex-shrink: 0; }
+
+/* ============ FOOTER ============ */
+.proposal-footer { margin-top: 40px; }
+.footer-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 32px;
+  padding: 24px 0 8px;
+  flex-wrap: wrap;
+}
+.footer-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+.footer-btn {
+  font-family: var(--grot);
+  font-size: .8rem;
+  font-weight: 600;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  padding: 15px 30px;
+  border-radius: 1px;
+  border: 1px solid var(--rule-strong);
+}
+.footer-btn--primary {
+  background: var(--feat-bg2);
+  border-color: var(--feat-bg2);
+  color: var(--feat-ink);
+}
+.footer-btn--primary:hover { background: var(--feat-bg1); border-color: var(--feat-bg1); }
+.footer-btn--ghost { background: transparent; color: var(--ink); }
+.footer-btn--ghost:hover { background: var(--ink); color: var(--paper); }
+.fine {
+  font-style: italic;
+  font-size: .84rem;
+  color: var(--ink-soft);
+  max-width: 40ch;
+}
+.colophon-line {
+  font-family: var(--grot);
+  font-size: .7rem;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  padding-top: 26px;
+}
+
+/* ============ THEME TOGGLE ============ */
+.theme-toggle {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 50;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  background: var(--card);
+  border: 1px solid var(--rule-strong);
+  border-radius: 2px;
+  color: var(--ink);
+}
+.theme-toggle:hover { background: var(--ink); color: var(--card); }
+.theme-toggle svg { width: 17px; height: 17px; }
+.tt-sun { display: none; }
+.tt-moon { display: block; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .tt-sun { display: block; }
+  :root:not([data-theme="light"]) .tt-moon { display: none; }
+}
+:root[data-theme="dark"] .tt-sun { display: block; }
+:root[data-theme="dark"] .tt-moon { display: none; }
+:root[data-theme="light"] .tt-sun { display: none; }
+:root[data-theme="light"] .tt-moon { display: block; }
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 1060px) {
+  .tiers { gap: 18px; }
+  .price { font-size: 1.85rem; }
+}
+@media (max-width: 940px) {
+  .sheet { padding: 28px 22px 44px; }
+  .ticket-row { padding-right: 52px; }
+  .masthead-grid { grid-template-columns: 1fr; gap: 30px; padding: 32px 0 30px; }
+  .tiers { grid-template-columns: 1fr; gap: 30px; max-width: 560px; margin-left: auto; margin-right: auto; }
+  .tier--featured { margin-top: 0; }
+  .footer-row { flex-direction: column; align-items: flex-start; }
+  .nudge .orn { width: 34px; }
+}
+</style>
+</head>
+<body>
+
+<button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch between light and dark theme">
+  <svg class="tt-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M20.4 14.2A8.6 8.6 0 0 1 9.8 3.6a8.6 8.6 0 1 0 10.6 10.6Z"/>
+  </svg>
+  <svg class="tt-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+    <circle cx="12" cy="12" r="4.4"/>
+    <path d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M5.2 5.2l1.7 1.7M17.1 17.1l1.7 1.7M18.8 5.2l-1.7 1.7M6.9 17.1l-1.7 1.7"/>
+  </svg>
+</button>
+
+<div class="sheet">
+
+  <!-- ============ MASTHEAD ============ -->
+  <header>
+    <p class="ticket-row">
+      <span class="co">KB Painting &amp; Refinishing — Wellington, Fla.</span>
+      <span class="no">Proposal №&nbsp;2417, The Matthews Residence</span>
+    </p>
+    <hr class="rule-tt" aria-hidden="true">
+
+    <div class="masthead-grid">
+      <div>
+        <p class="eyebrow">Your Investment</p>
+        <h1>Choose your level of protection</h1>
+        <p class="lede">Three ways to paint the same house — the difference is how long it stays beautiful, and how long we stand behind it.</p>
+      </div>
+
+      <ul class="colophon" aria-label="Included with every package">
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M14.5 3.5 20.5 9.5 11 19H5v-6Z"/><path d="M5 13l6 6"/><path d="M17 6.5l1.5 1.5"/>
+          </svg>
+          <span>Full surface prep included at every level</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="9" r="5.5"/><path d="M8.8 13.6 7 21l5-2.6L17 21l-1.8-7.4"/>
+          </svg>
+          <span>Written workmanship guarantee, signed by the owner</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 2.8 20 6v6.2c0 5-3.4 7.9-8 9.8-4.6-1.9-8-4.8-8-9.8V6Z"/><path d="m8.6 11.8 2.4 2.4 4.6-4.9"/>
+          </svg>
+          <span>Licensed &amp; insured in the State of Florida</span>
+        </li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- ============ TIER PLATES ============ -->
+  <main>
+    <section class="tiers" aria-label="Package options, Best, Better, and Basic">
+
+      <!-- ══════════ No. 1 — BEST ══════════ -->
+      <article class="tier tier--featured" aria-label="Best package, recommended">
+        <svg class="stamp" viewBox="0 0 150 52" aria-label="Recommended" role="img">
+          <ellipse cx="75" cy="26" rx="71" ry="23" fill="none" stroke="currentColor" stroke-width="2"/>
+          <ellipse cx="75" cy="26" rx="63" ry="17" fill="none" stroke="currentColor" stroke-width="1"/>
+          <text x="75" y="30.5" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-size="11.5" letter-spacing="2.6" font-weight="600" fill="currentColor">RECOMMENDED</text>
+        </svg>
+
+        <header>
+          <p class="tier-no">No. 1</p>
+          <h2 class="tier-name">Best</h2>
+          <p class="badge-line">done once, done right</p>
+        </header>
+
+        <div class="tier-plate">
+          <svg viewBox="0 0 220 150" role="img" aria-label="Two cans of premium Emerald paint">
+            <!-- back can -->
+            <g>
+              <ellipse cx="60" cy="134" rx="42" ry="7" fill="rgba(0,0,0,.16)"/>
+              <path d="M25 48 Q60 16 95 48" fill="none" stroke="#D8CFB4" stroke-width="3" stroke-linecap="round"/>
+              <rect x="23" y="44" width="74" height="88" rx="3" fill="#38644A" stroke="rgba(240,232,211,.35)" stroke-width="1"/>
+              <ellipse cx="60" cy="44" rx="37" ry="9.5" fill="#4A7C5E" stroke="rgba(240,232,211,.35)" stroke-width="1"/>
+              <ellipse cx="60" cy="44" rx="29" ry="6.5" fill="#2C5039"/>
+              <rect x="23" y="56" width="74" height="5" fill="rgba(0,0,0,.12)"/>
+              <rect x="31" y="70" width="58" height="38" fill="#EDE5CE"/>
+              <rect x="31" y="70" width="58" height="38" fill="none" stroke="#A8894C" stroke-width="1"/>
+              <line x1="38" y1="82" x2="82" y2="82" stroke="#A8894C" stroke-width="1"/>
+              <line x1="44" y1="90" x2="76" y2="90" stroke="#BBA36F" stroke-width="1"/>
+              <rect x="57.5" y="96" width="5" height="5" transform="rotate(45 60 98.5)" fill="#A8894C"/>
+              <rect x="29" y="48" width="5" height="80" fill="rgba(255,255,255,.13)"/>
+            </g>
+            <!-- front can -->
+            <g>
+              <ellipse cx="152" cy="140" rx="48" ry="8" fill="rgba(0,0,0,.16)"/>
+              <path d="M112 36 Q152 0 192 36" fill="none" stroke="#D8CFB4" stroke-width="3" stroke-linecap="round"/>
+              <rect x="110" y="32" width="84" height="104" rx="3" fill="#3E7052" stroke="rgba(240,232,211,.35)" stroke-width="1"/>
+              <ellipse cx="152" cy="32" rx="42" ry="11" fill="#4F8465" stroke="rgba(240,232,211,.35)" stroke-width="1"/>
+              <ellipse cx="152" cy="32" rx="33" ry="7.5" fill="#30573F"/>
+              <rect x="110" y="46" width="84" height="6" fill="rgba(0,0,0,.12)"/>
+              <rect x="119" y="62" width="66" height="44" fill="#EDE5CE"/>
+              <rect x="119" y="62" width="66" height="44" fill="none" stroke="#A8894C" stroke-width="1"/>
+              <line x1="127" y1="75" x2="177" y2="75" stroke="#A8894C" stroke-width="1"/>
+              <line x1="134" y1="84" x2="170" y2="84" stroke="#BBA36F" stroke-width="1"/>
+              <rect x="149.5" y="91" width="5" height="5" transform="rotate(45 152 93.5)" fill="#A8894C"/>
+              <rect x="117" y="37" width="5" height="95" fill="rgba(255,255,255,.13)"/>
+            </g>
+          </svg>
+          <p class="plate-caption">Sherwin-Williams Emerald line</p>
+        </div>
+
+        <div class="tier-meta">
+          <svg class="shield" viewBox="0 0 84 96" role="img" aria-label="Five-year warranty shield">
+            <path d="M42 4 76 14v32c0 26-16 40-34 46C24 86 8 72 8 46V14Z" fill="none" stroke="currentColor" stroke-width="2.4"/>
+            <path d="M42 11.5 69.5 19.5v26.2c0 21-12.9 32.4-27.5 37.6-14.6-5.2-27.5-16.6-27.5-37.6V19.5Z" fill="none" stroke="currentColor" stroke-width="1"/>
+            <text x="42" y="52" text-anchor="middle" font-family="Iowan Old Style, Palatino, Georgia, serif" font-size="30" font-weight="700" fill="currentColor">5</text>
+            <text x="42" y="68" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-size="8.5" letter-spacing="2.4" font-weight="600" fill="currentColor">YEAR</text>
+          </svg>
+          <div class="meta-right">
+            <p class="warranty-line">5-year workmanship warranty</p>
+            <p class="warranty-sub">in writing, transferable once</p>
+            <div class="life-bar" style="--fill:100%" role="img" aria-label="Expected service life, 12 to 15 years, the longest of the three packages"><span></span></div>
+            <p class="life-label"><strong>Lasts 12–15 years</strong> before repaint</p>
+          </div>
+        </div>
+
+        <div class="products">
+          <div class="product">
+            <p class="product-name">Emerald Rain Refresh</p>
+            <p class="product-desc">Self-cleaning exterior acrylic that sheds dirt with the rain</p>
+          </div>
+          <div class="product">
+            <p class="product-name">Emerald Urethane Trim</p>
+            <p class="product-desc">Furniture-grade enamel for doors, trim &amp; shutters</p>
+          </div>
+        </div>
+
+        <p class="bestfor">Best for <strong>your forever home</strong></p>
+
+        <div class="features">
+          <p class="list-title">What&rsquo;s included</p>
+          <ul class="included">
+            <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 8.5 6 12.5 14 3.5"/></svg><span>Full prep: pressure wash, scrape, sand &amp; spot-prime</span></li>
+            <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 8.5 6 12.5 14 3.5"/></svg><span>Two full coats, brushed &amp; back-rolled</span></li>
+            <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 8.5 6 12.5 14 3.5"/></svg><span>Self-cleaning, fade-resistant Emerald finish</span></li>
+            <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 8.5 6 12.5 14 3.5"/></svg><span>All trim, doors &amp; shutters in urethane enamel</span></li>
+            <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 8.5 6 12.5 14 3.5"/></svg><span>Wood rot repair, up to 8 linear feet</span></li>
+            <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 8.5 6 12.5 14 3.5"/></svg><span>Elastomeric patching on stucco cracks</span></li>
+            <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 8.5 6 12.5 14 3.5"/></svg><span>Caulk every gap, seam &amp; window perimeter</span></li>
+            <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 8.5 6 12.5 14 3.5"/></svg><span>Courtesy inspection each year, years 1–3</span></li>
+          </ul>
+          <p class="none-line">Nothing held back — this is the full specification.</p>
+        </div>
+
+        <div class="pricing">
+          <div class="price-row">
+            <span class="price-label">Materials &amp; labor</span>
+            <span class="price"><sup>$</sup>24,012</span>
+          </div>
+          <p class="financing">or as low as <strong>$400/mo</strong> — 60 mo via Wisetack, no credit impact</p>
+        </div>
+        <button class="cta" type="button">Choose Best</button>
+      </article>
+
+      <!-- ══════════ No. 2 — BETTER ══════════ -->
+      <article class="tier" aria-label="Better package, most popular">
+        <header>
+          <p class="tier-no">No. 2</p>
+          <h2 class="tier-name">Better</h2>
+          <p class="badge-line">the most popular choice</p>
+        </header>
+
+        <div class="tier-plate">
+          <svg viewBox="0 0 220 150" role="img" aria-label="Two cans of Duration and Pro-Classic paint">
+            <g>
+              <ellipse cx="60" cy="134" rx="42" ry="7" fill="rgba(0,0,0,.14)"/>
+              <path d="M25 48 Q60 16 95 48" fill="none" stroke="#857F6E" stroke-width="3" stroke-linecap="round"/>
+              <rect x="23" y="44" width="74" height="88" rx="3" fill="#46596B"/>
+              <ellipse cx="60" cy="44" rx="37" ry="9.5" fill="#57697B"/>
+              <ellipse cx="60" cy="44" rx="29" ry="6.5" fill="#374A5B"/>
+              <rect x="23" y="56" width="74" height="5" fill="rgba(0,0,0,.12)"/>
+              <rect x="31" y="70" width="58" height="38" fill="#F2ECDD"/>
+              <rect x="31" y="70" width="58" height="38" fill="none" stroke="#5C6E7E" stroke-width="1"/>
+              <line x1="38" y1="82" x2="82" y2="82" stroke="#5C6E7E" stroke-width="1"/>
+              <line x1="44" y1="90" x2="76" y2="90" stroke="#8E9CA9" stroke-width="1"/>
+              <rect x="57.5" y="96" width="5" height="5" transform="rotate(45 60 98.5)" fill="#5C6E7E"/>
+              <rect x="29" y="48" width="5" height="80" fill="rgba(255,255,255,.14)"/>
+            </g>
+            <g>
+              <ellipse cx="152" cy="140" rx="48" ry="8" fill="rgba(0,0,0,.14)"/>
+              <path d="M112 36 Q152 0 192 36" fill="none" stroke="#857F6E" stroke-width="3" stroke-linecap="round"/>
+              <rect x="110" y="32" width="84" height="104" rx="3" fill="#50647A"/>
+              <ellipse cx="152" cy="32" rx="42" ry="11" fill="#617488"/>
+              <ellipse cx="152" cy="32" rx="33" ry="7.5" fill="#405366"/>
+              <rect x="110" y="46" width="84" height="6" fill="rgba(0,0,0,.12)"/>
+              <rect x="119" y="62" width="66" height="44" fill="#F2ECDD"/>
+              <rect x="119" y="62" width="66" height="44" fill="none" stroke="#5C6E7E" stroke-width="1"/>
+              <line x1="127" y1="75" x2="177" y2="75" stroke="#5C6E7E" stroke-width="1"/>
+              <line x1="134" y1="84" x2="170" y2="84" stroke="#8E9CA9" stroke-width="1"/>
+              <rect x="149.5" y="91" width="5" height="5" transform="rotate(45 152 93.5)" fill="#5C6E7E"/>
+              <rect x="117" y="37" width="5" height="95" fill="rgba(255,255,255,.14)"/>
+            </g>
+          </svg>
+          <p class="plate-caption">Sherwin-Williams Duration line</p>
+        </div>
+
+        <div class="tier-meta">
+          <svg class="shield" viewBox="0 0 84 96" role="img" aria-label="Three-year warranty shield">
+            <path d="M42 4 76 14v32c0 26-16 40-34 46C24 86 8 72 8 46V14Z" fill="none" stroke="currentColor" stroke-width="2.4"/>
+            <path d="M42 11.5 69.5 19.5v26.2c0 21-12.9 32.4-27.5 37.6-14.6-5.2-27.5-16.6-27.5-37.6V19.5Z" fill="none" stroke="currentColor" stroke-width="1"/>
+            <text x="42" y="52" text-anchor="middle" font-family="Iowan Old Style, Palatino, Georgia, serif" font-size="30" font-weight="700" fill="currentColor">3</text>
+            <text x="42" y="68" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-size="8.5" letter-spacing="2.4" font-weight="600" fill="currentColor">YEAR</text>
+          </svg>
+          <div class="meta-right">
+            <p class="warranty-line">3-year workmanship warranty</p>
+            <p class="warranty-sub">in writing</p>
+            <div class="life-bar" style="--fill:67%" role="img" aria-label="Expected service life, 8 to 10 years"><span></span></div>
+            <p class="life-label"><strong>Lasts 8–10 years</strong> before repaint</p>
+          </div>
+        </div>
+
+        <div class="products">
+          <div class="product">
+            <p class="product-name">Duration</p>
+            <p class="product-desc">Thick-build exterior acrylic with strong fade resistance</p>
+          </div>
+          <div class="product">
+            <p class="product-name">Pro-Classic</p>
+            <p class="product-desc">Smooth, durable enamel for trim &amp; doors</p>
+          </div>
+        </div>
+
+        <p class="bestfor">Best for <strong>most homes</strong></p>
+
+        <div class="features">
+          <p class="list-title">What&rsquo;s included</p>
+          <ul class="included">
+            <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 8.5 6 12.5 14 3.5"/></svg><span>Full prep: pressure wash, scrape, sand &amp; spot-prime</span></li>
+            <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 8.5 6 12.5 14 3.5"/></svg><span>Two full coats on the body</span></li>
+            <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 8.5 6 12.5 14 3.5"/></svg><span>All trim &amp; doors in Pro-Classic enamel</span></li>
+            <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 8.5 6 12.5 14 3.5"/></svg><span>Caulk every gap, seam &amp; window perimeter</span></li>
+          </ul>
+          <p class="list-title">Not included at this level</p>
+          <ul class="excluded">
+            <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9"/></svg><span>Self-cleaning Emerald topcoat</span></li>
+            <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9"/></svg><span>Wood rot repair — quoted separately</span></li>
+            <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9"/></svg><span>Elastomeric stucco crack system</span></li>
+            <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9"/></svg><span>Annual courtesy inspections</span></li>
+          </ul>
+        </div>
+
+        <div class="pricing">
+          <div class="price-row">
+            <span class="price-label">Materials &amp; labor</span>
+            <span class="price"><sup>$</sup>20,103</span>
+          </div>
+          <p class="financing">or as low as <strong>$335/mo</strong> — 60 mo via Wisetack, no credit impact</p>
+        </div>
+        <button class="cta" type="button">Choose Better</button>
+      </article>
+
+      <!-- ══════════ No. 3 — BASIC ══════════ -->
+      <article class="tier" aria-label="Basic package, most affordable">
+        <header>
+          <p class="tier-no">No. 3</p>
+          <h2 class="tier-name">Basic</h2>
+          <p class="badge-line">the most affordable choice</p>
+        </header>
+
+        <div class="tier-plate">
+          <svg viewBox="0 0 220 150" role="img" aria-label="Two cans of SuperPaint and Pro-Classic paint">
+            <g>
+              <ellipse cx="60" cy="134" rx="42" ry="7" fill="rgba(0,0,0,.14)"/>
+              <path d="M25 48 Q60 16 95 48" fill="none" stroke="#857F6E" stroke-width="3" stroke-linecap="round"/>
+              <rect x="23" y="44" width="74" height="88" rx="3" fill="#867D68"/>
+              <ellipse cx="60" cy="44" rx="37" ry="9.5" fill="#968D77"/>
+              <ellipse cx="60" cy="44" rx="29" ry="6.5" fill="#6F6753"/>
+              <rect x="23" y="56" width="74" height="5" fill="rgba(0,0,0,.12)"/>
+              <rect x="31" y="70" width="58" height="38" fill="#F2ECDD"/>
+              <rect x="31" y="70" width="58" height="38" fill="none" stroke="#877E6C" stroke-width="1"/>
+              <line x1="38" y1="82" x2="82" y2="82" stroke="#877E6C" stroke-width="1"/>
+              <line x1="44" y1="90" x2="76" y2="90" stroke="#ABA28D" stroke-width="1"/>
+              <rect x="57.5" y="96" width="5" height="5" transform="rotate(45 60 98.5)" fill="#877E6C"/>
+              <rect x="29" y="48" width="5" height="80" fill="rgba(255,255,255,.14)"/>
+            </g>
+            <g>
+              <ellipse cx="152" cy="140" rx="48" ry="8" fill="rgba(0,0,0,.14)"/>
+              <path d="M112 36 Q152 0 192 36" fill="none" stroke="#857F6E" stroke-width="3" stroke-linecap="round"/>
+              <rect x="110" y="32" width="84" height="104" rx="3" fill="#918770"/>
+              <ellipse cx="152" cy="32" rx="42" ry="11" fill="#A1977F"/>
+              <ellipse cx="152" cy="32" rx="33" ry="7.5" fill="#786F5B"/>
+              <rect x="110" y="46" width="84" height="6" fill="rgba(0,0,0,.12)"/>
+              <rect x="119" y="62" width="66" height="44" fill="#F2ECDD"/>
+              <rect x="119" y="62" width="66" height="44" fill="none" stroke="#877E6C" stroke-width="1"/>
+              <line x1="127" y1="75" x2="177" y2="75" stroke="#877E6C" stroke-width="1"/>
+              <line x1="134" y1="84" x2="170" y2="84" stroke="#ABA28D" stroke-width="1"/>
+              <rect x="149.5" y="91" width="5" height="5" transform="rotate(45 152 93.5)" fill="#877E6C"/>
+              <rect x="117" y="37" width="5" height="95" fill="rgba(255,255,255,.14)"/>
+            </g>
+          </svg>
+          <p class="plate-caption">Sherwin-Williams SuperPaint line</p>
+        </div>
+
+        <div class="tier-meta">
+          <svg class="shield" viewBox="0 0 84 96" role="img" aria-label="Two-year warranty shield">
+            <path d="M42 4 76 14v32c0 26-16 40-34 46C24 86 8 72 8 46V14Z" fill="none" stroke="currentColor" stroke-width="2.4"/>
+            <path d="M42 11.5 69.5 19.5v26.2c0 21-12.9 32.4-27.5 37.6-14.6-5.2-27.5-16.6-27.5-37.6V19.5Z" fill="none" stroke="currentColor" stroke-width="1"/>
+            <text x="42" y="52" text-anchor="middle" font-family="Iowan Old Style, Palatino, Georgia, serif" font-size="30" font-weight="700" fill="currentColor">2</text>
+            <text x="42" y="68" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-size="8.5" letter-spacing="2.4" font-weight="600" fill="currentColor">YEAR</text>
+          </svg>
+          <div class="meta-right">
+            <p class="warranty-line">2-year workmanship warranty</p>
+            <p class="warranty-sub">in writing</p>
+            <div class="life-bar" style="--fill:47%" role="img" aria-label="Expected service life, 5 to 7 years"><span></span></div>
+            <p class="life-label"><strong>Lasts 5–7 years</strong> before repaint</p>
+          </div>
+        </div>
+
+        <div class="products">
+          <div class="product">
+            <p class="product-name">SuperPaint</p>
+            <p class="product-desc">Dependable exterior acrylic, the trade standard</p>
+          </div>
+          <div class="product">
+            <p class="product-name">Pro-Classic</p>
+            <p class="product-desc">Smooth, durable enamel for doors &amp; front trim</p>
+          </div>
+        </div>
+
+        <p class="bestfor">Best for <strong>rentals &amp; a quick refresh</strong></p>
+
+        <div class="features">
+          <p class="list-title">What&rsquo;s included</p>
+          <ul class="included">
+            <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 8.5 6 12.5 14 3.5"/></svg><span>Standard prep: pressure wash, scrape &amp; spot-prime</span></li>
+            <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 8.5 6 12.5 14 3.5"/></svg><span>One heavy coat, back-rolled on the body</span></li>
+            <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 8.5 6 12.5 14 3.5"/></svg><span>Doors &amp; front-facing trim in Pro-Classic</span></li>
+          </ul>
+          <p class="list-title">Not included at this level</p>
+          <ul class="excluded">
+            <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9"/></svg><span>Second full coat on the body</span></li>
+            <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9"/></svg><span>Full sanding &amp; priming pass</span></li>
+            <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9"/></svg><span>Fade-resistant or self-cleaning topcoats</span></li>
+            <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9"/></svg><span>Wood rot repair &amp; stucco crack system</span></li>
+            <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9"/></svg><span>Shutters, gutters &amp; rear trim</span></li>
+            <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9"/></svg><span>Annual courtesy inspections</span></li>
+          </ul>
+        </div>
+
+        <div class="pricing">
+          <div class="price-row">
+            <span class="price-label">Materials &amp; labor</span>
+            <span class="price"><sup>$</sup>17,218</span>
+          </div>
+          <p class="financing">or as low as <strong>$287/mo</strong> — 60 mo via Wisetack, no credit impact</p>
+        </div>
+        <button class="cta" type="button">Choose Basic</button>
+      </article>
+
+    </section>
+
+    <!-- steering nudge -->
+    <p class="nudge">
+      <svg class="orn" viewBox="0 0 54 8" aria-hidden="true"><line x1="0" y1="4" x2="20" y2="4" stroke="currentColor" stroke-width="1"/><rect x="24" y="1" width="6" height="6" transform="rotate(45 27 4)" fill="currentColor"/><line x1="34" y1="4" x2="54" y2="4" stroke="currentColor" stroke-width="1"/></svg>
+      <span>Most homeowners choose Best for the long-term value.</span>
+      <svg class="orn" viewBox="0 0 54 8" aria-hidden="true"><line x1="0" y1="4" x2="20" y2="4" stroke="currentColor" stroke-width="1"/><rect x="24" y="1" width="6" height="6" transform="rotate(45 27 4)" fill="currentColor"/><line x1="34" y1="4" x2="54" y2="4" stroke="currentColor" stroke-width="1"/></svg>
+    </p>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="proposal-footer">
+    <hr class="rule-tt" aria-hidden="true">
+    <div class="footer-row">
+      <div class="footer-actions">
+        <button class="footer-btn footer-btn--primary" type="button">Approve Proposal</button>
+        <button class="footer-btn footer-btn--ghost" type="button">Check Financing Options</button>
+      </div>
+      <p class="fine">Checking your financing rate takes about a minute and won&rsquo;t affect your credit score.</p>
+    </div>
+    <p class="colophon-line">KB Painting &amp; Refinishing — Prepared by hand for the Matthews residence, September 2026</p>
+  </footer>
+
+</div>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  var btn = document.getElementById('themeToggle');
+  function current() {
+    if (root.dataset.theme) return root.dataset.theme;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+  btn.addEventListener('click', function () {
+    root.dataset.theme = current() === 'dark' ? 'light' : 'dark';
+  });
+})();
+</script>
+
+</body>
+</html>
