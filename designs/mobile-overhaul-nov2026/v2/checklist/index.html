@@ -85,7 +85,7 @@ footer{ margin-top: 48px; font-size: 14px; color: var(--ink-2); }
 
   <h2>How this was checked</h2>
   <ul class="plain">
-    <li><b>A touch test taps through all four screens</b> the way a finger would: 198 checks, run at three phone widths (360, 390 and 430 px), all passing. It confirms each control is present, in order, on screen, and does its job.</li>
+    <li><b>A touch test taps through all four screens</b> the way a finger would: 202 checks, run at three phone widths (360, 390 and 430 px), all passing. It confirms each control is present, in order, on screen, and does its job.</li>
     <li><b>Every still was rendered in light and dark</b> and reviewed for cut-off text, overlap and sideways scrolling.</li>
     <li><b>Not checked on a real iPhone.</b> All of this ran in Chrome's phone emulation. Blur and motion should be confirmed on a device before building.</li>
     <li><b>Names, addresses and numbers are invented.</b> Nothing here comes from customer data.</li>
@@ -180,7 +180,7 @@ const SCREENS = [
 ];
 const names = { d: 'Drawn', s: 'Same dialog', k: 'Kept as is' };
 const total = SCREENS.reduce((t, s) => t + s[1], 0);
-document.getElementById('nums').innerHTML = `<div><b>${total.toLocaleString('en-US')}</b><span>items listed from the code</span></div><div><b>4</b><span>phone screens</span></div><div><b>0</b><span>features removed</span></div><div><b>198</b><span>touch checks passing</span></div>`;
+document.getElementById('nums').innerHTML = `<div><b>${total.toLocaleString('en-US')}</b><span>items listed from the code</span></div><div><b>4</b><span>phone screens</span></div><div><b>0</b><span>features removed</span></div><div><b>202</b><span>touch checks passing</span></div>`;
 document.getElementById('screens').innerHTML = SCREENS.map(([name, n, rows]) => `<h2>${name}<small>${n} items</small></h2><div class="list">${rows.map(([a, b, c]) => `<div class="row"><b>${a}</b><span>${b}</span><em class="tag ${c}">${names[c]}</em></div>`).join('')}</div>`).join('');
 </script>
 </body>
