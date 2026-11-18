@@ -1,0 +1,284 @@
+[
+ {
+  "name": "01-sales-pipeline",
+  "file": "01-sales-pipeline.webp",
+  "caption": "Sales Pipeline, top of the page",
+  "dark": false
+ },
+ {
+  "name": "02-sales-quick-actions",
+  "file": "02-sales-quick-actions.webp",
+  "caption": "The plus button, same five actions",
+  "dark": false
+ },
+ {
+  "name": "03-sales-stages",
+  "file": "03-sales-stages.webp",
+  "caption": "Search, filters and the six stages",
+  "dark": false
+ },
+ {
+  "name": "04-sales-new-lead",
+  "file": "04-sales-new-lead.webp",
+  "caption": "New Lead open",
+  "dark": false
+ },
+ {
+  "name": "05-sales-lead-menu",
+  "file": "05-sales-lead-menu.webp",
+  "caption": "More Actions on a lead",
+  "dark": false
+ },
+ {
+  "name": "06-sales-lead-expanded",
+  "file": "06-sales-lead-expanded.webp",
+  "caption": "A lead card expanded",
+  "dark": false
+ },
+ {
+  "name": "07-sales-proposal-sent",
+  "file": "07-sales-proposal-sent.webp",
+  "caption": "Proposal Sent open",
+  "dark": false
+ },
+ {
+  "name": "08-sales-job-sold",
+  "file": "08-sales-job-sold.webp",
+  "caption": "Job Sold, card expanded",
+  "dark": false
+ },
+ {
+  "name": "09-sales-filters",
+  "file": "09-sales-filters.webp",
+  "caption": "Filters row open",
+  "dark": false
+ },
+ {
+  "name": "10-sales-tools",
+  "file": "10-sales-tools.webp",
+  "caption": "Tools menu",
+  "dark": false
+ },
+ {
+  "name": "11-sales-trackers",
+  "file": "11-sales-trackers.webp",
+  "caption": "Monthly Goal and Salespeople",
+  "dark": false
+ },
+ {
+  "name": "12-add-lead",
+  "file": "12-add-lead.webp",
+  "caption": "Add New Lead",
+  "dark": false
+ },
+ {
+  "name": "13-navigation",
+  "file": "13-navigation.webp",
+  "caption": "The menu, same sections and links",
+  "dark": false
+ },
+ {
+  "name": "14-notifications",
+  "file": "14-notifications.webp",
+  "caption": "Notifications",
+  "dark": false
+ },
+ {
+  "name": "20-appointments-today",
+  "file": "20-appointments-today.webp",
+  "caption": "Sales Appointments, Today",
+  "dark": false
+ },
+ {
+  "name": "21-appointments-card",
+  "file": "21-appointments-card.webp",
+  "caption": "A visit card with every action",
+  "dark": false
+ },
+ {
+  "name": "22-appointments-calendar",
+  "file": "22-appointments-calendar.webp",
+  "caption": "Calendar view",
+  "dark": false
+ },
+ {
+  "name": "23-appointments-day-panel",
+  "file": "23-appointments-day-panel.webp",
+  "caption": "Day panel",
+  "dark": false
+ },
+ {
+  "name": "24-appointments-map",
+  "file": "24-appointments-map.webp",
+  "caption": "Map view",
+  "dark": false
+ },
+ {
+  "name": "25-appointment-details",
+  "file": "25-appointment-details.webp",
+  "caption": "Appointment Details",
+  "dark": false
+ },
+ {
+  "name": "26-appointments-add",
+  "file": "26-appointments-add.webp",
+  "caption": "Add menu",
+  "dark": false
+ },
+ {
+  "name": "27-todays-progress",
+  "file": "27-todays-progress.webp",
+  "caption": "Today's Progress",
+  "dark": false
+ },
+ {
+  "name": "30-project-pipeline",
+  "file": "30-project-pipeline.webp",
+  "caption": "Project Pipeline, top of the page",
+  "dark": false
+ },
+ {
+  "name": "31-project-stages",
+  "file": "31-project-stages.webp",
+  "caption": "Filters and the six stages",
+  "dark": false
+ },
+ {
+  "name": "32-project-started",
+  "file": "32-project-started.webp",
+  "caption": "Project Started open",
+  "dark": false
+ },
+ {
+  "name": "33-project-card-expanded",
+  "file": "33-project-card-expanded.webp",
+  "caption": "A project card expanded",
+  "dark": false
+ },
+ {
+  "name": "34-project-more",
+  "file": "34-project-more.webp",
+  "caption": "More menu",
+  "dark": false
+ },
+ {
+  "name": "35-project-details",
+  "file": "35-project-details.webp",
+  "caption": "Project Details",
+  "dark": false
+ },
+ {
+  "name": "36-project-trackers",
+  "file": "36-project-trackers.webp",
+  "caption": "PM Commission and Project Manager Metrics",
+  "dark": false
+ },
+ {
+  "name": "40-calendar-monthly",
+  "file": "40-calendar-monthly.webp",
+  "caption": "Project Calendar, Monthly",
+  "dark": false
+ },
+ {
+  "name": "41-calendar-day-panel",
+  "file": "41-calendar-day-panel.webp",
+  "caption": "Day panel",
+  "dark": false
+ },
+ {
+  "name": "42-calendar-weekly",
+  "file": "42-calendar-weekly.webp",
+  "caption": "Weekly",
+  "dark": false
+ },
+ {
+  "name": "43-calendar-daily",
+  "file": "43-calendar-daily.webp",
+  "caption": "Daily",
+  "dark": false
+ },
+ {
+  "name": "44-calendar-legend",
+  "file": "44-calendar-legend.webp",
+  "caption": "Legend",
+  "dark": false
+ },
+ {
+  "name": "45-calendar-map",
+  "file": "45-calendar-map.webp",
+  "caption": "Map",
+  "dark": false
+ },
+ {
+  "name": "46-schedule-job",
+  "file": "46-schedule-job.webp",
+  "caption": "Schedule Job",
+  "dark": false
+ },
+ {
+  "name": "01-sales-pipeline-dark",
+  "file": "01-sales-pipeline-dark.webp",
+  "caption": "Sales Pipeline, top of the page, dark",
+  "dark": true
+ },
+ {
+  "name": "04-sales-new-lead-dark",
+  "file": "04-sales-new-lead-dark.webp",
+  "caption": "New Lead open, dark",
+  "dark": true
+ },
+ {
+  "name": "20-appointments-today-dark",
+  "file": "20-appointments-today-dark.webp",
+  "caption": "Sales Appointments, Today, dark",
+  "dark": true
+ },
+ {
+  "name": "22-appointments-calendar-dark",
+  "file": "22-appointments-calendar-dark.webp",
+  "caption": "Calendar view, dark",
+  "dark": true
+ },
+ {
+  "name": "25-appointment-details-dark",
+  "file": "25-appointment-details-dark.webp",
+  "caption": "Appointment Details, dark",
+  "dark": true
+ },
+ {
+  "name": "32-project-started-dark",
+  "file": "32-project-started-dark.webp",
+  "caption": "Project Started open, dark",
+  "dark": true
+ },
+ {
+  "name": "40-calendar-monthly-dark",
+  "file": "40-calendar-monthly-dark.webp",
+  "caption": "Project Calendar, Monthly, dark",
+  "dark": true
+ },
+ {
+  "name": "42-calendar-weekly-dark",
+  "file": "42-calendar-weekly-dark.webp",
+  "caption": "Weekly, dark",
+  "dark": true
+ },
+ {
+  "name": "50-finish-satin",
+  "file": "50-finish-satin.webp",
+  "caption": "Satin finish",
+  "dark": false
+ },
+ {
+  "name": "51-finish-matte",
+  "file": "51-finish-matte.webp",
+  "caption": "Matte finish",
+  "dark": false
+ },
+ {
+  "name": "52-finish-matte-dark",
+  "file": "52-finish-matte-dark.webp",
+  "caption": "Matte finish, dark",
+  "dark": true
+ }
+]

@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:,">
+<title>What is accounted for</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=DM+Sans:opsz,wght@9..40,400..700&display=swap" rel="stylesheet">
+<style>
+:root{ color-scheme: light dark; --ground: #EEF1F7; --card: #FFFFFF; --ink: #0B1220; --ink-2: #3A465E; --line: #D5DBE8; --brand: #1F6DF6; --brand-ink: #0D4FCF; --good: #0F7A41; --good-bg: #DDF3E6; --blue-bg: #DFE9FF; --grey-bg: #E6EAF2; --warn: #8A4B00; --warn-bg: #FBE8C4; }
+@media (prefers-color-scheme: dark){ :root{ --ground: #070B16; --card: #111A30; --ink: #F3F6FF; --ink-2: #C0C9DF; --line: #26314F; --brand: #4E90FF; --brand-ink: #9CC0FF; --good: #5BE08E; --good-bg: #123524; --blue-bg: #14264D; --grey-bg: #1B2540; --warn: #FFC561; --warn-bg: #3B2A0C; } }
+*{ box-sizing: border-box; }
+body{ margin: 0; background: var(--ground); color: var(--ink); font: 400 16px/1.5 "DM Sans", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+main{ max-width: 860px; margin: 0 auto; padding: 28px 16px 80px; }
+h1{ font: 700 clamp(30px, 7vw, 44px)/1.05 "Bricolage Grotesque", sans-serif; font-stretch: 84%; letter-spacing: -.02em; margin: 0 0 12px; text-wrap: balance; }
+h2{ font: 650 25px/1.15 "Bricolage Grotesque", sans-serif; font-stretch: 86%; letter-spacing: -.01em; margin: 44px 0 6px; text-wrap: balance; }
+h2 small{ font: 400 14px "DM Sans", sans-serif; color: var(--ink-2); letter-spacing: 0; margin-left: 8px; white-space: nowrap; }
+p{ margin: 0 0 12px; max-width: 68ch; }
+.lead{ font-size: 18px; color: var(--ink-2); }
+a{ color: var(--brand-ink); }
+.nav{ display: flex; gap: 16px; flex-wrap: wrap; margin: 18px 0 6px; font-weight: 600; }
+.nums{ display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin: 22px 0 8px; }
+.nums div{ background: var(--card); border-radius: 16px; padding: 14px 16px; border: 1px solid var(--line); }
+.nums b{ display: block; font: 650 30px/1 "Bricolage Grotesque", sans-serif; font-stretch: 84%; font-variant-numeric: tabular-nums; }
+.nums span{ font-size: 14px; color: var(--ink-2); }
+.key{ display: flex; gap: 8px 16px; flex-wrap: wrap; font-size: 14px; color: var(--ink-2); margin: 10px 0 0; }
+.tag{ display: inline-flex; align-items: center; gap: 6px; height: 24px; padding: 0 9px; border-radius: 12px; font-size: 12.5px; font-weight: 600; white-space: nowrap; }
+.tag::before{ content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+.tag.d{ color: var(--good); background: var(--good-bg); } .tag.s{ color: var(--brand-ink); background: var(--blue-bg); } .tag.k{ color: var(--ink-2); background: var(--grey-bg); }
+.tag.k::before{ border-radius: 2px; }
+.list{ background: var(--card); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; margin-top: 12px; }
+.row{ display: grid; grid-template-columns: 190px 1fr auto; gap: 6px 16px; padding: 13px 16px; border-top: 1px solid var(--line); align-items: start; }
+.row:first-child{ border-top: 0; }
+.row b{ font-weight: 600; }
+.row span{ color: var(--ink-2); font-size: 15px; }
+@media (max-width: 640px){ .row{ grid-template-columns: 1fr auto; } .row span{ grid-column: 1 / -1; grid-row: 2; } }
+ol.plain, ul.plain{ margin: 10px 0 0; padding-left: 22px; display: grid; gap: 10px; max-width: 70ch; }
+ol.plain li b, ul.plain li b{ font-weight: 600; }
+.src{ font-size: 13.5px; color: var(--ink-2); display: block; margin-top: 2px; }
+.box{ background: var(--warn-bg); color: var(--ink); border-radius: 18px; padding: 16px 18px; margin-top: 14px; }
+.box h3{ margin: 0 0 6px; font: 650 18px/1.2 "Bricolage Grotesque", sans-serif; font-stretch: 88%; color: var(--warn); }
+footer{ margin-top: 48px; font-size: 14px; color: var(--ink-2); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Every control on these four screens, and where it is in round two</h1>
+  <p class="lead">Before redrawing anything I listed every button, menu, filter, badge, dialog and rule on the four phone screens, straight from the app's code. Round two keeps all of it where it is today and changes only the look and the motion.</p>
+  <div class="nav"><a href="../">Open the prototype</a><a href="../stills/">Stills</a><a href="../../">Round one, for comparison</a></div>
+  <div class="nums" id="nums"></div>
+  <p class="key"><span><span class="tag d">Drawn</span> in the prototype, in the place it has today</span><span><span class="tag s">Same dialog</span> same fields and buttons, in the new sheet</span><span><span class="tag k">Kept as is</span> not a visual thing, or not shown in the prototype</span></p>
+
+  <h2>What is different from today, on purpose</h2>
+  <p>This is the whole list. Nothing else moved.</p>
+  <ol class="plain">
+    <li><b>Sales Appointments, control row.</b> Today the row holds seven controls but a phone only shows four. Progress, Cancelled and Add sit past the right edge of the screen. Round two keeps Refresh, Today, Calendar and Map exactly where they are and puts the three hidden ones on a second row right under them.<span class="src">Measured on the DEV site at 390 and 430 px wide: the three buttons start at 393 px.</span></li>
+    <li><b>Project Calendar, button rows.</b> Today "Schedule Project", "Daily" and "Legend" are partly cut off at the edges of the screen. Same buttons, same order, now sized to fit.<span class="src">Measured on the DEV site at 390 px wide: they run 9 to 24 px past the edge.</span></li>
+    <li><b>Project Pipeline, stat tiles.</b> Today the portfolio value and all four helper lines are cut short with "…". They are shown in full.<span class="src">Measured on the DEV site at 390 px wide.</span></li>
+    <li><b>Long stage names and summaries wrap</b> to a second line instead of being cut off.</li>
+    <li><b>Dialogs rise from the bottom as sheets</b> with a handle to pull down. Their titles, fields and buttons are unchanged.</li>
+    <li><b>Emoji inside chips and badges are drawn as icons</b> (Hot, Warm, Cold, Freezing, Paid, Unpaid, the goal milestones). The words stay.</li>
+    <li><b>Small labels use normal capitalisation</b> instead of all capitals.</li>
+  </ol>
+  <p style="margin-top:14px">Dropped from round one, because the app does not work that way: the bottom tab bar (navigation stays in the menu), dragging a card to another stage (cards move only through their own buttons, as today), and the swipeable stage rail.</p>
+
+  <div class="box">
+    <h3>Gaps I found in the app as it is today</h3>
+    <p>None of these come from the redesign. I have not changed anything in the app. Tell me which ones you want fixed when this is built.</p>
+    <ul class="plain">
+      <li><b>Sales Appointments: Progress, Cancelled and Add are off screen on phones.</b> Adding is still possible from the Calendar view and from the pipeline's plus button. Today's Progress and Cancelled Appointments cannot be opened from this screen on a phone.<span class="src">Checked by measuring the live DEV page.</span></li>
+      <li><b>Project Pipeline: "Cancel Project" and "Unarchive" never show on phones.</b> They exist for admins on desktop.<span class="src">Checked in the code: the phone card is not told the user is an admin.</span></li>
+      <li><b>Project Pipeline filters: only Tag filters anything.</b> Project Manager, Project Status and Start Date Range can be set but do not change the board.<span class="src">Checked in the code.</span></li>
+      <li><b>Project card, "Assign to Project Manager": the list shows salespeople, admins and owners.</b> People whose role is project manager are not in it. They can still be assigned from Project Details and from Schedule Job. The prototype shows project managers in this list.<span class="src">Checked in the code.</span></li>
+      <li><b>Tapping a date does not carry that date into scheduling</b>, on either calendar.<span class="src">From the code inventory; I did not re-check this one by hand.</span></li>
+      <li><b>Project Calendar: Cancelled Appointments has no button on phones.</b><span class="src">From the code inventory; not re-checked by hand.</span></li>
+      <li><b>Sales Pipeline: unarchiving a lead shows the message "Lead Archived".</b><span class="src">From the code inventory; not re-checked by hand.</span></li>
+      <li><b>Sales Pipeline filters apply to lead cards only.</b> Stage, source, proposal status, value, tag and date do not filter proposal cards. This may be intended.<span class="src">From the code inventory; not re-checked by hand.</span></li>
+    </ul>
+  </div>
+
+  <div id="screens"></div>
+
+  <h2>How this was checked</h2>
+  <ul class="plain">
+    <li><b>A touch test taps through all four screens</b> the way a finger would: 198 checks, run at three phone widths (360, 390 and 430 px), all passing. It confirms each control is present, in order, on screen, and does its job.</li>
+    <li><b>Every still was rendered in light and dark</b> and reviewed for cut-off text, overlap and sideways scrolling.</li>
+    <li><b>Not checked on a real iPhone.</b> All of this ran in Chrome's phone emulation. Blur and motion should be confirmed on a device before building.</li>
+    <li><b>Names, addresses and numbers are invented.</b> Nothing here comes from customer data.</li>
+  </ul>
+  <footer>SnapCoat mobile, round two. Nothing in the app has been changed.</footer>
+</main>
+<script>
+const D = 'd', S = 's', K = 'k';
+const SCREENS = [
+  ['On every screen', 49, [
+    ['Top bar', 'Menu button with the unread-text badge · page title · live clock line · Search everything · Generate Override Code (admins) · Report a Bug · Notifications (bell, or red count) · profile picture', D],
+    ['Menu', 'Opens over a blurred backdrop; closes with the X, a tap outside, a left swipe, or after choosing a link · Locations · Find a feature · the ten sections (Today, Sales, Projects, Inbox, Money, Insights, People, Growth, Learn, Settings) with their links · EN / ES · light and dark', D],
+    ['Help strip', '"Want to know how to use this feature…" · help card with title, description, five steps, tips and the X', D],
+    ['Notifications', 'Clear menu · All / Unread / Read · type filter · grouped by day · delete · View all notifications', D],
+    ['Profile menu', 'Edit Profile · Change Password · Generate Override Code · Connect to Zapier · Training · Report Bug · Language · Log Out', D],
+    ['Clock button', 'Floating Clock In / Clocked in button · Time clock', D],
+    ['Dialogs', 'Search everything · Generate Discount Code · Connect with Zapier (About drawn, other tabs unchanged)', S],
+    ['Not shown', 'Platform announcement banner · seasonal decoration · Edit Profile and Change Password dialogs', K],
+    ['Behind the scenes', 'Scroll locking · presence · subscription blocking · hidden-page redirects', K],
+  ]],
+  ['Sales Pipeline', 316, [
+    ['Client Success card', 'Title · text · Book your Client Success Call', D],
+    ['Title row', '"Sales pipeline" · Live / Refreshing dot · today\'s date · plus button', D],
+    ['Plus button', 'Add Lead · Sales Appointment · Non-Sales Appointment · Create Proposal · Block Off Time (admins) · fans out downward with labels over a blurred backdrop · X closes', D],
+    ['Metrics', 'Pipeline value · Today\'s sales · Speed to lead · Set rate · Appts booked, each with its detail line · inbound calls line · needs follow-up line', D],
+    ['Lost Leads and Tools', 'Lost Leads · Tools: Zapier Integration, View Archived Leads / Return to Active Pipeline (admins)', D],
+    ['Search and filters', 'Search field (applies on Enter or the magnifier) · Filters with count and reset · All Stages · All Salespeople · All Sources · All Proposals · Value range · Tag · Date range · Reset', D],
+    ['Stage list', '"6 stages" · "Tap a stage to expand" · "Swipe up to browse · tap a card for actions" · six rows with number, title, count, total, summary, chevron and stage color · all start collapsed · first cards, then "N more"', D],
+    ['Lead card', 'Grip · name · Note (count) · More Actions · project line · amount with "est." · owner, source, age, AI Setter and AI score chips · SMS Opt-Out · Outside Service Area · AI REVIEW · payment badges · Requested row · appointment row · Schedule Appointment / Create Proposal / Non-Sales Appointment · Auto on / off · Create proposal / Edit appointment · expand', D],
+    ['Lead card, expanded', 'Contact Info with call and email links · Project Info · address · Created · action buttons · View Details, Edit Lead, More Actions · Salesperson', D],
+    ['More Actions menu', 'View Details · Edit Lead · Lead Notes · View Color Renders · Assign to Salesperson · Disqualify Lead · Archive Lead (admins) · Unarchive and Delete Permanently (archived view)', D],
+    ['Proposal card', 'Grip · name · Note · Proposal actions · title and type · number · amount with Cost and Tax · owner, status, Won / Lost, AI Closer and payment badges · Sold by · Created · Resume / View / Schedule Project / Revise · Auto on / off · View Customer · expand · Owner / Sold by', D],
+    ['Proposal actions menu', 'Resume or View Proposal · Delete Draft · View Invoice · Edit Proposal · Reject Proposal · Revise Proposal · Schedule Project', D],
+    ['Empty states', 'Active view · archived view · empty stage', D],
+    ['Monthly Goal', 'Three tiles · edit pencil and goal editor · details · Sales Breakdown · status line', D],
+    ['Salesperson Metrics', 'Month strip · a card per salesperson · Set Goal / Edit Goal', D],
+    ['Commission Tracker', 'Shown instead of Monthly Goal for commission users: period, tiles, Performance Tier, Recent Activity, How It\'s Calculated', K],
+    ['Dialogs drawn', 'Add New Lead · Create Proposal · Block Off Time · Lost Leads · Edit Lead · Schedule Job · Appointment Details · Edit Appointment · Lead Notes · Saved Color Renders · Reject Proposal · Delete Draft · Disqualify Lead · Review Required · Archive Lead · Permanent delete · AI Setter · AI Closer · Set Sales Goal', S],
+    ['Dialogs, first screen drawn', 'Appointment scheduler (Select Customer; the date, time, details and confirm steps and their override prompts are unchanged) · Lead Details (Overview; the other five tabs are unchanged) · Customer Details (its twelve tabs are unchanged)', S],
+    ['Behind the scenes', 'Stages change only through actions, no dragging · live updates · the link from search to a lead · loading and error states · who can see what', K],
+  ]],
+  ['Sales Appointments', 213, [
+    ['Hero card', '"Sales Calendar · Live" · Appointments · count scheduled', D],
+    ['Salesperson select', 'All Salespeople and each person with their color', D],
+    ['Control row', 'Refresh · Today · Calendar · Map (admins) · Progress · Cancelled · Add: Sales Appointment, Non-Sales Appointment, Block Off Time', D],
+    ['Today view', 'Day arrows · date · Today badge · Jump to Today · count bar · empty state', D],
+    ['Visit card', 'Time · value, proposal status and Recorded badges · title, customer, address, notes · AI Visit Recap · Assigned · Created by · On My Way · Call · Navigate · Proposal · Notes · "Appointment X of N"', D],
+    ['Blocked time', 'Striped card with time or ALL DAY, reason and person · opens Edit Time Block', D],
+    ['Calendar view', 'Month arrows · weekday row · today marker · up to three entries a day · "+N more" · blocked-time entries · day panel with Add Appointment · an empty day opens the type picker', D],
+    ['Map view', 'Date selector · center, fresh GPS, satellite, routes and legend buttons · salesperson and stop markers with their details · Salesperson Colors · status bar', D],
+    ['Dialogs drawn', 'Appointment Details with start and complete · Edit Appointment · Appointment Type · Block Off Time · Edit Time Block · Cancelled Appointments · Today\'s Progress · On My Way · Navigate with · Lead Notes · Cancel Appointment', S],
+    ['Dialogs unchanged', 'Call Recordings · Sales Recording · Create Change Order confirmation · the en-route panel after sending an ETA', K],
+    ['Behind the scenes', 'Who sees the Map · refresh timing · live updates · proposal linking', K],
+  ]],
+  ['Project Pipeline', 180, [
+    ['Hero card', '"Production workspace" · Live / Refreshing · title · description · plus button: Schedule Project', D],
+    ['Stat tiles', 'Portfolio value · Projects · In production · Current view', D],
+    ['Refresh and More', 'Refresh · More: View Archived Projects / Return to Active Projects, Cancelled Projects (admins)', D],
+    ['Filters card', 'Project Manager · Tag · Project Status · Start Date Range · Clear', D],
+    ['Stage list', 'Six rows with color strip, title, "N projects · total" and chevron · empty stage text · visit indicator above each card', D],
+    ['Project card', 'Source icon · automations On / Off · Note (count) · chevron · name · source and type chips · AI badges · IN PERSON PAYMENT REQUIRED / DEPOSIT PENDING · PAID / UNPAID · "(N proposal • total)" · tags with remove · + Tag · labor badges · project manager chip', D],
+    ['Project card, expanded', 'Contact Info · Project Info · address · Created · Assigned Labor with remove · Work Order: Admin Copy, Sub Copy · Schedule Project · Start Project · Assign Labor · Complete Project · Pause Project · Project Photos and camera · Resume Project · Reschedule · Collect Payment · View Invoice · View Details, Edit, More Actions · Project Manager', D],
+    ['More Actions menu', 'Lead Notes · View Color Renders · Assign to Project Manager', D],
+    ['Empty states', 'Active view · archived view', D],
+    ['PM Commission', 'Status chip · refresh · Earned, Average GP, Projects, Revenue · reporting period · Base, GP Bonus, Reviews · GP Performance · Costed Projects and Reviews', D],
+    ['Project Manager Metrics', 'Produced, Completed, Managers · a card per manager with goal, trend and Set Goal / Edit Goal', D],
+    ['Dialogs drawn', 'Cancelled Projects · Saved Color Renders · Review Required · Set Production Goal', S],
+    ['Dialogs unchanged', 'Cancel Project and Archive Project (in the code, not reachable on phones today) · the two PM commission detail lists · quick photo camera · the locked "PRO" versions', K],
+    ['Behind the scenes', 'Stages change only through the buttons · live updates · the link from search to a project', K],
+  ]],
+  ['Project Calendar', 114, [
+    ['Google Calendar line', 'Checking · Connected with Disconnect · Connect Google Calendar', D],
+    ['Filters card', 'Project Manager · Project Status · Start Date Range · Clear', D],
+    ['Action row', 'Refresh · Import · Schedule Project', D],
+    ['View row', 'Daily · Weekly · Monthly · map · Legend', D],
+    ['Monthly', 'Month Production line · month arrows · weekday row · Week Production lines · today marker · multi-day bars with time, name, type and completed check · single-day entries · "+N more" · day panel with Add Appointment', D],
+    ['Weekly', 'Week arrows · Week Production with By PM · seven day blocks · entries with position marker, name, type, dates and status', D],
+    ['Daily', 'Day arrows · Today badge · Jump to Today · count strip · empty state · card with time, value, status, Recorded and AI Visit Recap · On My Way · Call · Navigate · Notes · "Appointment X of N"', D],
+    ['Map', 'Week header · Total, Visited, Not Visited, Compliance · All PMs, All Status, Sort by · project list with Navigate', D],
+    ['Dialogs', 'Import Jobs from Dripjobs (file step drawn; preview, import and result steps unchanged) · On My Way · Navigate with', S],
+    ['Unchanged', 'Cancelled Appointments (desktop only today) · blocked-time card', K],
+  ]],
+  ['Dialogs both project screens share', 132, [
+    ['Schedule Job', 'Project picker or selected project · Start Date · Start Time · Project Manager · Duration · Subcontractor Pay · Notes · Schedule Job', S],
+    ['Reschedule Project', 'Start and end date and time · Duration · Assign Project Manager · Save Changes', S],
+    ['Project Details', 'Header · nine tabs (Info and Contact drawn; Talk, Activity, Paint, Pics, Files, Colors and Done unchanged) · the stage buttons · Edit · Delete · Proposal', S],
+    ['Assign Labor', 'Currently Assigned · Assignment Type · Select Employees or Subcontractor · Notes · Assign Labor', S],
+    ['Collect Final Payment', 'Amounts · completion form gate · Collect Signature Now · Send Completion Form · Collect', S],
+    ['Project Photos', 'Upload New Photo · Photo Type · Room/Area · Caption · Existing Photos', S],
+    ['Lead Notes and Edit Lead', 'Same dialogs as on the sales screens', S],
+  ]],
+];
+const names = { d: 'Drawn', s: 'Same dialog', k: 'Kept as is' };
+const total = SCREENS.reduce((t, s) => t + s[1], 0);
+document.getElementById('nums').innerHTML = `<div><b>${total.toLocaleString('en-US')}</b><span>items listed from the code</span></div><div><b>4</b><span>phone screens</span></div><div><b>0</b><span>features removed</span></div><div><b>198</b><span>touch checks passing</span></div>`;
+document.getElementById('screens').innerHTML = SCREENS.map(([name, n, rows]) => `<h2>${name}<small>${n} items</small></h2><div class="list">${rows.map(([a, b, c]) => `<div class="row"><b>${a}</b><span>${b}</span><em class="tag ${c}">${names[c]}</em></div>`).join('')}</div>`).join('');
+</script>
+</body>
+</html>

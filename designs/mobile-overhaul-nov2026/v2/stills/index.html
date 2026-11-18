@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:,">
+<title>Round two stills</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=DM+Sans:opsz,wght@9..40,400..700&display=swap" rel="stylesheet">
+<style>
+:root{ color-scheme: dark; }
+*{ box-sizing: border-box; }
+body{ margin: 0; background: #0A0E18; color: #F3F6FF; font: 400 16px/1.5 "DM Sans", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+main{ max-width: 1240px; margin: 0 auto; padding: 28px 16px 80px; }
+h1{ font: 700 clamp(30px, 7vw, 46px)/1.05 "Bricolage Grotesque", sans-serif; font-stretch: 84%; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+h2{ font: 650 24px/1.15 "Bricolage Grotesque", sans-serif; font-stretch: 86%; margin: 44px 0 14px; }
+p{ margin: 0 0 12px; color: #B7C2DC; max-width: 66ch; }
+a{ color: #9CC0FF; }
+.nav{ display: flex; gap: 16px; flex-wrap: wrap; margin: 16px 0 0; font-weight: 600; }
+.grid{ display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 22px 18px; }
+@media (max-width: 520px){ .grid{ grid-template-columns: 1fr 1fr; gap: 16px 10px; } }
+figure{ margin: 0; }
+figure a{ display: block; }
+img{ width: 100%; height: auto; aspect-ratio: 390 / 844; display: block; border-radius: 22px; background: #151C2E; box-shadow: 0 0 0 1px #2B3348, 0 18px 40px rgb(0 0 0 / .45); }
+figcaption{ font-size: 14px; color: #C9D2E8; margin-top: 8px; line-height: 1.35; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Round two: same layout, new coat</h1>
+  <p>Every screen keeps the regions, labels and controls it has today, in the same order. Only the look and the motion change. Tap a still to see it full size.</p>
+  <div class="nav"><a href="../">Open the prototype</a><a href="../checklist/">What is accounted for</a></div>
+  <div id="out"></div>
+</main>
+<script>
+const GROUPS = [['0', 'Sales Pipeline'], ['1', 'Sales Pipeline'], ['2', 'Sales Appointments'], ['3', 'Project Pipeline'], ['4', 'Project Calendar'], ['5', 'Finishes']];
+fetch('manifest.json').then((r) => r.json()).then((list) => {
+  const by = new Map();
+  list.forEach((s) => { const g = (GROUPS.find(([k]) => s.name.startsWith(k)) || ['', 'More'])[1]; if (!by.has(g)) by.set(g, []); by.get(g).push(s); });
+  document.getElementById('out').innerHTML = [...by].map(([g, items]) => `<h2>${g}</h2><div class="grid">${items.map((s) => `<figure><a href="${s.file}"><img src="${s.file}" alt="${s.caption}" loading="lazy" width="780" height="1688"></a><figcaption>${s.caption}</figcaption></figure>`).join('')}</div>`).join('');
+}).catch(() => { document.getElementById('out').innerHTML = '<p>The stills could not be loaded. Reload the page.</p>'; });
+</script>
+</body>
+</html>
