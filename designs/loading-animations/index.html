@@ -62,34 +62,24 @@
 
   /* ── 1 · Wet stroke ───────────────────────────────────────────── */
   .splash { position: absolute; inset: 0; z-index: 2; display: grid; place-items: center; background: inherit; }
-  .mark { display: grid; justify-items: center; gap: 18px; width: 100%; }
-  .tile { width: 86px; height: 86px; border-radius: 24px; background: #0b0f1a; display: grid; place-items: center; box-shadow: 0 16px 34px rgb(22 38 84 / 0.3), inset 0 1px 0 rgb(255 255 255 / 0.16); opacity: 0; }
-  .tile span { font: 700 62px/1 'DM Sans', system-ui, sans-serif; margin-top: -8px; background: linear-gradient(90deg, #2563eb, #3b82f6 25%, #8b5cf6 50%, #c026d3 75%, #ec4899); -webkit-background-clip: text; background-clip: text; color: transparent; }
-  .stroke { width: 86%; height: auto; overflow: visible; }
-  .paint, .streak, .shine { fill: none; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; }
-  .paint { stroke: url(#wsGrad); stroke-width: 58; filter: drop-shadow(0 10px 14px rgb(99 62 220 / 0.3)); }
-  .streak { stroke: rgb(255 255 255 / 0.2); stroke-width: 2.2; }
-  .shine { stroke: rgb(255 255 255 / 0.55); stroke-width: 7; }
-  .word { font: 700 31px var(--display); font-stretch: 86%; letter-spacing: -0.02em; fill: #fff; }
-  .wipe { transform: scaleX(0); transform-origin: 0 0; }
-  .gloss { transform: translateX(-70%); opacity: 0; }
-  .splash .wait { position: absolute; bottom: 44px; left: 0; right: 0; text-align: center; font-size: 12.5px; color: var(--ink3); opacity: 0; }
-
-  .run .tile { animation: tile-in 0.5s var(--spring) both; }
-  .run .paint { animation: draw 0.62s 0.28s var(--ease) forwards; }
-  .run .streak { animation: draw 0.62s 0.34s var(--ease) forwards; }
-  .run .shine { animation: draw 0.62s 0.3s var(--ease) forwards, dry 0.9s 1.25s ease forwards; }
-  .run .wipe { animation: wipe 0.62s 0.32s var(--ease) forwards; }
-  .run .gloss { animation: gloss 0.85s 0.82s var(--ease) forwards; }
-  .run .splash { animation: lift 0.5s 1.95s var(--ease) forwards; }
+  .logo { width: 90%; height: auto; overflow: visible; }
+  .lw { font: 700 54px 'DM Sans', Arial, sans-serif; letter-spacing: -1px; }
+  .pass { fill: none; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; }
+  .film { opacity: 0.34; }
+  .film .lit { opacity: 0.9; }
+  .gloss { transform: translateX(-140px) skewX(-18deg); opacity: 0; }
+  .run .p1 { animation: draw 0.55s 0.2s var(--ease) forwards; }
+  .run .p2 { animation: draw 0.55s 0.68s var(--ease) forwards; }
+  .run .film { animation: dry 0.85s 1.5s ease forwards; }
+  .run .gloss { animation: gloss 0.95s 1.3s var(--ease) forwards; }
+  .run .splash { animation: lift 0.5s 2.45s var(--ease) forwards; }
   .run .app > * { animation: rise 0.6s var(--ease) backwards; }
-  #s1.run .app > :nth-child(1) { animation-delay: 2s; } #s1.run .app > :nth-child(2) { animation-delay: 2.07s; }
-  #s1.run .app > :nth-child(3) { animation-delay: 2.14s; } #s1.run .app > :nth-child(4) { animation-delay: 2.21s; } #s1.run .app > :nth-child(5) { animation-delay: 2.28s; }
-  @keyframes tile-in { from { opacity: 0; scale: 0.6; translate: 0 10px; } to { opacity: 1; } }
+  #s1.run .app > :nth-child(1) { animation-delay: 2.5s; } #s1.run .app > :nth-child(2) { animation-delay: 2.57s; }
+  #s1.run .app > :nth-child(3) { animation-delay: 2.64s; } #s1.run .app > :nth-child(4) { animation-delay: 2.71s; } #s1.run .app > :nth-child(5) { animation-delay: 2.78s; }
   @keyframes draw { to { stroke-dashoffset: 0; } }
   @keyframes wipe { to { transform: scaleX(1); } }
-  @keyframes gloss { 0% { transform: translateX(-70%); opacity: 0; } 20% { opacity: 1; } 100% { transform: translateX(120%); opacity: 0; } }
-  @keyframes dry { to { stroke: rgb(255 255 255 / 0.16); } }
+  @keyframes gloss { 0% { transform: translateX(-140px) skewX(-18deg); opacity: 0; } 18% { opacity: 1; } 100% { transform: translateX(340px) skewX(-18deg); opacity: 0; } }
+  @keyframes dry { to { opacity: 0; } }
   @keyframes lift { to { opacity: 0; scale: 1.04; visibility: hidden; } }
   @keyframes rise { from { opacity: 0; translate: 0 16px; scale: 0.97; } }
 
@@ -127,7 +117,7 @@
   <p class="lede">Two previews for SnapCoat. Tap a phone or Replay to watch it again. Preview only: nothing here is in the app yet.</p>
 
   <section>
-    <h2>1 · Wet stroke</h2>
+    <h2>1 · Painting the logo</h2>
     <p class="where">When the app opens.</p>
     <div class="stage" id="s1">
       <div class="app">
@@ -138,27 +128,32 @@
         <div class="card"><h3>Won</h3><p>5 jobs this month</p><span class="amt">$52,900</span><span class="chip">This month</span></div>
       </div>
       <div class="splash">
-        <div class="mark">
-          <div class="tile"><span>s</span></div>
-          <svg class="stroke" viewBox="0 0 300 96" aria-label="SnapCoat">
-            <defs>
-              <linearGradient id="wsGrad" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#2f7bf7"/><stop offset="0.55" stop-color="#7b5cfa"/><stop offset="1" stop-color="#d946a8"/></linearGradient>
-              <linearGradient id="wsGloss" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset="0.5" stop-color="#fff" stop-opacity="0.6"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
-              <mask id="wsShape"><path d="M38 50 C 96 40, 160 58, 262 46" pathLength="1" stroke="#fff" stroke-width="58" stroke-linecap="round" fill="none"/></mask>
-              <clipPath id="wsReveal"><rect class="wipe" x="0" y="0" width="300" height="96"/></clipPath>
-            </defs>
-            <path class="paint" d="M38 50 C 96 40, 160 58, 262 46" pathLength="1"/>
-            <path class="streak" d="M30 36 C 96 27, 160 45, 272 33" pathLength="1"/>
-            <path class="streak" d="M26 63 C 96 54, 160 72, 276 59" pathLength="1"/>
-            <path class="shine" d="M44 31 C 100 22, 160 40, 256 28" pathLength="1"/>
-            <g clip-path="url(#wsReveal)"><text class="word" x="150" y="59" text-anchor="middle">SnapCoat</text></g>
-            <g mask="url(#wsShape)"><rect class="gloss" x="0" y="0" width="150" height="96" fill="url(#wsGloss)" transform="skewX(-18)"/></g>
-          </svg>
-        </div>
+        <svg class="logo" viewBox="0 0 300 110" role="img" aria-label="snapcoat">
+          <defs>
+            <linearGradient id="lgBrand" gradientUnits="userSpaceOnUse" x1="30" y1="0" x2="270" y2="0"><stop offset="0" stop-color="#2563EB"/><stop offset="0.25" stop-color="#3B82F6"/><stop offset="0.5" stop-color="#8B5CF6"/><stop offset="0.75" stop-color="#C026D3"/><stop offset="1" stop-color="#EC4899"/></linearGradient>
+            <linearGradient id="lgShine" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset="0.5" stop-color="#fff" stop-opacity="0.85"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+            <mask id="lgPainted" maskUnits="userSpaceOnUse" x="-20" y="-10" width="340" height="130">
+              <path class="pass p1" d="M6 40 C 80 31, 190 47, 294 36" pathLength="1" stroke="#fff" stroke-width="48"/>
+              <path class="pass p2" d="M294 71 C 212 80, 108 62, 6 73" pathLength="1" stroke="#fff" stroke-width="48"/>
+            </mask>
+            <mask id="lgLetters" maskUnits="userSpaceOnUse" x="-20" y="-10" width="340" height="130"><text class="lw" x="150" y="70" text-anchor="middle" fill="#fff">snapcoat<tspan font-size="21.6" dy="-19">©</tspan></text></mask>
+          </defs>
+          <!-- the wet coat the brush lays down; it dries away and leaves the logo -->
+          <g class="film">
+            <path class="pass p1" d="M6 40 C 80 31, 190 47, 294 36" pathLength="1" stroke="url(#lgBrand)" stroke-width="48"/>
+            <path class="pass p2" d="M294 71 C 212 80, 108 62, 6 73" pathLength="1" stroke="url(#lgBrand)" stroke-width="48"/>
+            <path class="pass p1 lit" d="M10 23 C 82 14, 190 30, 290 20" pathLength="1" stroke="#fff" stroke-width="3"/>
+            <path class="pass p2 lit" d="M290 55 C 212 64, 108 46, 10 57" pathLength="1" stroke="#fff" stroke-width="3"/>
+          </g>
+          <!-- the real logo, there wherever paint has been laid -->
+          <g mask="url(#lgPainted)"><text class="lw" x="150" y="70" text-anchor="middle" fill="url(#lgBrand)">snapcoat<tspan font-size="21.6" dy="-19">©</tspan></text></g>
+          <!-- the wet shine, on the letters only -->
+          <g mask="url(#lgLetters)"><rect class="gloss" x="0" y="0" width="120" height="110" fill="url(#lgShine)"/></g>
+        </svg>
       </div>
     </div>
     <div class="row"><button class="pill go" type="button" data-replay="s1">Replay</button></div>
-    <p class="note">One brush stroke lays the coat, a wet highlight slides across it, it dries, and the app rises in. On a slow connection the stroke simply stays wet (the highlight keeps passing) until the app is ready.</p>
+    <p class="note">The brush makes two passes and the real SnapCoat logo appears in the wet coat. A shine slides across the letters, the coat dries off, and the app rises in. On a slow connection the logo simply stays wet (the shine keeps passing) until the app is ready.</p>
   </section>
 
   <section>
