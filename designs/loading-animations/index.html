@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>SnapCoat loading animations (preview)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ground: #eef1f7; --ink: #0b1220; --ink2: #3a465e; --ink3: #6b768c;
+    --glass: rgb(255 255 255 / 0.74); --rim: rgb(255 255 255 / 0.95); --hair: rgb(11 18 32 / 0.08);
+    --bone: rgb(11 18 32 / 0.09); --sheen: rgb(255 255 255 / 0.85);
+    --shadow: 0 10px 30px rgb(22 38 84 / 0.13), 0 2px 6px rgb(22 38 84 / 0.07);
+    --accent: linear-gradient(120deg, #2f7bf7, #7b5cfa 55%, #d946a8);
+    --spring: cubic-bezier(0.34, 1.45, 0.64, 1); --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    --display: 'Bricolage Grotesque', 'DM Sans', system-ui, sans-serif;
+  }
+  body.dark {
+    --ground: #070b14; --ink: #f2f5fb; --ink2: #c0c9da; --ink3: #8e99ad;
+    --glass: rgb(30 39 60 / 0.62); --rim: rgb(255 255 255 / 0.14); --hair: rgb(255 255 255 / 0.08);
+    --bone: rgb(255 255 255 / 0.1); --sheen: rgb(255 255 255 / 0.22);
+    --shadow: 0 14px 34px rgb(0 0 0 / 0.5);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: 'DM Sans', system-ui, sans-serif; color: var(--ink); background: var(--ground); -webkit-font-smoothing: antialiased; transition: background 0.3s, color 0.3s; }
+  .page { max-width: 760px; margin: 0 auto; padding: 22px 16px 60px; }
+  header { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 6px; }
+  h1 { font: 700 26px/1.1 var(--display); font-stretch: 86%; letter-spacing: -0.02em; margin: 0; }
+  .lede { color: var(--ink2); margin: 6px 0 22px; font-size: 15px; line-height: 1.45; }
+  h2 { font: 700 20px/1.15 var(--display); font-stretch: 86%; letter-spacing: -0.015em; margin: 0 0 4px; }
+  .where { color: var(--ink3); font-size: 14px; margin: 0 0 14px; }
+  section { margin-bottom: 38px; }
+  .pill { appearance: none; border: 0; border-radius: 999px; padding: 11px 18px; font: 600 15px 'DM Sans', system-ui, sans-serif; color: var(--ink); background: var(--glass); box-shadow: var(--shadow), inset 0 1px 0 var(--rim); cursor: pointer; transition: scale 0.35s var(--spring); }
+  .pill:active { scale: 0.95; }
+  .pill.go { color: #fff; background: var(--accent); }
+  .row { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+
+  /* The phone */
+  .stage { position: relative; width: min(100%, 340px); height: 600px; margin: 0 auto; border-radius: 38px; overflow: hidden; isolation: isolate;
+    background:
+      radial-gradient(120% 50% at 0% 0%, rgb(86 140 255 / 0.2), transparent 62%),
+      radial-gradient(110% 46% at 100% 34%, rgb(217 70 168 / 0.14), transparent 66%),
+      radial-gradient(120% 50% at 30% 100%, rgb(40 200 190 / 0.14), transparent 62%), var(--ground);
+    box-shadow: 0 30px 60px rgb(22 38 84 / 0.22), 0 0 0 9px #0b0f1a, 0 0 0 10px rgb(255 255 255 / 0.12); }
+  body.dark .stage { box-shadow: 0 30px 60px rgb(0 0 0 / 0.6), 0 0 0 9px #05070c, 0 0 0 10px rgb(255 255 255 / 0.16); }
+
+  /* The app behind both loaders */
+  .app { position: absolute; inset: 0; padding: 14px 14px 0; display: flex; flex-direction: column; gap: 12px; }
+  .bar { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-radius: 22px; background: var(--glass); box-shadow: var(--shadow), inset 0 1px 0 var(--rim); }
+  .bar b { font: 700 17px var(--display); font-stretch: 86%; flex: 1; }
+  .dot { width: 34px; height: 34px; border-radius: 50%; background: var(--glass); box-shadow: inset 0 1px 0 var(--rim), 0 2px 8px rgb(22 38 84 / 0.1); }
+  .dot.me { background: var(--accent); }
+  .card { position: relative; overflow: hidden; border-radius: 22px; padding: 16px; min-height: 104px; background: var(--glass); box-shadow: var(--shadow), inset 0 1px 0 var(--rim), inset 0 0 0 1px var(--hair); }
+  .card h3 { margin: 0 0 3px; font: 700 17px var(--display); font-stretch: 86%; letter-spacing: -0.01em; }
+  .card p { margin: 0; color: var(--ink2); font-size: 13.5px; }
+  .card .amt { position: absolute; right: 16px; top: 15px; font: 700 17px var(--display); font-stretch: 86%; font-variant-numeric: tabular-nums; }
+  .chip { display: inline-block; margin-top: 12px; padding: 5px 11px; border-radius: 999px; font-size: 12px; font-weight: 600; color: #0d4fcf; background: rgb(31 109 246 / 0.12); }
+  body.dark .chip { color: #a9c6ff; background: rgb(96 150 255 / 0.18); }
+
+  /* ── 1 · Wet stroke ───────────────────────────────────────────── */
+  .splash { position: absolute; inset: 0; z-index: 2; display: grid; place-items: center; background: inherit; }
+  .mark { display: grid; justify-items: center; gap: 18px; width: 100%; }
+  .tile { width: 86px; height: 86px; border-radius: 24px; background: #0b0f1a; display: grid; place-items: center; box-shadow: 0 16px 34px rgb(22 38 84 / 0.3), inset 0 1px 0 rgb(255 255 255 / 0.16); opacity: 0; }
+  .tile span { font: 700 62px/1 'DM Sans', system-ui, sans-serif; margin-top: -8px; background: linear-gradient(90deg, #2563eb, #3b82f6 25%, #8b5cf6 50%, #c026d3 75%, #ec4899); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .stroke { width: 86%; height: auto; overflow: visible; }
+  .paint, .streak, .shine { fill: none; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; }
+  .paint { stroke: url(#wsGrad); stroke-width: 58; filter: drop-shadow(0 10px 14px rgb(99 62 220 / 0.3)); }
+  .streak { stroke: rgb(255 255 255 / 0.2); stroke-width: 2.2; }
+  .shine { stroke: rgb(255 255 255 / 0.55); stroke-width: 7; }
+  .word { font: 700 31px var(--display); font-stretch: 86%; letter-spacing: -0.02em; fill: #fff; }
+  .wipe { transform: scaleX(0); transform-origin: 0 0; }
+  .gloss { transform: translateX(-70%); opacity: 0; }
+  .splash .wait { position: absolute; bottom: 44px; left: 0; right: 0; text-align: center; font-size: 12.5px; color: var(--ink3); opacity: 0; }
+
+  .run .tile { animation: tile-in 0.5s var(--spring) both; }
+  .run .paint { animation: draw 0.62s 0.28s var(--ease) forwards; }
+  .run .streak { animation: draw 0.62s 0.34s var(--ease) forwards; }
+  .run .shine { animation: draw 0.62s 0.3s var(--ease) forwards, dry 0.9s 1.25s ease forwards; }
+  .run .wipe { animation: wipe 0.62s 0.32s var(--ease) forwards; }
+  .run .gloss { animation: gloss 0.85s 0.82s var(--ease) forwards; }
+  .run .splash { animation: lift 0.5s 1.95s var(--ease) forwards; }
+  .run .app > * { animation: rise 0.6s var(--ease) backwards; }
+  #s1.run .app > :nth-child(1) { animation-delay: 2s; } #s1.run .app > :nth-child(2) { animation-delay: 2.07s; }
+  #s1.run .app > :nth-child(3) { animation-delay: 2.14s; } #s1.run .app > :nth-child(4) { animation-delay: 2.21s; } #s1.run .app > :nth-child(5) { animation-delay: 2.28s; }
+  @keyframes tile-in { from { opacity: 0; scale: 0.6; translate: 0 10px; } to { opacity: 1; } }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+  @keyframes wipe { to { transform: scaleX(1); } }
+  @keyframes gloss { 0% { transform: translateX(-70%); opacity: 0; } 20% { opacity: 1; } 100% { transform: translateX(120%); opacity: 0; } }
+  @keyframes dry { to { stroke: rgb(255 255 255 / 0.16); } }
+  @keyframes lift { to { opacity: 0; scale: 1.04; visibility: hidden; } }
+  @keyframes rise { from { opacity: 0; translate: 0 16px; scale: 0.97; } }
+
+  /* ── 2 · Glass cards with a wet sheen ─────────────────────────── */
+  .bone { height: 12px; border-radius: 999px; background: var(--bone); margin-bottom: 11px; }
+  .bone.t { width: 54%; height: 16px; margin-bottom: 13px; } .bone.a { width: 82%; } .bone.b { width: 40%; height: 22px; margin: 13px 0 0; }
+  .card .sk, .card .real { transition: opacity 0.35s var(--ease), scale 0.5s var(--spring); }
+  .card .real { position: absolute; inset: 16px; opacity: 0; scale: 0.96; }
+  .card.wet::after { content: ''; position: absolute; inset: 0; background: linear-gradient(105deg, transparent 32%, var(--sheen) 48%, transparent 64%); transform: translateX(-130%); }
+  #s2 .bar .bone { flex: 1; margin: 0; height: 16px; max-width: 44%; }
+  #s2 .bar b { display: none; }
+  #s2.run .card.wet::after { animation: sheen 1.15s var(--ease) infinite; }
+  #s2.run .card:nth-of-type(3)::after { animation-delay: 0.09s; } #s2.run .card:nth-of-type(4)::after { animation-delay: 0.18s; } #s2.run .card:nth-of-type(5)::after { animation-delay: 0.27s; }
+  #s2.run .app > * { animation: rise 0.5s var(--ease) backwards; }
+  #s2.run .app > :nth-child(2) { animation-delay: 0.05s; } #s2.run .app > :nth-child(3) { animation-delay: 0.1s; } #s2.run .app > :nth-child(4) { animation-delay: 0.15s; } #s2.run .app > :nth-child(5) { animation-delay: 0.2s; }
+  #s2.ready .card .sk { opacity: 0; }
+  #s2.ready .card .real { opacity: 1; scale: 1; }
+  #s2.ready .card.wet::after { animation: none; opacity: 0; }
+  #s2.ready .bar .bone { display: none; } #s2.ready .bar b { display: block; }
+  #s2.ready .card:nth-of-type(3) .real, #s2.ready .card:nth-of-type(3) .sk { transition-delay: 0.06s; }
+  #s2.ready .card:nth-of-type(4) .real, #s2.ready .card:nth-of-type(4) .sk { transition-delay: 0.12s; }
+  #s2.ready .card:nth-of-type(5) .real, #s2.ready .card:nth-of-type(5) .sk { transition-delay: 0.18s; }
+  @keyframes sheen { to { transform: translateX(130%); } }
+
+  .note { color: var(--ink3); font-size: 13px; line-height: 1.45; margin-top: 12px; }
+  @media (prefers-reduced-motion: reduce) { .run * , .run *::after { animation-duration: 0.01s !important; animation-delay: 0s !important; } }
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <h1>Loading animations</h1>
+    <button class="pill" id="theme" type="button">Dark</button>
+  </header>
+  <p class="lede">Two previews for SnapCoat. Tap a phone or Replay to watch it again. Preview only: nothing here is in the app yet.</p>
+
+  <section>
+    <h2>1 · Wet stroke</h2>
+    <p class="where">When the app opens.</p>
+    <div class="stage" id="s1">
+      <div class="app">
+        <div class="bar"><span class="dot"></span><b>Sales Pipeline</b><span class="dot"></span><span class="dot me"></span></div>
+        <div class="card"><h3>New leads</h3><p>6 waiting on a first call</p><span class="amt">$48,200</span><span class="chip">Today</span></div>
+        <div class="card"><h3>Estimates booked</h3><p>4 this week, 2 tomorrow</p><span class="amt">$31,750</span><span class="chip">This week</span></div>
+        <div class="card"><h3>Proposals sent</h3><p>9 open, 3 viewed today</p><span class="amt">$86,400</span><span class="chip">Follow up</span></div>
+        <div class="card"><h3>Won</h3><p>5 jobs this month</p><span class="amt">$52,900</span><span class="chip">This month</span></div>
+      </div>
+      <div class="splash">
+        <div class="mark">
+          <div class="tile"><span>s</span></div>
+          <svg class="stroke" viewBox="0 0 300 96" aria-label="SnapCoat">
+            <defs>
+              <linearGradient id="wsGrad" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#2f7bf7"/><stop offset="0.55" stop-color="#7b5cfa"/><stop offset="1" stop-color="#d946a8"/></linearGradient>
+              <linearGradient id="wsGloss" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset="0.5" stop-color="#fff" stop-opacity="0.6"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+              <mask id="wsShape"><path d="M38 50 C 96 40, 160 58, 262 46" pathLength="1" stroke="#fff" stroke-width="58" stroke-linecap="round" fill="none"/></mask>
+              <clipPath id="wsReveal"><rect class="wipe" x="0" y="0" width="300" height="96"/></clipPath>
+            </defs>
+            <path class="paint" d="M38 50 C 96 40, 160 58, 262 46" pathLength="1"/>
+            <path class="streak" d="M30 36 C 96 27, 160 45, 272 33" pathLength="1"/>
+            <path class="streak" d="M26 63 C 96 54, 160 72, 276 59" pathLength="1"/>
+            <path class="shine" d="M44 31 C 100 22, 160 40, 256 28" pathLength="1"/>
+            <g clip-path="url(#wsReveal)"><text class="word" x="150" y="59" text-anchor="middle">SnapCoat</text></g>
+            <g mask="url(#wsShape)"><rect class="gloss" x="0" y="0" width="150" height="96" fill="url(#wsGloss)" transform="skewX(-18)"/></g>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div class="row"><button class="pill go" type="button" data-replay="s1">Replay</button></div>
+    <p class="note">One brush stroke lays the coat, a wet highlight slides across it, it dries, and the app rises in. On a slow connection the stroke simply stays wet (the highlight keeps passing) until the app is ready.</p>
+  </section>
+
+  <section>
+    <h2>2 · Glass cards with a wet sheen</h2>
+    <p class="where">Between pages, instead of a spinner.</p>
+    <div class="stage" id="s2">
+      <div class="app">
+        <div class="bar"><span class="dot"></span><span class="bone"></span><b>Project Pipeline</b><span class="dot"></span><span class="dot me"></span></div>
+        <div class="card wet"><div class="sk"><div class="bone t"></div><div class="bone a"></div><div class="bone b"></div></div><div class="real"><h3>Awaiting scheduling</h3><p>7 projects ready for a date</p><span class="chip">Schedule</span></div></div>
+        <div class="card wet"><div class="sk"><div class="bone t"></div><div class="bone a"></div><div class="bone b"></div></div><div class="real"><h3>Scheduled</h3><p>4 projects start this week</p><span class="chip">This week</span></div></div>
+        <div class="card wet"><div class="sk"><div class="bone t"></div><div class="bone a"></div><div class="bone b"></div></div><div class="real"><h3>In production</h3><p>3 crews on site today</p><span class="chip">Live</span></div></div>
+        <div class="card wet"><div class="sk"><div class="bone t"></div><div class="bone a"></div><div class="bone b"></div></div><div class="real"><h3>Final walkthrough</h3><p>2 projects to close out</p><span class="chip">Close out</span></div></div>
+      </div>
+    </div>
+    <div class="row"><button class="pill go" type="button" data-replay="s2">Replay</button></div>
+    <p class="note">The page is there the instant you tap: glass cards in the shape of what is coming, a wet sheen passing over them, then the real content settles in. No spinner, no blank screen.</p>
+  </section>
+</div>
+<script>
+  var timers = {};
+  function play(id) {
+    var el = document.getElementById(id);
+    clearTimeout(timers[id]);
+    el.classList.remove('run', 'ready');
+    void el.offsetWidth; // start the animations again from the first frame
+    el.classList.add('run');
+    if (id === 's2') timers[id] = setTimeout(function () { el.classList.add('ready'); }, 2100);
+  }
+  document.querySelectorAll('[data-replay]').forEach(function (b) { b.addEventListener('click', function () { play(b.getAttribute('data-replay')); }); });
+  ['s1', 's2'].forEach(function (id) { document.getElementById(id).addEventListener('click', function () { play(id); }); });
+  document.getElementById('theme').addEventListener('click', function () { var d = document.body.classList.toggle('dark'); this.textContent = d ? 'Light' : 'Dark'; });
+  // Each one plays when it first comes into view.
+  var seen = {};
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) { entries.forEach(function (e) { if (e.isIntersecting && !seen[e.target.id]) { seen[e.target.id] = true; play(e.target.id); } }); }, { threshold: 0.55 });
+    ['s1', 's2'].forEach(function (id) { io.observe(document.getElementById(id)); });
+  } else { play('s1'); play('s2'); }
+</script>
+</body>
+</html>
