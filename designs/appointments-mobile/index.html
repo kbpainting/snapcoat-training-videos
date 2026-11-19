@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Sales Appointments on a phone (proposed)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ground: #070b14; --ink: #f2f5fb; --ink2: #c0c9da; --ink3: #8e99ad;
+    --glass: rgb(30 39 60 / 0.66); --glass2: rgb(255 255 255 / 0.06); --rim: rgb(255 255 255 / 0.12); --hair: rgb(255 255 255 / 0.08);
+    --shadow: 0 14px 34px rgb(0 0 0 / 0.45);
+    --call: #4f8dff; --nav: #2fc46b; --prop: #a66bff; --note: #f29a2e;
+    --accent: linear-gradient(120deg, #2f7bf7, #7b5cfa 55%, #d946a8);
+    --spring: cubic-bezier(0.34, 1.45, 0.64, 1); --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    --display: 'Bricolage Grotesque', 'DM Sans', system-ui, sans-serif;
+  }
+  body.light {
+    --ground: #eef1f7; --ink: #0b1220; --ink2: #3a465e; --ink3: #66728a;
+    --glass: rgb(255 255 255 / 0.78); --glass2: rgb(11 18 32 / 0.05); --rim: rgb(255 255 255 / 0.95); --hair: rgb(11 18 32 / 0.08);
+    --shadow: 0 10px 30px rgb(22 38 84 / 0.13);
+    --call: #1f6df6; --nav: #0f8a48; --prop: #7a3fe0; --note: #b86a00;
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; }
+  body { font-family: 'DM Sans', system-ui, sans-serif; color: var(--ink); background: #05070c; -webkit-font-smoothing: antialiased; }
+  body.light { background: #dfe4ee; }
+  button { font: inherit; color: inherit; border: 0; background: none; padding: 0; cursor: pointer; }
+  .phone { position: relative; max-width: 430px; min-height: 100vh; min-height: 100dvh; margin: 0 auto; overflow: hidden;
+    background:
+      radial-gradient(120% 40% at 0% 0%, rgb(86 140 255 / 0.2), transparent 62%),
+      radial-gradient(110% 36% at 100% 30%, rgb(217 70 168 / 0.14), transparent 66%),
+      radial-gradient(120% 40% at 30% 100%, rgb(40 200 190 / 0.12), transparent 62%), var(--ground); }
+  .note { margin: 0; padding: 8px 14px; font-size: 12.5px; text-align: center; color: var(--ink3); }
+  .note b { color: var(--ink2); }
+
+  /* App bar */
+  .bar { display: flex; align-items: center; gap: 10px; padding: 10px 12px; margin: 0 8px; border-radius: 0 0 22px 22px; background: var(--glass); box-shadow: var(--shadow), inset 0 1px 0 var(--rim); }
+  .bar h1 { flex: 1; margin: 0; font: 700 18px/1.1 var(--display); font-stretch: 86%; letter-spacing: -0.01em; }
+  .bar small { display: block; font: 400 11.5px 'DM Sans', sans-serif; color: var(--ink3); letter-spacing: 0; margin-top: 2px; }
+  .ico { width: 40px; height: 40px; flex: 0 0 40px; border-radius: 50%; display: grid; place-items: center; background: var(--glass2); box-shadow: inset 0 1px 0 var(--rim); }
+  .ico svg, .act svg, .seg svg, .fab svg, .row svg, .omw svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .me { background: var(--accent); color: #fff; font-weight: 700; font-size: 13px; }
+
+  /* One row: the three views and the filter */
+  .tools { display: flex; gap: 8px; padding: 12px 12px 8px; }
+  .seg { flex: 1; display: flex; padding: 4px; border-radius: 999px; background: var(--glass); box-shadow: inset 0 1px 0 var(--rim); }
+  .seg button { flex: 1; height: 40px; border-radius: 999px; display: flex; align-items: center; justify-content: center; gap: 6px; font-weight: 600; font-size: 14px; color: var(--ink2); transition: scale 0.35s var(--spring), background 0.2s; }
+  .seg button svg { width: 16px; height: 16px; }
+  .seg button.on { color: #fff; background: var(--accent); box-shadow: 0 6px 16px rgb(99 62 220 / 0.35), inset 0 1px 0 rgb(255 255 255 / 0.35); }
+  .seg button:active, .ico:active, .act:active, .fab:active { scale: 0.94; }
+  .filter { position: relative; width: 48px; height: 48px; flex: 0 0 48px; background: var(--glass); }
+  .filter i { position: absolute; top: 9px; right: 10px; width: 9px; height: 9px; border-radius: 50%; background: #d946a8; box-shadow: 0 0 0 2px var(--ground); display: none; }
+  .filter.active i { display: block; }
+
+  /* The day, one sticky line */
+  .day { position: sticky; top: 0; z-index: 5; display: flex; align-items: center; gap: 6px; margin: 0 12px; padding: 6px; border-radius: 18px; background: var(--glass); box-shadow: var(--shadow), inset 0 1px 0 var(--rim); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+  .day .mid { flex: 1; text-align: center; font: 700 16px var(--display); font-stretch: 86%; }
+  .day .mid span { display: inline-block; margin-left: 6px; padding: 2px 9px; border-radius: 999px; font: 600 11.5px 'DM Sans', sans-serif; color: #fff; background: var(--accent); vertical-align: 2px; }
+  .day .mid em { display: block; font: 500 12px 'DM Sans', sans-serif; color: var(--ink3); margin-top: 1px; }
+
+  /* The agenda */
+  .list { padding: 12px 12px 110px; display: grid; gap: 10px; }
+  .appt { border-radius: 22px; background: var(--glass); box-shadow: var(--shadow), inset 0 1px 0 var(--rim), inset 0 0 0 1px var(--hair); overflow: hidden; transition: box-shadow 0.25s; }
+  .appt.next { box-shadow: var(--shadow), inset 0 1px 0 var(--rim), inset 0 0 0 1.5px rgb(123 92 250 / 0.55); }
+  .head { display: flex; gap: 12px; width: 100%; padding: 13px 14px 10px; text-align: left; }
+  .time { flex: 0 0 62px; font: 700 15px/1.15 var(--display); font-stretch: 86%; font-variant-numeric: tabular-nums; }
+  .time small { display: block; font: 500 11.5px 'DM Sans', sans-serif; color: var(--ink3); margin-top: 3px; }
+  .who { flex: 1; min-width: 0; }
+  .who b { display: block; font: 700 16px/1.2 var(--display); font-stretch: 86%; letter-spacing: -0.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .who span { display: block; font-size: 13px; color: var(--ink2); margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .tag { display: inline-flex; align-items: center; gap: 5px; margin-top: 6px; padding: 3px 9px; border-radius: 999px; font-size: 11.5px; font-weight: 600; color: var(--prop); background: color-mix(in srgb, var(--prop) 16%, transparent); }
+  .who .tag { display: inline-flex; width: auto; margin-top: 6px; }
+  .who .tag.up { color: #fff; background: var(--accent); margin-right: 5px; }
+  .chev { align-self: center; color: var(--ink3); transition: rotate 0.3s var(--ease); }
+  .appt.open .chev { rotate: 180deg; }
+  .acts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; padding: 0 14px 13px; }
+  .act { height: 46px; border-radius: 16px; display: flex; align-items: center; justify-content: center; gap: 7px; font-weight: 600; font-size: 13.5px; background: color-mix(in srgb, var(--c) 17%, transparent); color: var(--c); transition: scale 0.35s var(--spring); }
+  .act span { display: none; }
+  .more { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.38s var(--ease); }
+  .appt.open .more { grid-template-rows: 1fr; }
+  .more > div { overflow: hidden; }
+  .more p { margin: 0; padding: 0 14px 12px; font-size: 13.5px; line-height: 1.45; color: var(--ink2); }
+  .omw { display: flex; align-items: center; justify-content: center; gap: 9px; width: calc(100% - 28px); height: 52px; margin: 0 14px 12px; border-radius: 18px; color: #fff; font-weight: 700; font-size: 16px; background: var(--accent); box-shadow: 0 10px 22px rgb(99 62 220 / 0.35), inset 0 1.5px 0 rgb(255 255 255 / 0.4); transition: scale 0.35s var(--spring); }
+  .omw:active { scale: 0.97; }
+  .appt.open .acts { grid-template-columns: repeat(2, 1fr); }
+  .appt.open .act { height: 50px; color: #fff; background: var(--c); }
+  .appt.open .act span { display: inline; }
+  .done { opacity: 0.62; }
+  .done .tag { color: var(--nav); background: color-mix(in srgb, var(--nav) 16%, transparent); }
+
+  /* Add: one floating button */
+  .fab { position: fixed; right: max(16px, calc(50% - 199px)); bottom: 22px; z-index: 6; width: 60px; height: 60px; border-radius: 22px; display: grid; place-items: center; color: #fff; background: var(--accent); box-shadow: 0 16px 32px rgb(99 62 220 / 0.45), inset 0 1.5px 0 rgb(255 255 255 / 0.4); transition: scale 0.35s var(--spring); }
+  .fab svg { width: 26px; height: 26px; }
+
+  /* The filter sheet: where the tucked-away controls live */
+  .veil { position: fixed; inset: 0; z-index: 8; background: rgb(3 6 12 / 0.55); opacity: 0; pointer-events: none; transition: opacity 0.25s; }
+  .sheet { position: fixed; left: 50%; bottom: 0; z-index: 9; width: min(100%, 430px); translate: -50% 105%; padding: 10px 14px calc(18px + env(safe-area-inset-bottom, 0px)); border-radius: 28px 28px 0 0; background: var(--ground); box-shadow: 0 -20px 50px rgb(0 0 0 / 0.5), inset 0 1px 0 var(--rim); transition: translate 0.45s var(--ease); }
+  body.light .sheet { background: #f7f9fc; }
+  .showsheet .veil { opacity: 1; pointer-events: auto; }
+  .showsheet .sheet { translate: -50% 0; }
+  .grab { width: 44px; height: 5px; border-radius: 999px; background: var(--hair); margin: 0 auto 12px; }
+  .sheet h2 { margin: 0 4px 10px; font: 700 18px var(--display); font-stretch: 86%; }
+  .row { display: flex; align-items: center; gap: 12px; width: 100%; padding: 13px 12px; border-radius: 16px; text-align: left; font-weight: 600; font-size: 15px; }
+  .row + .row { margin-top: 4px; }
+  .row { background: var(--glass2); }
+  .row small { margin-left: auto; font-weight: 500; color: var(--ink3); font-size: 13px; }
+  .row.pick.on { box-shadow: inset 0 0 0 1.5px rgb(123 92 250 / 0.7); }
+  .sheet h3 { margin: 14px 4px 8px; font: 600 12px 'DM Sans', sans-serif; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink3); }
+  .toast { position: fixed; left: 50%; bottom: 96px; z-index: 12; translate: -50% 20px; padding: 10px 16px; border-radius: 999px; font-size: 13.5px; font-weight: 600; color: #fff; background: rgb(20 26 40 / 0.94); box-shadow: var(--shadow); opacity: 0; pointer-events: none; transition: opacity 0.2s, translate 0.3s var(--ease); white-space: nowrap; }
+  .toast.show { opacity: 1; translate: -50% 0; }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="phone" id="phone">
+  <p class="note"><b>Proposed layout</b> · sample data · tap a card, the filter, the + · <button id="theme" type="button" style="text-decoration:underline">switch to light</button></p>
+
+  <div class="bar">
+    <span class="ico"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></span>
+    <h1>Sales Appointments<small>948 scheduled · live</small></h1>
+    <span class="ico"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></span>
+    <span class="ico me">BK</span>
+  </div>
+
+  <div class="tools">
+    <div class="seg" role="tablist">
+      <button class="on" type="button" data-view="Today"><svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>Today</button>
+      <button type="button" data-view="Calendar"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Calendar</button>
+      <button type="button" data-view="Map"><svg viewBox="0 0 24 24"><path d="m9 4-6 2v14l6-2 6 2 6-2V4l-6 2-6-2zM9 4v14M15 6v14"/></svg>Map</button>
+    </div>
+    <button class="ico filter" id="filter" type="button" aria-label="Filter and more"><svg viewBox="0 0 24 24"><path d="M4 6h16M7 12h10M10 18h4"/></svg><i></i></button>
+  </div>
+
+  <div class="day">
+    <button class="ico" type="button" data-say="Wednesday, Nov 18"><svg viewBox="0 0 24 24"><path d="m15 6-6 6 6 6"/></svg></button>
+    <div class="mid">Thu, Nov 19 <span>Today</span><em id="count">4 appointments · next at 10:00 AM</em></div>
+    <button class="ico" type="button" data-say="Friday, Nov 20"><svg viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg></button>
+  </div>
+
+  <div class="list" id="list"></div>
+
+  <button class="fab" id="fab" type="button" aria-label="Add"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
+</div>
+
+<div class="veil" id="veil"></div>
+<div class="sheet" id="sheet" role="dialog" aria-label="Filter and more">
+  <div class="grab"></div>
+  <h2 id="sheetTitle">Filter and more</h2>
+  <div id="sheetBody"></div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+  var I = {
+    call: '<svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>',
+    nav: '<svg viewBox="0 0 24 24"><path d="m3 11 18-8-8 18-2-8-8-2z"/></svg>',
+    prop: '<svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5zM14 3v5h5M9 13h6M9 17h6"/></svg>',
+    note: '<svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H8l-5 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>',
+    chev: '<svg class="chev" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>'
+  };
+  var appts = [
+    { t: '8:30', e: '9:30 AM', who: 'Estimate · Morgan Blake', where: '88 Harbor View Ct, Stuart, FL', rep: 'Dana M.', note: 'Exterior repaint, two story. Gate code 4411.', done: true },
+    { t: '10:00', e: '11:00 AM', who: 'Sales Meeting · Alex Rivera', where: '1420 Palm Ridge Dr, Stuart, FL', rep: 'Dana M.', note: 'Full interior painting. Customer knows we do not fix moldings. Two bedrooms, two bathrooms and the kitchen area; wants to start before the holidays.' },
+    { t: '12:30', e: '1:30 PM', who: 'Estimate · Jordan Lee', where: '305 Coral Way, Port St. Lucie, FL', rep: 'Sam T.', note: 'Kitchen cabinets, 32 doors. Wants a satin finish and soft-close hardware left as is.' },
+    { t: '2:00', e: '3:00 PM', who: 'Color Consult · Priya Shah', where: '72 Seagrape Ln, Jensen Beach, FL', rep: 'Dana M.', note: 'Picking between two whites for the main floor. Bring the large swatches.' },
+    { t: '4:30', e: '5:30 PM', who: 'Estimate · Chris Walker', where: '9 Osprey Point, Palm City, FL', rep: 'Sam T.', note: 'Exterior trim and front door only.' }
+  ];
+  var list = document.getElementById('list');
+  function card(a, i) {
+    var next = i === 1;
+    return '<article class="appt' + (next ? ' next open' : '') + (a.done ? ' done' : '') + '">' +
+      '<button class="head" type="button"><span class="time">' + a.t + '<small>to ' + a.e + '</small></span>' +
+      '<span class="who"><b>' + a.who + '</b><span>' + a.where + '</span>' +
+      (next ? '<span class="tag up">Next up</span>' : '') + '<span class="tag">' + (a.done ? 'Done · ' : '') + a.rep + '</span></span>' + I.chev + '</button>' +
+      '<div class="more"><div><p>' + a.note + '</p>' + (a.done ? '' : '<button class="omw" type="button" data-say="On My Way sent">' + I.nav + 'On My Way</button>') + '</div></div>' +
+      '<div class="acts">' +
+      '<button class="act" style="--c:var(--call)" type="button" data-say="Call">' + I.call + '<span>Call</span></button>' +
+      '<button class="act" style="--c:var(--nav)" type="button" data-say="Navigate">' + I.nav + '<span>Navigate</span></button>' +
+      '<button class="act" style="--c:var(--prop)" type="button" data-say="Proposal">' + I.prop + '<span>Proposal</span></button>' +
+      '<button class="act" style="--c:var(--note)" type="button" data-say="Notes">' + I.note + '<span>Notes</span></button>' +
+      '</div></article>';
+  }
+  list.innerHTML = appts.map(card).join('');
+  var toast = document.getElementById('toast'); var tt;
+  function say(msg) { toast.textContent = msg; toast.classList.add('show'); clearTimeout(tt); tt = setTimeout(function () { toast.classList.remove('show'); }, 1300); }
+  list.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-say]'); if (b) { say(b.getAttribute('data-say')); return; }
+    var h = e.target.closest('.head'); if (!h) return;
+    var a = h.parentNode; var open = a.classList.contains('open');
+    list.querySelectorAll('.appt.open').forEach(function (x) { x.classList.remove('open'); });
+    if (!open) a.classList.add('open');
+  });
+  document.querySelectorAll('.day [data-say]').forEach(function (b) { b.addEventListener('click', function () { say(b.getAttribute('data-say')); }); });
+  document.querySelectorAll('.seg button').forEach(function (b) { b.addEventListener('click', function () { document.querySelectorAll('.seg button').forEach(function (x) { x.classList.remove('on'); }); b.classList.add('on'); if (b.getAttribute('data-view') !== 'Today') say(b.getAttribute('data-view') + ' view (unchanged)'); }); });
+  // Sheets
+  var body = document.body; var sheetBody = document.getElementById('sheetBody'); var sheetTitle = document.getElementById('sheetTitle');
+  var rep = 'All Salespeople';
+  function filterSheet() {
+    sheetTitle.textContent = 'Filter and more';
+    sheetBody.innerHTML = '<h3>Salesperson</h3>' + ['All Salespeople', 'Dana M.', 'Sam T.'].map(function (n) { return '<button class="row pick' + (n === rep ? ' on' : '') + '" type="button" data-rep="' + n + '">' + n + (n === rep ? '<small>Showing</small>' : '') + '</button>'; }).join('') +
+      '<h3>More</h3><button class="row" type="button" data-say="Refreshed">Refresh<small>Updated just now</small></button><button class="row" type="button" data-say="Stats">Appointment stats</button><button class="row" type="button" data-say="Cancelled appointments">Cancelled appointments<small>3</small></button>';
+  }
+  function addSheet() {
+    sheetTitle.textContent = 'Add';
+    sheetBody.innerHTML = '<button class="row" type="button" data-say="New appointment">New appointment</button><button class="row" type="button" data-say="Block time">Block time</button><button class="row" type="button" data-say="Recurring block">Recurring block</button>';
+  }
+  function show(fill) { fill(); body.classList.add('showsheet'); }
+  function hide() { body.classList.remove('showsheet'); }
+  document.getElementById('filter').addEventListener('click', function () { show(filterSheet); });
+  document.getElementById('fab').addEventListener('click', function () { show(addSheet); });
+  document.getElementById('veil').addEventListener('click', hide);
+  sheetBody.addEventListener('click', function (e) {
+    var r = e.target.closest('[data-rep]');
+    if (r) { rep = r.getAttribute('data-rep'); document.getElementById('filter').classList.toggle('active', rep !== 'All Salespeople'); filterSheet(); say('Showing ' + rep); return; }
+    var s = e.target.closest('[data-say]'); if (s) { hide(); say(s.getAttribute('data-say')); }
+  });
+  document.getElementById('theme').addEventListener('click', function () { var l = body.classList.toggle('light'); this.textContent = l ? 'switch to dark' : 'switch to light'; });
+</script>
+</body>
+</html>
